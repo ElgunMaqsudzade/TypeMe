@@ -1,0 +1,46 @@
+.sidebar {
+  width: 20%;
+  position: fixed;
+  top: 50px;
+  .side-links {
+    display: flex;
+    flex-direction: column;
+    .side-row {
+      display: flex;
+      &:hover {
+        background-color: $secon-clr;
+      }
+      .side-link {
+        width: 100%;
+        font-size: 18px;
+        padding: 10px 20px;
+        color: $text-clr;
+        font-weight: 400;
+        .side-icon {
+          font-size: 25px;
+          margin-right: 10px;
+          transform: translateY(-2px);
+        }
+      }
+      .profile {
+        width: 100%;
+        .profile-link {
+          display: flex;
+        }
+      }
+
+      .addition {
+        cursor: pointer;
+        display: flex;
+        width: 30px;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          background-color: $secon-medium-clr;
+        }
+      }
+    }
+  }
+}

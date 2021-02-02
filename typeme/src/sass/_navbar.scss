@@ -1,0 +1,180 @@
+nav {
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  @extend %boxShadow;
+  .nav-center {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .nav-left-side {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .search-box {
+        position: relative;
+        .searchInput {
+          width: 150px;
+          margin-left: 20px;
+          padding: 3px 30px;
+          border: 0;
+          background-color: $secon-lighter-clr;
+          border-radius: 22px;
+        }
+        .search-icon {
+          cursor: pointer;
+          color: #606770;
+          font-size: 18px;
+          position: absolute;
+          top: 50%;
+          left: 27px;
+          transform: translateY(-50%);
+        }
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        h1 {
+          font-size: 20px;
+          margin-bottom: 3px;
+          text-transform: uppercase;
+        }
+        .brand-holder {
+          margin-right: 7px;
+          width: 35px;
+        }
+      }
+    }
+
+    .nav-toggle {
+      border: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      opacity: 0.7;
+      hr {
+        width: 18px;
+        border: 1px solid #614b3b;
+        margin: 2.5px 0;
+        transition: all 0.3s ease-in-out;
+      }
+      &:hover {
+        opacity: 1;
+      }
+      @media only screen and(min-width:768px) {
+        display: none;
+      }
+    }
+    .nav-toggle.toggled {
+      .line-1 {
+        transform-origin: left;
+        transform: translateY(-50%) rotate(45deg);
+      }
+      .line-2 {
+        opacity: 0;
+      }
+      .line-3 {
+        transform-origin: left;
+        transform: translateY(-50%) rotate(-45deg);
+      }
+    }
+    .nav-menu {
+      @media only screen and (max-width: 767.98px) {
+        display: none;
+      }
+      margin: 0 20px;
+      height: 100%;
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      .menu-item {
+        flex-grow: 1;
+        padding: 8px 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        height: 100%;
+        color: $secon-darker-clr;
+        &:hover {
+          background-color: $secon-lighter-clr;
+        }
+      }
+    }
+    .nav-right-side {
+      display: flex;
+      .links {
+        .nav-link {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 4px 8px !important;
+          button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 0;
+            background-color: $secon-lighter-clr;
+            color: $text-clr;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            opacity: 0.8;
+            &:hover {
+              opacity: 1;
+            }
+          }
+          .add-posts {
+            font-size: 24px;
+          }
+        }
+      }
+      .profile-box {
+        display: flex;
+        align-items: center;
+        padding: 4px 8px;
+        .bg-div {
+          background-color: $secon-lighter-clr;
+          border-radius: 30px;
+          display: flex;
+          align-items: center;
+          .pr-div {
+            padding-right: 5px;
+            display: flex;
+            align-items: center;
+            .avatar-holder {
+              width: 30px;
+            }
+            .name {
+              font-size: 16px;
+              font-weight: 600;
+            }
+          }
+          .addition {
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            align-items: center;
+            font-size: 15px;
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              background-color: $secon-medium-clr;
+            }
+          }
+        }
+      }
+    }
+  }
+}
