@@ -1,0 +1,20 @@
+.error-section {
+  .error-page {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    h1 {
+      font-size: 7.5em;
+      margin: 15px 0px;
+      font-weight: bold;
+    }
+    h2 {
+      font-weight: bold;
+    }
+    button {
+      width: 100px;
+      background-color: red;
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { useGlobalContext } from "./../components/context";
 
 const Home = () => {
   const { users } = useGlobalContext();
-  return <section className="section"></section>;
+  return <section>hello</section>;
 };
 
 export default Home;

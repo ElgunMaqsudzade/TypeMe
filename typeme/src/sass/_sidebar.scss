@@ -1,45 +1,61 @@
 .sidebar {
-  width: 20%;
+  background-color: $clr-light;
   position: fixed;
-  top: 50px;
-  .side-links {
+  max-width: 285px;
+  padding-right: 15px;
+  padding-left: 15px;
+  width: 100%;
+  .side-items {
     display: flex;
     flex-direction: column;
-    .side-row {
+    .side-item {
+      border-radius: 4px;
       display: flex;
       &:hover {
-        background-color: $secon-clr;
+        background-color: $clr-hover-grey;
       }
-      .side-link {
+      .side-body {
+        display: flex;
         width: 100%;
         font-size: 18px;
-        padding: 10px 20px;
-        color: $text-clr;
+        padding: 10px;
+        color: $clr-main-blue;
         font-weight: 400;
-        .side-icon {
-          font-size: 25px;
-          margin-right: 10px;
-          transform: translateY(-2px);
+        .side-text {
+          line-height: 30px;
+          margin: 0;
+          font-size: 20px;
         }
-      }
-      .profile {
-        width: 100%;
-        .profile-link {
+        .side-icon {
           display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 25px;
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+        }
+        .side-img {
+          overflow: hidden;
+          width: 30px;
+          height: 30px;
+          margin-right: 10px;
+          border-radius: 50%;
         }
       }
 
-      .addition {
+      .side-children-icon {
         cursor: pointer;
+        background-color: unset;
+        border: unset;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
         display: flex;
         width: 30px;
         justify-content: center;
         align-items: center;
         font-size: 15px;
         transition: all 0.2s ease-in-out;
-        &:hover {
-          background-color: $secon-medium-clr;
-        }
       }
     }
   }
