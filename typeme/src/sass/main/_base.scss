@@ -80,8 +80,12 @@ input {
 .page_layout {
   padding-top: 64px;
 }
-.card {
-  background-color: white;
-  margin: 20px 0;
-  padding: 20px;
+button {
+  outline: none;
+}
+.mCard {
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 1px $clr-s-card-grey;
+  margin: 15px 0 0;
 }

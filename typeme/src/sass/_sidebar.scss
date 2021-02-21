@@ -9,53 +9,25 @@
     display: flex;
     flex-direction: column;
     .side-item {
-      border-radius: 4px;
-      display: flex;
-      &:hover {
-        background-color: $clr-hover-grey;
-      }
-      .side-body {
+      .side-item-link {
         display: flex;
-        width: 100%;
-        font-size: 18px;
-        padding: 10px;
-        color: $clr-main-blue;
-        font-weight: 400;
-        .side-text {
-          line-height: 30px;
-          margin: 0;
-          font-size: 20px;
-        }
-        .side-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 25px;
-          width: 30px;
-          height: 30px;
-          margin-right: 10px;
-        }
-        .side-img {
-          overflow: hidden;
-          width: 30px;
-          height: 30px;
-          margin-right: 10px;
-          border-radius: 50%;
-        }
-      }
-
-      .side-children-icon {
-        cursor: pointer;
-        background-color: unset;
-        border: unset;
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
-        display: flex;
-        width: 30px;
-        justify-content: center;
         align-items: center;
-        font-size: 15px;
-        transition: all 0.2s ease-in-out;
+        height: 30px;
+        border-radius: 4px;
+        padding: 0 15px;
+        .Icon {
+          color: $clr-main-blue;
+          margin-right: 10px;
+          width: 20px !important;
+          height: 20px !important;
+          svg {
+            width: 20px !important;
+            height: 20px !important;
+          }
+        }
+        &:hover {
+          background-color: $clr-hover-dgrey;
+        }
       }
     }
   }

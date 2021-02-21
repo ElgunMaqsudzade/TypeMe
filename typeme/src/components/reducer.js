@@ -1,10 +1,7 @@
 const reducer = (state, action) => {
   const { payload, type } = action;
-  if (type === "SEARCH") {
-    const newUsers = payload.data.users.filter((user) =>
-      user.username.toLowerCase().includes(payload.searchValue)
-    );
-    return { ...state, users: newUsers };
+  if (type === "CREATE_TEXT") {
+    return { ...state, createText: payload };
   }
   return state;
 };
