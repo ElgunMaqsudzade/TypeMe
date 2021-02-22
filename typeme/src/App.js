@@ -6,6 +6,7 @@ import RSidebar from "./components/r_sidebar";
 import News from "./pages/news";
 import Profile from "./pages/profile";
 import Error from "./pages/error";
+import LoginRegister from "./pages/login_register";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <div className="page">
         <Router>
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/feed">
               <div className="page_header">
                 <Navbar />
               </div>
@@ -50,6 +51,13 @@ function App() {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </Route>
+            <Route exact path="/">
+              <div className="container">
+                <div className="row">
+                  <LoginRegister />
                 </div>
               </div>
             </Route>

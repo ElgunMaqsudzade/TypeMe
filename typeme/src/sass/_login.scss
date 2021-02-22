@@ -1,0 +1,45 @@
+@import "main/variables";
+.login {
+  padding: 25px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 1px $clr-s-card-grey;
+  .login-form {
+    input {
+      margin-bottom: 15px;
+      padding: 6px 12px 8px;
+      border-radius: 3px;
+      width: 100%;
+      border: 1px solid $clr-f-card-grey;
+      &::placeholder {
+        font-size: 14px;
+        transition: all 0.1s;
+      }
+      &:focus::placeholder {
+        color: #b2b2b2;
+      }
+    }
+    .login-btn {
+      margin-right: 40px;
+      margin-top: 5px;
+      border-radius: 3px;
+      font-size: 14px;
+      line-height: 20px;
+      width: 100px;
+      text-align: center;
+      background-color: $clr-main-blue;
+      border: none;
+      color: white;
+      padding: 7px 16px 8px;
+      &:hover {
+        opacity: 0.88;
+      }
+    }
+    .forgot {
+      color: $clr-main-blue;
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+}

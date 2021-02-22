@@ -16,7 +16,7 @@ const data = [
     info: "My profile",
     link: "/profile",
   },
-  { id: 2, icon: <Icon20NewsfeedOutline />, info: "News", link: "/" },
+  { id: 2, icon: <Icon20NewsfeedOutline />, info: "News", link: "/feed" },
   { id: 3, icon: <Icon20MessageOutline />, info: "Messenger", link: "/messages" },
   { id: 4, icon: <Icon20UsersOutline />, info: "Friends", link: "/friends" },
   { id: 5, icon: <Icon20Users3Outline />, info: "Groups", link: "/groups" },

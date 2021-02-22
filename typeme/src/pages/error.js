@@ -14,7 +14,7 @@ const Error = () => {
           The page you are looking for does not exist. How you got here is a mystery. But you can click the button below to go
           back to the homepage.
         </p>
-        <Link to="/" className="error-btn">
+        <Link to="/feed" className="error-btn">
           <div className="error-btn-icon">
             <IoIosReturnLeft />
           </div>

@@ -1,0 +1,95 @@
+@import "main/variables";
+.register {
+  background-color: white;
+  padding: 25px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 1px $clr-s-card-grey;
+  .register-title {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 500;
+    text-align: center;
+  }
+  .register-subtitle {
+    color: $clr-grey;
+    padding: 5px 0 21px 0;
+    text-align: center;
+  }
+  .register-form {
+    .reg-inp {
+      margin-bottom: 15px;
+      padding: 6px 12px 8px;
+      border-radius: 3px;
+      width: 100%;
+      border: 1px solid $clr-f-card-grey;
+      &::placeholder {
+        font-size: 14px;
+        transition: all 0.1s;
+      }
+      &:focus::placeholder {
+        color: #b2b2b2;
+      }
+    }
+    .label-name {
+      margin: 0 0 10px 1px;
+      color: $clr-grey;
+      font-weight: 500;
+    }
+    .birthday-box {
+      .react-date-picker__wrapper {
+        padding: 4px 12px;
+        border-radius: 3px;
+        border: 1px solid $clr-f-card-grey;
+      }
+      width: 100%;
+      margin-bottom: 15px;
+      .react-date-picker__button {
+        &:hover {
+          background-color: $clr-hover-dgrey;
+        }
+      }
+      .icon {
+        width: 20px !important;
+        height: 20px !important;
+        svg {
+          width: 20px !important;
+          height: 20px !important;
+        }
+        color: $clr-main-blue;
+      }
+      .calendar {
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid $clr-main-blue;
+        .react-calendar__tile--now {
+          border: 1px solid rgba(81, 129, 184, 0.4);
+          background-color: transparent;
+        }
+        .react-calendar__tile--active {
+          background-color: $clr-main-blue;
+        }
+      }
+    }
+    .gender-radio-box {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      input {
+        margin: 1px 7px 1px 0;
+      }
+      label {
+        margin: 0;
+        margin-right: 30px;
+      }
+    }
+    .login-btn {
+      margin-top: 5px;
+      padding: 7px 16px 8px;
+      border-radius: 3px;
+      border: none;
+      width: 100%;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

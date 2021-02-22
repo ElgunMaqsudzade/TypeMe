@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="container">
         <div className="row">
           <div className="col-4 nav-main">
-            <Link to="/" className="nav-brand">
+            <Link to="/feed" className="nav-brand">
               <div className="logo-holder">
                 <img src={logo} alt="" />
               </div>
