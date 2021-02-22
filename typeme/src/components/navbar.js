@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
-import { Icon24NotificationOutline, Icon16SearchOutline, Icon24MusicOutline, Icon12Dropdown } from "@vkontakte/icons";
+import {
+  Icon24NotificationOutline,
+  Icon16SearchOutline,
+  Icon24MusicOutline,
+  Icon12Dropdown,
+} from "@vkontakte/icons";
 import { useGlobalContext } from "./context";
 const Navbar = () => {
-  const { setSearchTerm, toggled, setToggled } = useGlobalContext();
+  const { registerUser } = useGlobalContext();
+  // const { name, image } = registerUser;
   return (
     <nav>
       <div className="container">

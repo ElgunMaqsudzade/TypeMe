@@ -1,18 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../sass/_register.scss";
 import DatePicker from "react-date-picker";
 import { Icon20CalendarOutline, Icon16Cancel } from "@vkontakte/icons";
-function Register({ birthday, setBirthday }) {
+function Register({ RegisterSubmitHandler }) {
+  const [birthday, setBirthday] = useState(null);
+  const [user, setUser] = useState({
+    name: null,
+    surname: null,
+    gender: null,
+    email: null,
+    password: null,
+    checkpassword: null,
+    birthday: null,
+  });
+  useEffect(() => {
+    if (birthday != null) {
+      setUser({
+        ...user,
+        birthday: `${birthday.getDate()}-${birthday.getMonth() + 1}-${birthday.getFullYear()}`,
+      });
+    }
+  }, [birthday]);
   let date = new Date();
   date.setFullYear(date.getFullYear() - 100);
   return (
     <div className="register">
-      <h4 className="register-title">First time here?</h4>
-      <p className="register-subtitle">Sign up for VK</p>
-      <form className="register-form" action="">
-        <input type="text" className="reg-inp" placeholder="Your first name" />
-        <input type="text" className="reg-inp" placeholder="Your first name" />
-        <input type="text" className="reg-inp" placeholder="Your email address" />
+      <h4 className="register-title">Sign up for VK</h4>
+      <form className="register-form">
+        <input
+          type="text"
+          className="reg-inp"
+          placeholder="Your first name"
+          onChange={(e) => setUser({ ...user, name: e.target.value })}
+        />
+        <input
+          type="text"
+          className="reg-inp"
+          placeholder="Your last name"
+          onChange={(e) => setUser({ ...user, surname: e.target.value })}
+        />
+        <input
+          type="text"
+          className="reg-inp"
+          placeholder="Your email address"
+          onChange={(e) => setUser({ ...user, email: e.target.value })}
+        />
+        <input
+          type="password"
+          className="reg-inp"
+          placeholder="Enter your password"
+          onChange={(e) => setUser({ ...user, password: e.target.value })}
+        />
+        <input
+          type="password"
+          className="reg-inp"
+          placeholder="Re-enter your password"
+          onChange={(e) => setUser({ ...user, checkpassword: e.target.value })}
+        />
         <p className="label-name">Birthday</p>
         <DatePicker
           onChange={setBirthday}
@@ -29,12 +73,28 @@ function Register({ birthday, setBirthday }) {
         />
         <p className="label-name">Your gender</p>
         <div className="gender-radio-box">
-          <input type="radio" name="gender" id="male" />
+          <input
+            type="radio"
+            name="gender"
+            id="male"
+            onChange={() => setUser({ ...user, gender: "male" })}
+          />
           <label htmlFor="male">Male</label>
-          <input type="radio" name="gender" id="female" />
+          <input
+            type="radio"
+            name="gender"
+            id="female"
+            onChange={() => setUser({ ...user, gender: "female" })}
+          />
           <label htmlFor="female">Female</label>
         </div>
-        <button className="login-btn btn-success">Continue registration</button>
+        <button
+          className="login-btn btn-success"
+          type="button"
+          onClick={() => RegisterSubmitHandler(user)}
+        >
+          Continue registration
+        </button>
       </form>
     </div>
   );
