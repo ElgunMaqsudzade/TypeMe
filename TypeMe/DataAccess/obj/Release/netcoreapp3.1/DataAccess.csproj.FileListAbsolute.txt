@@ -1,0 +1,17 @@
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\DataAccess.deps.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\DataAccess.runtimeconfig.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\DataAccess.runtimeconfig.dev.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\DataAccess.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\DataAccess.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\Core.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\Entity.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\Core.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\bin\Release\netcoreapp3.1\Entity.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.csprojAssemblyReference.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.AssemblyInfoInputs.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.AssemblyInfo.cs
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.csproj.CopyComplete
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\DataAccess\obj\Release\netcoreapp3.1\DataAccess.genruntimeconfig.cache

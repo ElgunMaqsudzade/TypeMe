@@ -1,0 +1,12 @@
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\bin\Release\netcoreapp3.1\Core.deps.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\bin\Release\netcoreapp3.1\Core.runtimeconfig.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\bin\Release\netcoreapp3.1\Core.runtimeconfig.dev.json
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\bin\Release\netcoreapp3.1\Core.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\bin\Release\netcoreapp3.1\Core.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.dll
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.pdb
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.genruntimeconfig.cache
+C:\Users\TOSHIBA\Desktop\Architecture\TypeMe\Core\obj\Release\netcoreapp3.1\Core.csprojAssemblyReference.cache
