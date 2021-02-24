@@ -9,7 +9,7 @@ namespace TypeMeApi.Extentions
 {
     public static class Helper
     {
-        public static void SendMessage(string messageSubject, string messageBody, string mailTo)
+        public static async Task SendMessage(string messageSubject, string messageBody, string mailTo)
         {
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             client.UseDefaultCredentials = false;
@@ -23,7 +23,7 @@ namespace TypeMeApi.Extentions
             message.Body = messageBody;
             message.BodyEncoding = System.Text.Encoding.UTF8;
             message.IsBodyHtml = true;
-            client.Send(message);
+            await client.SendMailAsync(message);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Entity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using TypeMeApi.Identity;
+using TypeMeApi.Extentions;
 using TypeMeApi.ToDoItems;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -54,6 +55,7 @@ namespace TypeMeApi.Controllers
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Register register)
         {
+
             AppUser appUser = await _userManager.FindByEmailAsync(register.Email);
             if (appUser != null)
             {
@@ -81,7 +83,25 @@ namespace TypeMeApi.Controllers
             }
             else
             {
-                return Ok(new Response { Status = "Success", Error = "User Registered" });
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                var stringChars = new char[6];
+                var random = new Random();
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                }
+                var finalString = new String(stringChars);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                var mailto = newUser.Email;
+                var messageBody = $"<p>Emaili təsdiqləmək üçün {finalString} bu rəqəmi  daxil   edin</p>" +
+                    $"</br><p>Qeydiyatı yalnız bir dəfə təsdiqləyə bilərsiz</p>";
+                var messageSubject = "Email Təsdiqləmə";
+                //***********     Send Message to Email     ***********
+                await Helper.SendMessage(messageSubject, messageBody, mailto);
+
+                return Ok(new { response = new Response { Status = "Success", Error = "User Registered" }, 
+                    confirmationstring = finalString, confirmationtoken = token });
             }
 
         }
@@ -115,8 +135,8 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = user,
-                }) ;
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email }
+                });
             }
             return Unauthorized(new Response { Status = "Error", Error = "Email or Password Wrong" });
         }

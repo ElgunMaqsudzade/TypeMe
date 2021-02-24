@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace TypeMeApi.Identity
+namespace Entity.Entities
 {
-    public class AppUser:IdentityUser
+    public class AppUser:IdentityUser,IEntity
     {
         [Required]
         public string Name { get; set; }

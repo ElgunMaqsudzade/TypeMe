@@ -1,7 +1,7 @@
 using Business.Abstract;
 using Business.Concret;
 using DataAccess.Abstract;
-using DataAccess.Abstract.Concret;
+using DataAccess.Concret;
 using Entity.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -20,8 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TypeMeApi.DAL;
-using TypeMeApi.Identity;
 
 namespace TypeMeApi
 {
@@ -43,7 +41,8 @@ namespace TypeMeApi
             });
             services.AddScoped<IStudentService,StudentManager>();
             services.AddScoped<IStudentDAL,EFStudentDAL>();
-            services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
+            services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<IAppUserDal, EFAppUserDal>();
             services.AddControllers();
             services.AddIdentity<AppUser, IdentityRole>(identityOptions =>
             {
@@ -56,7 +55,7 @@ namespace TypeMeApi
                 identityOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 identityOptions.User.RequireUniqueEmail = true;
                 identityOptions.SignIn.RequireConfirmedEmail = true;
-            }).AddEntityFrameworkStores<MyIdentityDbContext>().AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
