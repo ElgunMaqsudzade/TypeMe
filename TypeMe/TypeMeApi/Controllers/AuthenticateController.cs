@@ -1,5 +1,4 @@
-﻿using Entity.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TypeMeApi.Extentions;
+using TypeMeApi.Identity;
 using TypeMeApi.ToDoItems;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,10 +24,13 @@ namespace TypeMeApi.Controllers
     //[Authorize]
     public class AuthenticateController : ControllerBase
     {
+        
         private readonly UserManager<AppUser> _userManager;
         public IConfiguration Configuration { get; }
+
         public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration)
         {
+            
             _userManager = userManager;
             Configuration = configuration;
         }
@@ -100,8 +103,12 @@ namespace TypeMeApi.Controllers
                 //***********     Send Message to Email     ***********
                 await Helper.SendMessage(messageSubject, messageBody, mailto);
 
-                return Ok(new { response = new Response { Status = "Success", Error = "User Registered" }, 
-                    confirmationstring = finalString, confirmationtoken = token });
+                return Ok(new
+                {
+                    response = new Response { Status = "Success", Error = "User Registered" },
+                    confirmationstring = finalString,
+                    confirmationtoken = token
+                });
             }
 
         }

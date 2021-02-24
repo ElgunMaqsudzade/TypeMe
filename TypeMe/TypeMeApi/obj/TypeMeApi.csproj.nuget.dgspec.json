@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj": {}
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj",
         "projectName": "Business",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -31,11 +31,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj"
               },
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj"
               }
             }
           }
@@ -72,9 +72,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -83,14 +80,14 @@
         }
       }
     },
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -122,10 +119,6 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[3.1.11, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.11, )"
@@ -160,14 +153,14 @@
         }
       }
     },
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -187,11 +180,11 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj"
               },
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj"
               }
             }
           }
@@ -206,14 +199,6 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[3.1.11, )"
-            },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[3.1.11, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.11, )"
@@ -240,9 +225,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
@@ -251,14 +233,14 @@
         }
       }
     },
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -278,8 +260,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj"
               }
             }
           }
@@ -295,10 +277,6 @@
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Http.Features": {
-              "target": "Package",
-              "version": "[3.1.11, )"
-            },
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.11, )"
             },
@@ -336,14 +314,14 @@
         }
       }
     },
-    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
         "projectName": "TypeMeApi",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -363,17 +341,17 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj"
               },
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj"
               },
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj"
               },
-              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj"
               }
             }
           }

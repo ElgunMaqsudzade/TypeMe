@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace Core.Repository.EFRepository
 {
     public class EFEntityRepositoryBase<TEntity, IContext> : IEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
-        where IContext : IdentityDbContext, new()
+        where IContext : DbContext, new()
     {
         public TEntity Get(Expression<Func<TEntity, bool>> filter = null)
         {
