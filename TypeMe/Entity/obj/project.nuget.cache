@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MpalUgxpR9VX/gvJ2vlG+hNB+ce8q0IBrKZ5vOgp/I2oyeKhDk8Y6KMeR/49IOIYlypKrkqVFkJwhmzm/UVv4w==",
+  "dgSpecHash": "mVz3AOPun2iO8iIzyGAOFfKYb7mOgEWe0BgrmsRa/8X/HF6EhEL/2x7G3qFUqjUmMdE3AkTO5OQ6KDHOqLBycQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj",
+  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.aspnetcore.http.features\\3.1.11\\microsoft.aspnetcore.http.features.3.1.11.nupkg.sha512",
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Z6K4iZRl4FmtrM70CHmnS7csN4CiiZ8EskjbtxzcbaaMs4hr8fCwxmABQrpQ8Z2qqE01RfoLVYNiDFmqm+vZQg==",
+  "dgSpecHash": "Q+oAOgGDpsZZQpmBdQJMtWLmA7Ld18TQnm/Ahkz+E9G5zEO8UPZ0OikvoKLU2NnDsww+/z6nr15ulobVlROVPg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj",
+  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.1\\microsoft.bcl.hashcode.1.1.1.nupkg.sha512",

@@ -107,7 +107,7 @@ namespace TypeMeApi.Controllers
                 {
                     response = new Response { Status = "Success", Error = "User Registered" },
                     confirmationstring = finalString,
-                    confirmationtoken = token
+                    confirmationtoken = token.ToString()
                 });
             }
 
@@ -142,22 +142,22 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email }
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,user.EmailConfirmed }
+                    
                 });
             }
             return Unauthorized(new Response { Status = "Error", Error = "Email or Password Wrong" });
         }
         [HttpPost]
         [Route("verifyemail")]
-        public async Task<ActionResult> VerifyEmail([FromBody] string email, string token)
+        public async Task<ActionResult> VerifyEmail([FromBody] Verify EmailToken)
         {
-            if (email == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "bele bir email yoxdur" });
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(EmailToken.Email);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "bele bir emailli user yoxdur" });
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
-                var result = await _userManager.ConfirmEmailAsync(user, token);
+                var result = await _userManager.ConfirmEmailAsync(user, EmailToken.Token);
                 if (result.Succeeded)
                 {
                     return Ok();

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {}
+    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -77,14 +77,14 @@
         }
       }
     },
-    "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
+    "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj",
+        "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj",
         "projectName": "Entity",
-        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj",
+        "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj",
         "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\obj\\",
+        "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -104,8 +104,8 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj"
+              "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj"
               }
             }
           }
