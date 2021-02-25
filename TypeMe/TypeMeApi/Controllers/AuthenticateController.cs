@@ -109,7 +109,7 @@ namespace TypeMeApi.Controllers
                 $"</br></br><span style='padding: 8px 16px 8px 16px;background-color: #dce1e6;text-align: center;border-radius: 7px;'>{finalString} </span></div>";
                 var messageSubject = "Account Confrim";
                 //***********     Send Message to Email     ***********
-                await Helper.SendMessage(messageSubject, messageBody, mailto);
+                await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
 
 
 
@@ -159,7 +159,7 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email, user.EmailConfirmed }
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email }
 
                 });
             }
@@ -205,12 +205,56 @@ namespace TypeMeApi.Controllers
         public async Task Delete([FromBody] Delete delete)
         {
 
-            AppUser user = await _userManager.FindByEmailAsync(delete.email); 
-            if(user.EmailConfirmed == false)
-                {
+            AppUser user = await _userManager.FindByEmailAsync(delete.Email);
+            if (user.EmailConfirmed == false)
+            {
                 await _userManager.DeleteAsync(user);
                 await _userManager.UpdateAsync(user);
             }
+        }
+        [HttpPost]
+        [Route("foremailrp")]
+        public async Task<IActionResult> ForEmailRP([FromBody] EmailResetPassword emailResetPassword )
+        {
+            AppUser user = await _userManager.FindByEmailAsync(emailResetPassword.Email);
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var stringChars = new char[6];
+            var random = new Random();
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            var resetToken = new String(stringChars);
+            var mailto = emailResetPassword.Email;
+            var messageBody = $"<div><h3>Hello {user.Name}</h3>" +
+                $"</br> <p>We received a request to reset password your Typeme account.</p>"
+                + $"<p>Enter the following password reset code: </p>" +
+            $"</br></br><span style='padding: 8px 16px 8px 16px;background-color: #dce1e6;text-align: center;border-radius: 7px;'>{resetToken} </span></div>";
+            var messageSubject = "Account Confrim";
+            //***********     Send Message to Email     ***********
+            await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
+            return Ok(new
+            {
+                response = new Response { Status = "Success", Error = "Message sent for you change  password of account" },
+                confirmationstring = resetToken,
+            });
+        }
+
+        [HttpPost]
+        [Route("resetpassword")]
+        public async Task<ActionResult> ResetPassword([FromBody] ResetPassword resetPassword)
+        {
+            AppUser user = await _userManager.FindByIdAsync(resetPassword.Email);
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
+
+            IdentityResult identityResult = await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), resetPassword.Password);
+            if (!identityResult.Succeeded)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. You can't change  password of account" });
+            }
+
+            return Ok(new Response { Status = "Ok", Error = "You change  password of account" });
         }
     }
 }

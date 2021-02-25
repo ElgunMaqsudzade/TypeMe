@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace TypeMeApi.ToDoItems
 {
-    public class Delete
+    public class ResetPassword
     {
         public string Email { get; set; }
+        public string Password { get; set; }
     }
 }
