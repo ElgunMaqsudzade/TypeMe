@@ -1,23 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import Login from "../components/login";
 import Register from "../components/register";
-import { useGlobalContext } from "./../components/context";
-import axios from "axios";
 
 const LoginRegister = () => {
-  const {} = useGlobalContext();
-  const RegisterSubmitHandler = (user) => {
-    console.log(user);
-    axios
-      .post("http://jrcomerun-001-site1.ftempurl.com/api/authenticate/register", user)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   return (
     <section className="login-register">
       <div className="row">
@@ -37,7 +22,7 @@ const LoginRegister = () => {
               <Login />
             </div>
             <div className="register-box">
-              <Register RegisterSubmitHandler={RegisterSubmitHandler} />
+              <Register />
             </div>
           </div>
         </div>

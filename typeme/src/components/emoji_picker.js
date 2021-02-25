@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Picker from "emoji-picker-react";
 import { useGlobalContext } from "./../components/context";
 
 const App = () => {
   const { setCreateText, createText } = useGlobalContext();
 
-  const onEmojiClick = (event, emojiObject) => {
+  const onEmojiClick = (emojiObject) => {
     setCreateText(createText + `&#x${emojiObject.unified};`);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import ContentEditable from "react-contenteditable";
 import { useGlobalContext } from "./../components/context";
 
@@ -19,7 +19,9 @@ function Textarea({ placeholder, setShowSubmit, showSubmit }) {
           onFocus={FocusHandler}
           onChange={() => setCreateText(textarea.current.innerText)}
         />
-        {!createText && <div className={`placeholder ${showSubmit ? "focus" : ""}`}>{placeholder}</div>}
+        {!createText && (
+          <div className={`placeholder ${showSubmit ? "focus" : ""}`}>{placeholder}</div>
+        )}
       </div>
     </>
   );

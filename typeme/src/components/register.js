@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../sass/_register.scss";
 import DatePicker from "react-date-picker";
 import { Icon20CalendarOutline, Icon16Cancel } from "@vkontakte/icons";
-function Register({ RegisterSubmitHandler }) {
+function Register() {
   const [birthday, setBirthday] = useState(null);
   const [user, setUser] = useState({
     name: null,
@@ -20,13 +20,19 @@ function Register({ RegisterSubmitHandler }) {
         birthday: `${birthday.getDate()}-${birthday.getMonth() + 1}-${birthday.getFullYear()}`,
       });
     }
-  }, [birthday]);
+  }, [user, birthday]);
   let date = new Date();
   date.setFullYear(date.getFullYear() - 100);
+
+  const RegisterSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(user);
+  };
+
   return (
     <div className="register">
       <h4 className="register-title">Sign up for VK</h4>
-      <form className="register-form">
+      <form className="register-form" onSubmit={RegisterSubmitHandler}>
         <input
           type="text"
           className="reg-inp"
@@ -88,13 +94,7 @@ function Register({ RegisterSubmitHandler }) {
           />
           <label htmlFor="female">Female</label>
         </div>
-        <button
-          className="login-btn btn-success"
-          type="button"
-          onClick={() => RegisterSubmitHandler(user)}
-        >
-          Continue registration
-        </button>
+        <button className="login-btn btn-success">Continue registration</button>
       </form>
     </div>
   );

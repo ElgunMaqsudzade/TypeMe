@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "./components/navbar";
 import LSidebar from "./components/l_sidebar";
 import RSidebar from "./components/r_sidebar";
@@ -9,10 +9,12 @@ import Error from "./pages/error";
 import LoginRegister from "./pages/login_register";
 
 function App() {
+  const store = JSON.parse(localStorage.getItem("login"));
   return (
     <>
       <div className="page">
         <Router>
+          {!store || !store.logined ? <Redirect to="/" /> : null}
           <Switch>
             <Route exact path="/feed">
               <div className="page_header">

@@ -9,8 +9,11 @@
     "@vkontakte/icons": "^1.75.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "email-validator": "^2.0.4",
     "emoji-picker-react": "^3.4.2",
+    "formik": "^2.2.6",
     "node-sass": "^4.14.1",
+    "proxy": "http://jrcomerun-001-site1.ftempurl.com",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-contenteditable": "^3.3.5",
@@ -19,7 +22,8 @@
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",

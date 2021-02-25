@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoIosReturnLeft } from "react-icons/io";
 import Image from "../images/error.png";
 const Error = () => {

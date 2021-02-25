@@ -13,8 +13,8 @@ import {
   Icon12Dropdown,
 } from "@vkontakte/icons";
 
-const CreatePost = ({ logo }) => {
-  const { setCreateText, createText } = useGlobalContext();
+const CreatePost = () => {
+  const { setCreateText, createText, user } = useGlobalContext();
   const [showSubmit, setShowSubmit] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showPostSecurity, setShowPostSecurity] = useState(false);
@@ -35,13 +35,20 @@ const CreatePost = ({ logo }) => {
           <div className="profile">
             <Link to="/profile">
               <div className="profile-link">
-                <img src={logo} alt="" />
+                <img
+                  src={user.image ? require(`../images/user/${user.image}`).default : null}
+                  alt=""
+                />
               </div>
             </Link>
           </div>
           <div className="create-body">
             <div className="create-text-box">
-              <Textarea setShowSubmit={setShowSubmit} showSubmit={showSubmit} placeholder={"What's new?"} />
+              <Textarea
+                setShowSubmit={setShowSubmit}
+                showSubmit={showSubmit}
+                placeholder={"What's new?"}
+              />
             </div>
             <div className="text-smile">
               {showSubmit && <Icon20SmileOutline />}

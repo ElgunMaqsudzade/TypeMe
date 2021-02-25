@@ -36,6 +36,8 @@
       }
     }
     .forgot {
+      background: white;
+      border: none;
       color: $clr-main-blue;
       &:hover {
         text-decoration: underline !important;

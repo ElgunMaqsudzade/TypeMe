@@ -81,11 +81,82 @@
         flex-grow: 1;
       }
       .account {
+        position: relative;
+        background-color: white;
+        border: none;
         padding-left: 10px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+        .settings {
+          min-width: 206px;
+          max-width: 230px;
+          width: auto;
+          border-radius: 4;
+          background-color: white;
+          display: flex;
+          flex-direction: column;
+          border: 1px solid #c5d0db;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+          padding: 4px 0;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          width: 100%;
+          top: 48px;
+          right: 0;
+          position: absolute;
+          .divider {
+            margin: 4px 13px;
+            border-top: 1px solid #c5d0db;
+          }
+          .setting-items {
+            width: 100%;
+            padding: 0 15px;
+            text-align: left;
+            cursor: pointer;
+            height: 30px;
+            line-height: 30px;
+            color: #2a5885;
+            &:hover {
+              background-color: $clr-hover-blue;
+            }
+          }
+          .user-profile {
+            padding: 8px 15px 8px;
+            align-items: center;
+            height: auto;
+            display: flex;
+            .to-profile {
+              width: 100%;
+              display: flex;
+            }
+            .user-info {
+              max-width: 165px;
+              .user-name {
+                margin-bottom: 2px;
+                font-size: 13px;
+                line-height: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+              .user-descr {
+                font-size: 12px;
+                line-height: 14px;
+                color: $clr-grey;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+            }
+            .thumbnail {
+              overflow: hidden;
+              margin-right: 9px;
+              width: 34px;
+              height: 34px;
+              border-radius: 50%;
+            }
+          }
+        }
         .account-image {
           width: 32px;
           border-radius: 50%;
