@@ -24,13 +24,13 @@ namespace TypeMeApi.Controllers
     //[Authorize]
     public class AuthenticateController : ControllerBase
     {
-        
+
         private readonly UserManager<AppUser> _userManager;
         public IConfiguration Configuration { get; }
 
         public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration)
         {
-            
+
             _userManager = userManager;
             Configuration = configuration;
         }
@@ -46,10 +46,6 @@ namespace TypeMeApi.Controllers
         public async Task<ActionResult<AppUser>> Get(string email)
         {
             AppUser user = await _userManager.FindByEmailAsync(email);
-            //if (user == null)
-            //{
-            //    return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "user for This Email was'nt Exists" });
-            //}
             return user;
         }
 
@@ -62,11 +58,21 @@ namespace TypeMeApi.Controllers
             AppUser appUser = await _userManager.FindByEmailAsync(register.Email);
             if (appUser != null)
             {
-                return StatusCode(StatusCodes.Status403Forbidden,
-                    new Response { Status = "Error", Error = "This Email Already Exists" });
+                if (appUser.EmailConfirmed == true)
+                {
+                    return StatusCode(StatusCodes.Status403Forbidden,
+                   new Response { Status = "Error", Error = "This email already exists." });
+                }
+                else
+                {
+                    AppUser user = await _userManager.FindByEmailAsync(register.Email);
+                    await _userManager.DeleteAsync(user);
+                    await _userManager.UpdateAsync(user);
+                }
+
             }
 
-            var birthday = DateTime.Parse(register.Birthday);
+            var birthday = DateTime.ParseExact(register.Birthday, "d-M-yyyy", null);
             string loginId = Guid.NewGuid().ToString("N");
             AppUser newUser = new AppUser()
             {
@@ -97,11 +103,15 @@ namespace TypeMeApi.Controllers
 
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                 var mailto = newUser.Email;
-                var messageBody = $"<p>Emaili təsdiqləmək üçün {finalString} bu rəqəmi  daxil   edin</p>" +
-                    $"</br><p>Qeydiyatı yalnız bir dəfə təsdiqləyə bilərsiz</p>";
-                var messageSubject = "Email Təsdiqləmə";
+                var messageBody = $"<div><h3>Hello {newUser.Name}</h3>" +
+                    $"</br> <p>We received a request to confirm your Typeme account.</p>"
+                    + $"<p>Enter the following password reset code: </p>" +
+                $"</br></br><span style='padding: 8px 16px 8px 16px;background-color: #dce1e6;text-align: center;border-radius: 7px;'>{finalString} </span></div>";
+                var messageSubject = "Account Confrim";
                 //***********     Send Message to Email     ***********
                 await Helper.SendMessage(messageSubject, messageBody, mailto);
+
+
 
                 return Ok(new
                 {
@@ -109,6 +119,7 @@ namespace TypeMeApi.Controllers
                     confirmationstring = finalString,
                     confirmationtoken = token.ToString()
                 });
+
             }
 
         }
@@ -130,6 +141,12 @@ namespace TypeMeApi.Controllers
                 {
                     authClaim.Add(new Claim(ClaimTypes.Role, role));
                 }
+                if (user.EmailConfirmed == false)
+                {
+                    await _userManager.DeleteAsync(user);
+                    await _userManager.UpdateAsync(user);
+                    return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "Your account wasn't confirmed." });
+                }
                 var signInKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
                 var token = new JwtSecurityToken(
                     issuer: Configuration["JWT:ValidIssuer"],
@@ -142,47 +159,58 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,user.EmailConfirmed }
-                    
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email, user.EmailConfirmed }
+
                 });
             }
-            return Unauthorized(new Response { Status = "Error", Error = "Email or Password Wrong" });
+            else
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "Email or password wrong." });
+            }
+
         }
         [HttpPost]
         [Route("verifyemail")]
         public async Task<ActionResult> VerifyEmail([FromBody] Verify EmailToken)
         {
             var user = await _userManager.FindByEmailAsync(EmailToken.Email);
-            if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "bele bir emailli user yoxdur" });
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
 
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 var result = await _userManager.ConfirmEmailAsync(user, EmailToken.Token);
                 if (result.Succeeded)
                 {
-                    return Ok();
+                    return Ok(new Response { Status = "Ok", Error = "It is verified." });
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "verify ede bilmedin" });
+                    return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. Account wasn't verified." });
                 }
 
             }
             else
             {
-                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "bu email artiq verify olub" });
+                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. Account wasn't verified." });
             }
         }
         // PUT api/<AuthenticateController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
-        }
 
+        }
         // DELETE api/<AuthenticateController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{email}")]
+        public async Task Delete([FromBody] Delete delete)
         {
+
+            AppUser user = await _userManager.FindByEmailAsync(delete.email); 
+            if(user.EmailConfirmed == false)
+                {
+                await _userManager.DeleteAsync(user);
+                await _userManager.UpdateAsync(user);
+            }
         }
     }
 }

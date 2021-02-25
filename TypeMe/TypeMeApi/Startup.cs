@@ -51,7 +51,7 @@ namespace TypeMeApi
                 identityOptions.Password.RequiredLength = 6;
                 identityOptions.Password.RequireNonAlphanumeric = false;
                 identityOptions.Password.RequireUppercase = true;
-                identityOptions.Lockout.MaxFailedAccessAttempts = 3;
+                identityOptions.Lockout.MaxFailedAccessAttempts = 10;
                 identityOptions.Lockout.AllowedForNewUsers = false;
                 identityOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 identityOptions.User.RequireUniqueEmail = true;
