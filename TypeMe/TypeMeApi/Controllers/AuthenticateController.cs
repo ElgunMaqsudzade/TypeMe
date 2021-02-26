@@ -77,6 +77,7 @@ namespace TypeMeApi.Controllers
             AppUser newUser = new AppUser()
             {
                 Email = register.Email,
+                Image="default.png",
                 Name = register.Name,
                 UserName = loginId,
                 Surname = register.Surname,
