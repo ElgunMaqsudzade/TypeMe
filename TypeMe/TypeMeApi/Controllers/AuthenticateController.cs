@@ -237,8 +237,8 @@ namespace TypeMeApi.Controllers
             await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
             return Ok(new
             {
-                response = new Response { Status = "Success", Error = "Message sent for you change  password of account" },
                 confirmationstring = resetToken,
+                resettoken= await _userManager.GeneratePasswordResetTokenAsync(user),
             });
         }
 
@@ -246,16 +246,16 @@ namespace TypeMeApi.Controllers
         [Route("resetpassword")]
         public async Task<ActionResult> ResetPassword([FromBody] ResetPassword resetPassword)
         {
-            AppUser user = await _userManager.FindByIdAsync(resetPassword.Email);
+            AppUser user = await _userManager.FindByEmailAsync(resetPassword.Email);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
 
-            IdentityResult identityResult = await _userManager.ResetPasswordAsync(user, await _userManager.GeneratePasswordResetTokenAsync(user), resetPassword.Password);
+            IdentityResult identityResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
             if (!identityResult.Succeeded)
             {
-                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. You can't change  password of account" });
+                return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. You can't change  password of this account" });
             }
 
-            return Ok(new Response { Status = "Ok", Error = "You change  password of account" });
+            return Ok();
         }
     }
 }
