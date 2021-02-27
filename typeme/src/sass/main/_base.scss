@@ -76,6 +76,7 @@ input {
     outline: none;
   }
 }
+
 .page_layout {
   padding-top: 64px;
 }
@@ -86,5 +87,13 @@ button {
   background: var(--white);
   border-radius: 4px;
   box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 1px $clr-s-card-grey;
-  margin: 15px 0 0;
+  margin-bottom: 15px;
+}
+.modal-box {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25));
+  position: absolute;
 }

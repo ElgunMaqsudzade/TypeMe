@@ -7,6 +7,8 @@ import News from "./pages/news";
 import Profile from "./pages/profile";
 import Error from "./pages/error";
 import LoginRegister from "./pages/login_register";
+import Messenger from "./pages/messenger";
+import Friends from "./pages/friends";
 
 function App() {
   const store = JSON.parse(localStorage.getItem("login"));
@@ -50,6 +52,39 @@ function App() {
                       </div>
                       <div className="col-8">
                         <Profile />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Route>
+            <Route exact path="/messenger">
+              <div className="page_header">
+                <Navbar />
+              </div>
+              <div className="container page_layout">
+                <div className="row">
+                  <LSidebar />
+                  <div className="col-9 offset-3">
+                    <Messenger />
+                  </div>
+                </div>
+              </div>
+            </Route>
+            <Route exact path="/friends">
+              <div className="page_header">
+                <Navbar />
+              </div>
+              <div className="container page_layout">
+                <div className="row">
+                  <LSidebar />
+                  <div className="col-9 offset-3">
+                    <div className="row">
+                      <div className="col-8">
+                        <Friends />
+                      </div>
+                      <div className="col-4">
+                        <RSidebar />
                       </div>
                     </div>
                   </div>

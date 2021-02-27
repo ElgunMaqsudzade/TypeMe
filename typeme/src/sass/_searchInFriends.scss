@@ -1,0 +1,78 @@
+@import "./main/variables";
+.search-bar {
+  position: relative;
+  border-bottom: 1px solid $clr-s-card-grey;
+  .search-inp {
+    padding: 14px 60px;
+    width: 100%;
+    border: 0;
+    &::placeholder {
+      transition: all 0.2s;
+      opacity: 0.8;
+    }
+    &:focus::placeholder {
+      opacity: 0.5;
+    }
+  }
+  .search-icon {
+    position: absolute;
+    color: $clr-grey;
+    opacity: 0.8;
+    top: 50%;
+    left: 32px;
+    transform: translateY(-50%);
+  }
+  .search-settings {
+    top: 50%;
+    transform: translateY(-50%);
+    right: 37px;
+    position: absolute;
+    .settings-title {
+      background-color: transparent;
+      border: none;
+      color: $clr-dark-blue;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .settings {
+      top: 30px;
+      right: -25px;
+      background-color: white;
+      border: 1px solid #c5d0db;
+      padding: 14px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      width: 232px;
+      position: absolute;
+      .setting-item {
+        .title {
+          cursor: default;
+          padding-bottom: 9px;
+        }
+      }
+      .setting-item.gender {
+        .radio-item {
+          text-transform: capitalize;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+          input {
+            margin-right: 7px;
+          }
+          label {
+            margin: 0;
+          }
+        }
+      }
+      .arrow-up {
+        position: absolute;
+        top: -12px;
+        right: 31px;
+        font-size: 19px;
+        color: #c5d0db;
+      }
+    }
+  }
+}

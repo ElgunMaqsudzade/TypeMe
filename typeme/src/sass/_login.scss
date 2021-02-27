@@ -44,4 +44,11 @@
       }
     }
   }
+  .login-error {
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    color: #ad4547;
+  }
 }

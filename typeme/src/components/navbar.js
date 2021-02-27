@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useGlobalContext } from "./context";
 import useOutsideClick from "../components/customHooks/showHide";
 import logo from "../images/logo.png";
@@ -11,17 +11,18 @@ import {
 } from "@vkontakte/icons";
 const Navbar = () => {
   const history = useHistory();
-  const { user, setOldUsers } = useGlobalContext();
+  const { user, HandleOldUsers } = useGlobalContext();
   const [showSettings, setShowSettings] = useState(null);
 
   const LogoutHandler = () => {
-    localStorage.removeItem("login");
-    setOldUsers({
-      email: user.email,
-      image: user.image,
-      name: user.name,
-      surname: user.surname,
+    const { email, image, name, surname } = user;
+    HandleOldUsers({
+      email: email,
+      image: image,
+      name: name,
+      surname: surname,
     });
+    localStorage.removeItem("login");
     history.push("/");
   };
 
@@ -61,7 +62,7 @@ const Navbar = () => {
               <div className="account-title">{user.name}</div>
               <div className="account-image">
                 <img
-                  src={user.image ? require(`../images/user/${user.image}`).default : null}
+                  src={user.image && require(`../images/user/${user.image}`).default}
                   alt=""
                   className="img-fluid"
                 />
@@ -73,7 +74,7 @@ const Navbar = () => {
                     <Link to="/profile" className="to-profile">
                       <div className="thumbnail">
                         <img
-                          src={user.image ? require(`../images/user/${user.image}`).default : null}
+                          src={user.image && require(`../images/user/${user.image}`).default}
                           alt=""
                         />
                       </div>

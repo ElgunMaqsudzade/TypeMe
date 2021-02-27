@@ -11,6 +11,40 @@
   .title.no-users {
     margin-top: 100px;
   }
+  .users {
+    display: flex;
+    .old-user {
+      margin: 0 5px 10px;
+      padding: 34px 39px 84px;
+      border: 1px solid rgba(0, 20, 51, 0.12);
+      border-radius: 4px;
+      box-shadow: 0 1px 1px $clr-f-card-grey, 0 2px 4px $clr-s-card-grey;
+      width: 180px;
+      height: 220px;
+      position: relative;
+      .close-icon {
+        cursor: pointer;
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        opacity: 0.6;
+        color: $clr-grey;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .image-holder {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 50%;
+      }
+      .name-box {
+        position: absolute;
+        bottom: 40px;
+      }
+    }
+  }
   .content {
     font-weight: 500;
     width: 500px;
@@ -26,6 +60,203 @@
     flex-direction: column;
     .register-box {
       margin: 30px 0 20px 0;
+    }
+  }
+  .verify-box {
+    top: 40%;
+    left: 50%;
+    padding: 18px 16px 18px 18px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px $clr-f-card-grey, $clr-s-card-grey;
+    margin: auto;
+    width: 500px;
+    background-color: white;
+    hr {
+      margin: 10px 0;
+    }
+    .verify-title {
+      font-size: 20px;
+      line-height: 24px;
+      font-weight: 700;
+    }
+    .verify-dscr {
+      font-size: 17px;
+      line-height: 20px;
+      margin-bottom: 20px;
+    }
+
+    .verify-body {
+      display: flex;
+      margin-bottom: 20px;
+      .verify-inp {
+        text-transform: uppercase;
+        font-size: 16px;
+        width: 230px;
+        margin-right: 20px;
+        padding: 6px 12px 8px;
+        border-radius: 3px;
+        border: 1px solid $clr-f-card-grey;
+        &::placeholder {
+          font-size: 14px;
+          transition: all 0.1s;
+        }
+        &:focus::placeholder {
+          color: #b2b2b2;
+        }
+      }
+      .verify-info {
+        .info {
+          font-size: 15px;
+          line-height: 20px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    .verify-footer {
+      display: flex;
+      justify-content: space-between;
+      .re-send-box {
+        line-height: 40px;
+        .re-send {
+          cursor: pointer;
+          margin: 0;
+          background: white;
+          border: none;
+          color: $clr-main-blue;
+          &:hover {
+            text-decoration: underline !important;
+          }
+        }
+      }
+      .verify-submit {
+        .submit-btn {
+          margin-right: 20px;
+          margin-top: 5px;
+          border-radius: 3px;
+          font-size: 14px;
+          line-height: 20px;
+          width: 100px;
+          text-align: center;
+          background-color: $clr-main-blue;
+          border: none;
+          color: white;
+          padding: 7px 16px 8px;
+          &:hover {
+            opacity: 0.88;
+          }
+        }
+        .cancel-btn {
+          margin-top: 5px;
+          border-radius: 3px;
+          font-size: 14px;
+          line-height: 20px;
+          width: 100px;
+          text-align: center;
+          background-color: #e4e6eb;
+          border: none;
+          color: #4b4f56;
+          padding: 7px 16px 8px;
+          &:hover {
+            opacity: 0.88;
+          }
+        }
+      }
+    }
+  }
+  .verify-error {
+    background: $clr-error-background;
+    border: 1px solid $clr-error-border;
+    margin: 0;
+    margin-bottom: 10px;
+    color: white;
+    padding: 9px 10px;
+  }
+  .shortLogin-box .verify-error {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 400px;
+  }
+  .shortLogin-box {
+    border-radius: 4px;
+    background-color: white;
+    width: 450px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    padding: 44px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .image-holder {
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    .close-icon {
+      cursor: pointer;
+      position: absolute;
+      top: 25px;
+      right: 21px;
+      opacity: 0.6;
+      color: $clr-grey;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    .name-box {
+      margin-bottom: 25px;
+      font-size: 16px;
+    }
+    .submit-btn {
+      margin-right: 40px;
+      margin-top: 5px;
+      border-radius: 3px;
+      font-size: 14px;
+      line-height: 20px;
+      width: 100px;
+      text-align: center;
+      background-color: $clr-main-blue;
+      border: none;
+      color: white;
+      padding: 7px 16px 8px;
+      &:hover {
+        opacity: 0.88;
+      }
+    }
+    .forgot-btn {
+      background: white;
+      border: none;
+      color: $clr-main-blue;
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+    .login-inp {
+      margin-bottom: 15px;
+      padding: 6px 12px 8px;
+      border-radius: 3px;
+      width: 100%;
+      border: 1px solid $clr-f-card-grey;
+      &::placeholder {
+        font-size: 14px;
+        transition: all 0.1s;
+      }
+      &:focus::placeholder {
+        color: #b2b2b2;
+      }
+    }
+    .shortlogin-error {
+      top: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+      color: #ad4547;
     }
   }
 }

@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+const Reducer = (state, action) => {
   const { payload, type } = action;
   if (type === "CREATE_TEXT") {
     return { ...state, createText: payload };
@@ -6,11 +6,10 @@ const reducer = (state, action) => {
   if (type === "USER_DATA") {
     return { ...state, user: payload };
   }
-  if (type === "OLD_USERS") {
-    localStorage.setItem("oldusers", JSON.stringify(localStorage.getItem("oldusers") + payload));
-    return { ...state };
+  if (type === "USER_DATA") {
+    return { ...state, user: payload };
   }
 
   return state;
 };
-export default reducer;
+export default Reducer;

@@ -1,0 +1,96 @@
+.friends-top {
+  position: relative;
+  border-bottom: 1px solid $clr-s-card-grey;
+  font-size: 14px;
+  padding: 0 10px;
+  display: flex;
+  .friends-top-item {
+    text-align: center;
+    cursor: pointer;
+    margin: 0 4px -1px;
+    min-width: 120px;
+    padding: 18px 6px 20px;
+    opacity: 0.8;
+    .friends-count {
+      margin-left: 10px;
+      opacity: 0.5;
+    }
+    &:hover {
+      border-bottom: 2px solid rgba(81, 129, 184, 0.4);
+    }
+  }
+  .friends-top-item.selected {
+    opacity: 1;
+    border-bottom: 2px solid $clr-main-blue;
+  }
+  .find-friends {
+    position: absolute;
+    top: 50%;
+    color: white;
+    right: 20px;
+    transform: translateY(-50%);
+    padding: 4px 15px;
+    text-align: center;
+    background-color: $clr-main-blue;
+    border: 0;
+    border-radius: 4px;
+    font-size: 12.5px;
+  }
+}
+.friends-list {
+  padding: 0 20px;
+  .friend {
+    border-bottom: 1px solid $clr-s-card-grey;
+    display: flex;
+    padding: 12px 0;
+    .image-holder {
+      width: 80px;
+      height: 80px;
+      margin-right: 15px;
+      img {
+        border-radius: 50%;
+      }
+      position: relative;
+      .check {
+        border: 3px solid white;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 5px;
+        right: 2px;
+      }
+      .check.offline {
+        background-color: $clr-grey;
+      }
+      .check.online {
+        background-color: green;
+      }
+    }
+    .friend-body {
+      display: flex;
+      flex-direction: column;
+      padding: 5px 10px 0 0;
+      .friend-name {
+        color: $clr-dark-blue;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 9px;
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+      .status {
+        font-size: 13px;
+        color: $clr-grey;
+        margin-bottom: 9px;
+      }
+      .send-message {
+        color: $clr-dark-blue;
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+}
