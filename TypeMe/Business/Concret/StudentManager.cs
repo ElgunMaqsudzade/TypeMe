@@ -31,15 +31,12 @@ namespace Business.Concret
 
         public void Update(Student student)
         {
-            _studentDal.Add(student);
+            _studentDal.Update(student);
         }
         public void Delete(int id)
         {
             _studentDal.Delete(new Student { Id = id });
         }
-
-       
-
         
     }
 }

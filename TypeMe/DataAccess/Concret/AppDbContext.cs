@@ -14,6 +14,8 @@ namespace DataAccess.Abstract.Concret
             optionsBuilder.UseSqlServer(@"Data Source = SQL5102.site4now.net; Initial Catalog = DB_A6F35F_jrcomerun; User Id = DB_A6F35F_jrcomerun_admin; Password = Lene1234");
         }
         public DbSet<Student> Students { get; set; }
-        
+        public DbSet<Status> Statuses { get; set; }
+        public DbSet<Friend> Friends { get; set; }
+
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DataAccess.Concret
 {
-    public class EFStudentDAL : EFEntityRepositoryBase<Student, AppDbContext>, IStudentDAL
+    public class EFFriendDal : EFEntityRepositoryBase<Friend, AppDbContext>, IFriendDal
     {
 
     }

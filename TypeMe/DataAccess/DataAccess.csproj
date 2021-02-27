@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210227100430_FriendAndStatusTables.cs" />
+    <Compile Remove="Migrations\20210227100430_FriendAndStatusTables.Designer.cs" />
+    <Compile Remove="Migrations\20210227101252_FriendAndStatusTables.cs" />
+    <Compile Remove="Migrations\20210227101252_FriendAndStatusTables.Designer.cs" />
+    <Compile Remove="Migrations\20210227101359_FriendAndStatusTables.cs" />
+    <Compile Remove="Migrations\20210227101359_FriendAndStatusTables.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">

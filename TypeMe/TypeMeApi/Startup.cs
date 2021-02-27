@@ -1,7 +1,7 @@
 using Business.Abstract;
 using Business.Concret;
 using DataAccess.Abstract;
-using DataAccess.Abstract.Concret;
+using DataAccess.Concret;
 using Entity.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +43,10 @@ namespace TypeMeApi
             });
             services.AddScoped<IStudentService,StudentManager>();
             services.AddScoped<IStudentDAL,EFStudentDAL>();
+            services.AddScoped<IFriendService, FriendManager>();
+            services.AddScoped<IFriendDal, EFFriendDal>();
+            services.AddScoped<IStatusService, StatusManager>();
+            services.AddScoped<IStatusDal, EFStatusDal>();
             services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddControllers();
             services.AddIdentity<AppUser, IdentityRole>(identityOptions =>
