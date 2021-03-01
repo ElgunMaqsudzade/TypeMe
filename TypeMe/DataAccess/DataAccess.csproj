@@ -5,12 +5,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210224151534_First.cs" />
+    <Compile Remove="Migrations\20210224151534_First.Designer.cs" />
     <Compile Remove="Migrations\20210227100430_FriendAndStatusTables.cs" />
     <Compile Remove="Migrations\20210227100430_FriendAndStatusTables.Designer.cs" />
     <Compile Remove="Migrations\20210227101252_FriendAndStatusTables.cs" />
     <Compile Remove="Migrations\20210227101252_FriendAndStatusTables.Designer.cs" />
     <Compile Remove="Migrations\20210227101359_FriendAndStatusTables.cs" />
     <Compile Remove="Migrations\20210227101359_FriendAndStatusTables.Designer.cs" />
+    <Compile Remove="Migrations\20210227101452_FriendAndStatusTables.cs" />
+    <Compile Remove="Migrations\20210227101452_FriendAndStatusTables.Designer.cs" />
+    <Compile Remove="Migrations\20210227135547_Frist.cs" />
+    <Compile Remove="Migrations\20210227135547_Frist.Designer.cs" />
+    <Compile Remove="Migrations\20210227140738_First.cs" />
+    <Compile Remove="Migrations\20210227140738_First.Designer.cs" />
+    <Compile Remove="Migrations\20210227143252_First.cs" />
+    <Compile Remove="Migrations\20210227143252_First.Designer.cs" />
+    <Compile Remove="Migrations\20210228111747_First.cs" />
+    <Compile Remove="Migrations\20210228111747_First.Designer.cs" />
+    <Compile Remove="Migrations\20210228124125_First.cs" />
+    <Compile Remove="Migrations\20210228124125_First.Designer.cs" />
+    <Compile Remove="Migrations\20210228124938_First.cs" />
+    <Compile Remove="Migrations\20210228124938_First.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +41,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

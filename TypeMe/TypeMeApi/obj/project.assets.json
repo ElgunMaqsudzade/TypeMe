@@ -1646,6 +1646,7 @@
         "dependencies": {
           "Core": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "3.1.11",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.11",
           "System.ComponentModel.Annotations": "5.0.0"
         },

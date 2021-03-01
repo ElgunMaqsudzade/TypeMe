@@ -9,6 +9,6 @@ namespace Entity.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual List<Friend> Friends { get; set; }
+        public virtual ICollection<Friend> Friends { get; set; }
     }
 }

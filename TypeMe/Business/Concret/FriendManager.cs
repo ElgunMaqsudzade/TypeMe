@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entity.Entities;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,33 +15,49 @@ namespace Business.Concret
         {
             _friendDal = friendDal;
         }
-
-        public FriendManager()
+        public List<Friend> GetFriends(string whoseId)
         {
+            //List<AppUser> appUsers = new List<AppUser>();
+            return _friendDal.GetAll(s => s.FromUserName == whoseId||s.ToUserName==whoseId);
+
         }
 
-        public List<Friend> GetStatuses()
+        public Friend GetFriendWithId(string whoseId, string whichId)
         {
-            return _friendDal.GetAll();
+            if(_friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId) != null)
+            {
+                return _friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+            }
+            else
+            {
+                return _friendDal.Get(s => s.ToUserName == whoseId && s.FromUserName == whichId);
+            }
+            
         }
 
-        public Friend GetStaWithId(int id)
+        public void Add(string from, string to,int statusId)
         {
-            return _friendDal.Get(s => s.Id == id);
-        }
-        public void Add(Friend friend)
-        {
+            Friend friend = new Friend
+            {
+                FromUserName = from,
+                ToUserName = to,
+                StatusId=statusId
+            };
             _friendDal.Add(friend);
         }
 
-        public void Delete(int id)
+        public void Delete(string from, string to)
         {
-             _friendDal.Delete(new Friend { Id = id });
+            if (_friendDal.Get(s => s.FromUserName == from && s.ToUserName == to) != null)
+            {
+                _friendDal.Delete(_friendDal.Get(s => s.FromUserName == from && s.ToUserName == to));
+            }
+            else if (_friendDal.Get(s => s.ToUserName == from && s.FromUserName == to) != null)
+            {
+                _friendDal.Delete(_friendDal.Get(s => s.ToUserName == from && s.FromUserName == to));
+            }
+
         }
 
-        public void Update(Friend friend)
-        {
-            _friendDal.Update(friend);
-        }
     }
 }

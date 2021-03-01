@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TypeMeApi.Identity;
 
 namespace TypeMeApi.DAL
 {
@@ -15,6 +14,6 @@ namespace TypeMeApi.DAL
         {
 
         }
-        public DbSet<AppUser> AppUsers { get; set; }
+        
     }
 }

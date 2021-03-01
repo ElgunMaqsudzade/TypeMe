@@ -7,10 +7,9 @@ namespace Business.Abstract
 {
     public interface IFriendService
     {
-        Friend GetStaWithId(int id);
-        List<Friend> GetStatuses();
-        void Add(Friend friend);
-        void Update(Friend friend);
-        void Delete(int id);
+        Friend GetFriendWithId(string whoseId,string whichId);
+        List<Friend> GetFriends(string whoseId);
+        void Add(string from,string to,int statusId);
+        void Delete(string from, string to);
     }
 }

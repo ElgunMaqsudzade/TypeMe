@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Entity.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using TypeMeApi.Extentions;
-using TypeMeApi.Identity;
 using TypeMeApi.ToDoItems;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -160,7 +160,7 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email }
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,user.UserName }
 
                 });
             }
@@ -202,8 +202,8 @@ namespace TypeMeApi.Controllers
 
         }
         // DELETE api/<AuthenticateController>/5
-        [HttpDelete("{email}")]
-        public async Task Delete([FromBody] Delete delete)
+        [HttpDelete("{delete}")]
+        public async Task Delete([FromBody] DeleteUser delete)
         {
 
             AppUser user = await _userManager.FindByEmailAsync(delete.Email);

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TypeMeApi.ToDoItems
 {
-    public class Delete
+    public class GetFriends
     {
-        public string Email { get; set; }
+        public string UserName { get; set; }
     }
 }

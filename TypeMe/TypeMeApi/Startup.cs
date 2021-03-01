@@ -21,7 +21,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TypeMeApi.DAL;
-using TypeMeApi.Identity;
 
 namespace TypeMeApi
 {
@@ -41,8 +40,6 @@ namespace TypeMeApi
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            services.AddScoped<IStudentService,StudentManager>();
-            services.AddScoped<IStudentDAL,EFStudentDAL>();
             services.AddScoped<IFriendService, FriendManager>();
             services.AddScoped<IFriendDal, EFFriendDal>();
             services.AddScoped<IStatusService, StatusManager>();
