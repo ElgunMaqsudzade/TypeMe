@@ -4,6 +4,7 @@ using Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Business.Concret
 {
@@ -14,27 +15,28 @@ namespace Business.Concret
         {
             _statusDal = statusDal;
         }
-        public List<Status> GetStatuses()
+        public async Task<List<Status>> GetStatuses()
         {
-            return _statusDal.GetAll();
+            return await _statusDal.GetAllAsync();
         }
 
-        public Status GetStaWithId(int id)
+        public async Task Add(Status status)
         {
-            return _statusDal.Get(s => s.Id == id);
-        }
-        public void Add(Status status)
-        {
-            _statusDal.Add(status);
+            await _statusDal.AddAsync(status);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _statusDal.Delete(new Status { Id = id });
+            await _statusDal.DeleteAsync(new Status { Id = id });
         }
-        public void Update(Status student)
+        public async Task Update(Status student)
         {
-            _statusDal.Update(student);
+            await _statusDal.UpdateAsync(student);
+        }
+
+        public async Task<Status> GetStaWithIdAsync(int id)
+        {
+            return await  _statusDal.GetAsync(s => s.Id == id);
         }
     }
 }

@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
     public interface IStatusService
     {
-        Status GetStaWithId(int id);
-        List<Status> GetStatuses();
-        void Add(Status status);
-        void Update(Status student);
-        void Delete(int id);
+        Task<Status> GetStaWithIdAsync(int id);
+        Task<List<Status>> GetStatuses();
+        Task Add(Status status);
+        Task Update(Status student);
+        Task Delete(int id);
     }
 }

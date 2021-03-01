@@ -61,27 +61,6 @@ namespace TypeMeApi.Controllers
         [Route("find")]
         public ActionResult Find([FromBody] GetUser getUser)
         {
-            if (getUser.Skip < 20)
-            {
-                List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key) && u.EmailConfirmed == true).Take(20).ToList();
-                List<UserToDo> users = new List<UserToDo>();
-                foreach (AppUser user in allUsers)
-                {
-                    UserToDo userToDo = new UserToDo
-                    {
-                        Email = user.Email,
-                        Name = user.Name,
-                        Surname = user.Surname,
-                        Image = user.Image,
-                        Username = user.UserName,
-                        Gender = user.Gender,
-                    };
-                    users.Add(userToDo);
-                }
-                return Ok(new { users });
-            }
-            else
-            {
                 List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).Skip(getUser.Skip).Take(20).ToList();
                 List<UserToDo> users = new List<UserToDo>();
                 foreach (AppUser user in allUsers)
@@ -97,8 +76,7 @@ namespace TypeMeApi.Controllers
                     };
                     users.Add(userToDo);
                 }
-                return Ok(new { users });
-            }
+                return Ok(new { users , usersCount = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).ToList().Count() });
             
         }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Business.Concret
 {
@@ -15,47 +16,47 @@ namespace Business.Concret
         {
             _friendDal = friendDal;
         }
-        public List<Friend> GetFriends(string whoseId)
+        public async Task<List<Friend>> GetFriends(string whoseId)
         {
             //List<AppUser> appUsers = new List<AppUser>();
-            return _friendDal.GetAll(s => s.FromUserName == whoseId||s.ToUserName==whoseId);
+            return await _friendDal.GetAllAsync(s => s.FromUserName == whoseId||s.ToUserName==whoseId);
 
         }
-        public Friend Get(string whoseId, string whichId)
+        public async Task<Friend> Get(string whoseId, string whichId)
         {
-           return _friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+           return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
         }
 
-        public Friend GetFriendWithId(string whoseId, string whichId)
+        public async Task<Friend> GetFriendWithId(string whoseId, string whichId)
         {
-            if(_friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId) != null)
+            if(await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId) != null)
             {
-                return _friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+                return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
             }
             else  
             {
-                return _friendDal.Get(s => s.ToUserName == whoseId && s.FromUserName == whichId);
+                return await _friendDal.GetAsync(s => s.ToUserName == whoseId && s.FromUserName == whichId);
             }
             
         }
 
-        public void Add(Friend friend)
+        public async Task Add(Friend friend)
         {
-            _friendDal.Add(friend);
+            await _friendDal.AddAsync(friend);
         }
 
-        public void Update(Friend friend,int statusId)
+        public async Task Update(Friend friend,int statusId)
         {
             friend.StatusId = statusId;
-            _friendDal.Update(friend);
+            await _friendDal.UpdateAsync(friend);
         }
         
 
         
 
-        public void Delete(Friend friend)
+        public async Task Delete(Friend friend)
         {
-            _friendDal.Delete(friend);
+            await _friendDal.DeleteAsync(friend);
         }
     }
 }

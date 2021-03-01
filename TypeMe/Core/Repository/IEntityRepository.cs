@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Repository
 {
-    public interface IEntityRepository<T> where T:class,IEntity,new()
+    public interface IEntityRepository<T> where T : class, IEntity, new()
     {
-        T Get(Expression<Func<T, bool>> filter=null);
-        List<T> GetAll(Expression<Func<T, bool>> filter = null);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        Task<T> GetAsync(Expression<Func<T, bool>> filter = null);
+        Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
     }
 }

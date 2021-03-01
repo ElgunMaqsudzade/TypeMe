@@ -6,7 +6,8 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IFriendDal: IEntityRepository<Friend>
+    public interface IFriendDal : IEntityRepository<Friend>
     {
+       
     }
 }
