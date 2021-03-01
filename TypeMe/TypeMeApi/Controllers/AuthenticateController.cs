@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TypeMeApi.Extentions;
 using TypeMeApi.ToDoItems;
+using TypeMeApi.ToDoItems.Authenticate;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -36,21 +37,73 @@ namespace TypeMeApi.Controllers
         }
         // GET: api/<AuthenticateController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult GetUsers()
         {
-            return new string[] { $"{DateTime.Parse("2-2-2020")}", "value2" };
+            List<AppUser> allUsers = _userManager.Users.Where(u=>u.EmailConfirmed==true).Take(20).ToList();
+            List<UserToDo> users = new List<UserToDo>();
+            foreach (AppUser user in allUsers)
+            {
+                UserToDo userToDo = new UserToDo
+                {
+                    Email = user.Email,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Image = user.Image,
+                    Username = user.UserName,
+                    Gender = user.Gender,
+                };
+                users.Add(userToDo);
+            }
+            return Ok(new { users} );
+          
         }
-
-        // GET api/<AuthenticateController>/5
-        [HttpGet("{email}", Name = "Get")]
-        public async Task<ActionResult<AppUser>> Get(string email)
-        {
-            AppUser user = await _userManager.FindByEmailAsync(email);
-            return user;
-        }
-
-        // POST api/<AuthenticateController>
         [HttpPost]
+        [Route("find")]
+        public ActionResult Find([FromBody] GetUser getUser)
+        {
+            if (getUser.Skip < 20)
+            {
+                List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key) && u.EmailConfirmed == true).Take(20).ToList();
+                List<UserToDo> users = new List<UserToDo>();
+                foreach (AppUser user in allUsers)
+                {
+                    UserToDo userToDo = new UserToDo
+                    {
+                        Email = user.Email,
+                        Name = user.Name,
+                        Surname = user.Surname,
+                        Image = user.Image,
+                        Username = user.UserName,
+                        Gender = user.Gender,
+                    };
+                    users.Add(userToDo);
+                }
+                return Ok(new { users });
+            }
+            else
+            {
+                List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).Skip(getUser.Skip).Take(20).ToList();
+                List<UserToDo> users = new List<UserToDo>();
+                foreach (AppUser user in allUsers)
+                {
+                    UserToDo userToDo = new UserToDo
+                    {
+                        Email = user.Email,
+                        Name = user.Name,
+                        Surname = user.Surname,
+                        Image = user.Image,
+                        Username = user.UserName,
+                        Gender = user.Gender,
+                    };
+                    users.Add(userToDo);
+                }
+                return Ok(new { users });
+            }
+            
+        }
+
+            // POST api/<AuthenticateController>
+            [HttpPost]
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Register register)
         {
@@ -160,7 +213,7 @@ namespace TypeMeApi.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,user.UserName }
+                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,username= user.UserName }
 
                 });
             }
