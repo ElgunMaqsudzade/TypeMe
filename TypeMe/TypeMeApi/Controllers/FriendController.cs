@@ -34,21 +34,21 @@ namespace TypeMeApi.Controllers
         [Route("getfriends")]
         public async Task<ActionResult> GetFriends([FromBody] GetFriends getFriends)
         {
-            AppUser user = await _userManager.FindByEmailAsync(getFriends.UserName);
+            AppUser user = await _userManager.FindByNameAsync(getFriends.UserName);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
-                     new Response { Status = "Error", Error = "There is no account with this email." });
+                     new Response { Status = "Error", Error = "There is no account with this username." });
 
-            if (_friendService.GetFriends(user.Id).Count() == 0)
+            if (_friendService.GetFriends(user.UserName).Count() == 0)
             {
                 return StatusCode(StatusCodes.Status403Forbidden,
-                 new Response { Status = "Error", Error = "This account hasn't friends" });
+                 new Response { Status = "Error", Error = "This account doesn't have friends" });
             }
             else
             {
                 List<FriendToDo> FriendsList = new List<FriendToDo>();
-                foreach (Friend friendRel in _friendService.GetFriends(user.Id))
+                foreach (Friend friendRel in _friendService.GetFriends(user.UserName))
                 {
-                    if (friendRel.FromUserName != user.Id )
+                    if (friendRel.FromUserName != user.UserName )
                     {
                         AppUser friendUser = await _userManager.FindByNameAsync(friendRel.FromUserName);
                         FriendToDo friend = new FriendToDo
@@ -58,12 +58,12 @@ namespace TypeMeApi.Controllers
                             Surname = friendUser.Surname,
                             Image = friendUser.Image,
                             Username = friendUser.UserName,
-                            Status = _statusService.GetStaWithId(friendRel.StatusId).Name
-
+                            Status = _statusService.GetStaWithId(friendRel.StatusId).Name,
+                            IsFromUser = false,
                         };
                         FriendsList.Add(friend);
                     }
-                    else if(friendRel.ToUserName != user.Id)
+                    else if(friendRel.ToUserName != user.UserName)
                     {
                         AppUser friendUser = await _userManager.FindByNameAsync(friendRel.ToUserName);
                         FriendToDo friend = new FriendToDo
@@ -73,8 +73,8 @@ namespace TypeMeApi.Controllers
                             Surname = friendUser.Surname,
                             Image = friendUser.Image,
                             Username = friendUser.UserName,
-                            Status = _statusService.GetStaWithId(friendRel.StatusId).Name
-
+                            Status = _statusService.GetStaWithId(friendRel.StatusId).Name,
+                            IsFromUser = true,
                         };
                         FriendsList.Add(friend);
                     }
@@ -106,8 +106,8 @@ namespace TypeMeApi.Controllers
         [HttpDelete("{deletefriend}")]
         public async Task Delete([FromBody] DeleteFriend deleteFriend)
         {
-            AppUser fromUser = await _userManager.FindByEmailAsync(deleteFriend.FromUserName);
-            AppUser toUser = await _userManager.FindByEmailAsync(deleteFriend.ToUserName);
+            AppUser fromUser = await _userManager.FindByNameAsync(deleteFriend.FromUserName);
+            AppUser toUser = await _userManager.FindByNameAsync(deleteFriend.ToUserName);
             _friendService.Delete(fromUser.Id, toUser.Id);
         }
     }
