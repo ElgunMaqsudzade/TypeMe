@@ -7,7 +7,7 @@ namespace TypeMeApi.ToDoItems
 {
     public class DeleteFriend
     {
-        public string FromUserName{ get; set; }
-        public string ToUserName { get; set; }
+        public string Fromusername{ get; set; }
+        public string Tousername { get; set; }
     }
 }

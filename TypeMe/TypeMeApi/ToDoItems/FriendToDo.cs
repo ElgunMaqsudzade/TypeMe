@@ -14,5 +14,6 @@ namespace TypeMeApi.ToDoItems
         public string Username { get; set; }
         public string Status { get; set; }
         public bool IsFromUser { get; set; }
+        public string Gender { get; set; }
     }
 }

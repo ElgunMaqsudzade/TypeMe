@@ -21,6 +21,10 @@ namespace Business.Concret
             return _friendDal.GetAll(s => s.FromUserName == whoseId||s.ToUserName==whoseId);
 
         }
+        public Friend Get(string whoseId, string whichId)
+        {
+           return _friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+        }
 
         public Friend GetFriendWithId(string whoseId, string whichId)
         {
@@ -28,36 +32,30 @@ namespace Business.Concret
             {
                 return _friendDal.Get(s => s.FromUserName == whoseId && s.ToUserName == whichId);
             }
-            else
+            else  
             {
                 return _friendDal.Get(s => s.ToUserName == whoseId && s.FromUserName == whichId);
             }
             
         }
 
-        public void Add(string from, string to,int statusId)
+        public void Add(Friend friend)
         {
-            Friend friend = new Friend
-            {
-                FromUserName = from,
-                ToUserName = to,
-                StatusId=statusId
-            };
             _friendDal.Add(friend);
         }
 
-        public void Delete(string from, string to)
+        public void Update(Friend friend,int statusId)
         {
-            if (_friendDal.Get(s => s.FromUserName == from && s.ToUserName == to) != null)
-            {
-                _friendDal.Delete(_friendDal.Get(s => s.FromUserName == from && s.ToUserName == to));
-            }
-            else if (_friendDal.Get(s => s.ToUserName == from && s.FromUserName == to) != null)
-            {
-                _friendDal.Delete(_friendDal.Get(s => s.ToUserName == from && s.FromUserName == to));
-            }
-
+            friend.StatusId = statusId;
+            _friendDal.Update(friend);
         }
+        
 
+        
+
+        public void Delete(Friend friend)
+        {
+            _friendDal.Delete(friend);
+        }
     }
 }

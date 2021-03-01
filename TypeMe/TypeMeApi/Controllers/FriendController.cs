@@ -32,9 +32,9 @@ namespace TypeMeApi.Controllers
         // GET api/<FriendController>/5
         [HttpPost]
         [Route("getfriends")]
-        public async Task<ActionResult> GetFriends([FromBody] GetFriends getFriends)
+        public async Task<ActionResult> GetFriends([FromBody] GetFriend getFriends)
         {
-            AppUser user = await _userManager.FindByNameAsync(getFriends.UserName);
+            AppUser user = await _userManager.FindByNameAsync(getFriends.Username);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
                      new Response { Status = "Error", Error = "There is no account with this username." });
 
@@ -88,27 +88,51 @@ namespace TypeMeApi.Controllers
                 }) ;
             }
         }
-
-        // POST api/<FriendController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("addfriend")]
+        public void AddFriend([FromBody] AddFriend addFriend)
         {
-
+            if (_friendService.GetFriendWithId(addFriend.Fromusername, addFriend.Tousername) != null) 
+            {
+                    _friendService.Update(_friendService.GetFriendWithId(addFriend.Fromusername, addFriend.Tousername),1);
+            }
+            else if(_friendService.GetFriendWithId(addFriend.Fromusername, addFriend.Tousername) == null)
+            {
+                Friend friend = new Friend
+                {
+                    FromUserName = addFriend.Fromusername,
+                    ToUserName=addFriend.Tousername,
+                    StatusId=3
+                };
+                _friendService.Add(friend);
+            }
         }
 
-        // PUT api/<FriendController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+            // DELETE api/<FriendController>/5
+            [HttpDelete("{deletefriend}")]
+        public void Delete([FromBody] DeleteFriend deleteFriend)
         {
-        }
-
-        // DELETE api/<FriendController>/5
-        [HttpDelete("{deletefriend}")]
-        public async Task Delete([FromBody] DeleteFriend deleteFriend)
-        {
-            AppUser fromUser = await _userManager.FindByNameAsync(deleteFriend.FromUserName);
-            AppUser toUser = await _userManager.FindByNameAsync(deleteFriend.ToUserName);
-            _friendService.Delete(fromUser.Id, toUser.Id);
+            Friend fromFriend = _friendService.Get(deleteFriend.Fromusername, deleteFriend.Tousername);
+            Friend toFriend = _friendService.Get(deleteFriend.Tousername, deleteFriend.Fromusername);
+            if (fromFriend != null && fromFriend.StatusId == 1)
+            {
+                _friendService.Update(fromFriend, 3);
+            }
+            else if (fromFriend !=null &&fromFriend.StatusId==3)
+            {
+                _friendService.Delete(fromFriend);
+            }
+            
+            else if (toFriend != null && toFriend.StatusId == 1)
+            {
+                toFriend.FromUserName = deleteFriend.Tousername;
+                toFriend.ToUserName = deleteFriend.Fromusername;
+                _friendService.Update(toFriend, 3);
+            }
+            else if (toFriend != null && toFriend.StatusId == 3)
+            {
+                _friendService.Delete(toFriend);
+            }
         }
     }
 }
