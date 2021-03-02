@@ -1,5 +1,58 @@
 .friends {
   @import "./my-friends";
+  @import "./find-friends";
   background-color: white;
   border-radius: 4px;
+  .no-friends {
+    width: 100%;
+    text-align: center;
+    padding: 30px 50px;
+    color: $clr-grey;
+  }
+  .loading {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .pending-list {
+    padding: 0 20px;
+    .pending-item {
+      padding: 12px 0;
+      display: flex;
+      .image-holder {
+        border-radius: 50%;
+        overflow: hidden;
+        width: 80px;
+        height: 80px;
+        margin-right: 20px;
+      }
+      .pending-body {
+        .addfriend-content {
+          color: $clr-grey;
+        }
+        padding-top: 9px;
+        .name-box {
+          font-weight: 700;
+          font-size: 13px;
+          color: $clr-dark-blue;
+          margin-bottom: 9px;
+        }
+        .add-friend {
+          opacity: 0.9;
+          width: 90px;
+          color: white;
+          padding: 4px 15px;
+          text-align: center;
+          background-color: $clr-main-blue;
+          border: 0;
+          border-radius: 4px;
+          font-size: 12.5px;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
 }

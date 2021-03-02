@@ -1,5 +1,6 @@
 @import "./main/variables";
 .search-bar {
+  z-index: 1000;
   position: relative;
   border-bottom: 1px solid $clr-s-card-grey;
   .search-inp {

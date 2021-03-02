@@ -9,6 +9,7 @@ import Error from "./pages/error";
 import LoginRegister from "./pages/login_register";
 import Messenger from "./pages/messenger";
 import Friends from "./pages/friends";
+import FriendsSidebar from "./components/friends-page-comp/friendsSidebar";
 
 function App() {
   const store = JSON.parse(localStorage.getItem("login"));
@@ -71,7 +72,7 @@ function App() {
                 </div>
               </div>
             </Route>
-            <Route exact path="/friends">
+            <Route exact path="/friends/:section">
               <div className="page_header">
                 <Navbar />
               </div>
@@ -84,7 +85,7 @@ function App() {
                         <Friends />
                       </div>
                       <div className="col-4">
-                        <RSidebar />
+                        <FriendsSidebar />
                       </div>
                     </div>
                   </div>

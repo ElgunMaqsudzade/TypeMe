@@ -7,10 +7,12 @@ const AppContext = React.createContext();
 const initialState = {
   url: "https://localhost:44303",
   createText: "",
-  user: { name: null, image: null, surname: null, gender: null, logined: null },
-  friends: [],
+  user: { name: null, image: null, surname: null, gender: null, logined: null, username: null },
 };
 const AppProvider = ({ children }) => {
+  const [addFriendRes, setAddFriendRes] = useState({ added: false, username: "" });
+  const [allusers, setAllUsers] = useState([]);
+  const [pathname, setPathname] = useState(null);
   const [shortLogin, setShortLogin] = useState(null);
   const [oldUsers, setOldUsers] = useState(null);
   const [logged, setLogged] = useState(null);
@@ -37,8 +39,8 @@ const AppProvider = ({ children }) => {
     return dispatch({ type: "CREATE_TEXT", payload: text });
   };
 
-  const CallFriends = (data) => {
-    return dispatch({ type: "ALL_FRIENDS", payload: data });
+  const CallUsers = (data) => {
+    console.log(data);
   };
 
   const HandleOldUsers = (data) => {
@@ -59,6 +61,13 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const AddFriend = ({ tousername }) => {
+    axios
+      .post(`${state.url}/api/friend/addfriend`, { fromusername: state.user.username, tousername })
+      .then((res) => setAddFriendRes({ added: true, username: tousername }))
+      .catch((res) => console.log(res));
+  };
+
   const ResetPasswordHandler = (email) => {
     setShortLogin(null);
     setResetInfo({ email });
@@ -76,6 +85,7 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        addFriendRes,
         setCreateText,
         HandleOldUsers,
         setLogged,
@@ -87,9 +97,11 @@ const AppProvider = ({ children }) => {
         ResetPasswordHandler,
         setShortLogin,
         shortLogin,
-        CallFriends,
-        selectFriendPage,
-        setSelectFriendPage,
+        pathname,
+        setPathname,
+        allusers,
+        CallUsers,
+        AddFriend,
       }}
     >
       {children}

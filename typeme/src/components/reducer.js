@@ -6,10 +6,7 @@ const Reducer = (state, action) => {
   if (type === "USER_DATA") {
     return { ...state, user: payload };
   }
-  if (type === "USER_DATA") {
-    return { ...state, user: payload };
-  }
 
-  return state;
+  return { ...state };
 };
 export default Reducer;

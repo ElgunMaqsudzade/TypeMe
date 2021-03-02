@@ -18,7 +18,7 @@ const data = [
   },
   { id: 2, icon: <Icon20NewsfeedOutline />, info: "News", link: "/feed" },
   { id: 3, icon: <Icon20MessageOutline />, info: "Messenger", link: "/messenger" },
-  { id: 4, icon: <Icon20UsersOutline />, info: "Friends", link: "/friends" },
+  { id: 4, icon: <Icon20UsersOutline />, info: "Friends", link: "/friends/all" },
   { id: 5, icon: <Icon20Users3Outline />, info: "Groups", link: "/groups" },
   { id: 6, icon: <Icon20PictureOutline />, info: "Photos", link: "/images" },
   { id: 7, icon: <Icon20MusicOutline />, info: "Music", link: "/music" },

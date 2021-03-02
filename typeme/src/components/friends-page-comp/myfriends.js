@@ -1,65 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useGlobalContext } from "../context";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SearchBar from "../friends-page-comp/searchInFriends";
 import Friend from "../friends-page-comp/friend";
 
-function Myfriends() {
-  const {} = useGlobalContext();
+function Myfriends({ myfriends, loading, HandleFindUsers }) {
   const [searchkeyword, setSearchKeyword] = useState("");
-  const [friends, setFriends] = useState([]);
+  const [showSearchSettings, setShowSearchSettings] = useState(false);
   const [searchParameters, setSearchParameters] = useState({ online: false, gender: "any" });
-  const data = [
-    {
-      name: "Elgun",
-      surname: "Maqsudzade",
-      hometown: "sd",
-      email: "1",
-      image: "default.png",
-      onlinestatus: true,
-      gender: "male",
-    },
-    {
-      name: "Kamran",
-      email: "2",
-      image: "default.png",
-      onlinestatus: false,
-      surname: "Nebiyev",
-      gender: "male",
-    },
-    {
-      name: "Turane",
-      email: "3",
-      image: "default.png",
-      onlinestatus: false,
-      surname: "Cabbarova",
-      gender: "female",
-    },
-  ];
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    let newFriends = data;
-    if (!searchParameters.online) {
-      newFriends = data.filter((friend) => {
-        const main =
-          friend.name.toLowerCase().includes(searchkeyword) ||
-          friend.surname.toLowerCase().includes(searchkeyword);
-        if (searchParameters.gender === "any") return main;
-        if (searchParameters.gender === "male") return main && friend.gender === "male";
-        if (searchParameters.gender === "female") return main && friend.gender === "female";
-      });
-    } else {
-      newFriends = data.filter((friend) => {
-        const main =
-          (friend.name.toLowerCase().includes(searchkeyword) ||
-            friend.surname.toLowerCase().includes(searchkeyword)) &&
-          friend.onlinestatus;
-        if (searchParameters.gender === "any") return main;
-        if (searchParameters.gender === "male") return main && friend.gender === "male";
-        if (searchParameters.gender === "female") return main && friend.gender === "female";
-      });
-    }
+    let newFriends = myfriends;
+    newFriends = myfriends.filter((friend) => {
+      const { name, surname, status, gender, onlinestatus } = friend;
+      const main =
+        name.toLowerCase().includes(searchkeyword) || surname.toLowerCase().includes(searchkeyword);
+      if (status === "accepted") {
+        if (!searchParameters.online) {
+          if (searchParameters.gender === "any") return main;
+          if (searchParameters.gender === "male") return main && gender === "male";
+          if (searchParameters.gender === "female") return main && gender === "female";
+        } else {
+          const onlineMain = main && onlinestatus;
+          if (searchParameters.gender === "any") return onlineMain;
+          if (searchParameters.gender === "male") return onlineMain && gender === "male";
+          if (searchParameters.gender === "female") return onlineMain && gender === "female";
+        }
+      }
+    });
     setFriends(newFriends);
-  }, [searchkeyword, searchParameters]);
+  }, [searchkeyword, searchParameters, myfriends]);
 
   return (
     <>
@@ -68,29 +38,46 @@ function Myfriends() {
           className={`friends-top-item ${!searchParameters.online && "selected"}`}
           onClick={() => setSearchParameters({ ...searchParameters, online: false })}
         >
-          All friends <span className="friends-count">{data.length}</span>
+          All friends{" "}
+          <span className="friends-count">
+            {myfriends.filter((friend) => friend.status === "accepted").length}
+          </span>
         </div>
         <div
           className={`friends-top-item ${searchParameters.online && "selected"}`}
           onClick={() => setSearchParameters({ ...searchParameters, online: true })}
         >
           Friends online{" "}
-          <span className="friends-count">{data.filter((user) => user.onlinestatus).length}</span>
+          <span className="friends-count">
+            {friends.filter((user) => user.onlinestatus && user.status === "accepted").length}
+          </span>
         </div>
-        <button className="find-friends">Find Friends</button>
+        <Link className="find-friends" to="/friends/find">
+          Find Friends
+        </Link>
       </div>
       <div className="friends-search">
         <SearchBar
-          setSearchKeyword={setSearchKeyword}
-          searchkeyword={searchkeyword}
+          searchParameters={searchParameters}
           setSearchParameters={setSearchParameters}
+          setSearchKeyword={setSearchKeyword}
+          showSearchSettings={showSearchSettings}
+          setShowSearchSettings={setShowSearchSettings}
+          HandleFindUsers={HandleFindUsers}
         />
       </div>
-      <div className="friends-list">
-        {friends.map((friend) => {
-          return <Friend key={friend.email} {...friend} />;
-        })}
-      </div>
+      {loading ? (
+        <div className="loading">
+          <div className="lds-dual-ring"></div>
+        </div>
+      ) : (
+        <div className="friends-list">
+          {friends.map((friend) => {
+            return <Friend key={friend.email} {...friend} />;
+          })}
+          {friends.length === 0 && <div className="no-friends">No friends were found</div>}
+        </div>
+      )}
     </>
   );
 }

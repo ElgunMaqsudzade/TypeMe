@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import outside from "../customHooks/showHide";
+import { IoSettingsOutline } from "react-icons/io5";
 
-function Friend({ name, image, surname, hometown, onlinestatus }) {
+function Friend({ name, image, surname, hometown, onlinestatus, username }) {
+  const [settings, setSettings] = useState(false);
+
+  const refOut = useRef(null);
+  outside(refOut, () => {
+    if (settings) {
+      setSettings(false);
+    }
+  });
+
   return (
     <>
       <div className="friend">
@@ -17,8 +28,15 @@ function Friend({ name, image, surname, hometown, onlinestatus }) {
           <Link to="/messenger" className="send-message">
             Write message
           </Link>
-          <div className="friend-settings"></div>
         </div>
+        <button className="friend-settings" onClick={() => setSettings(!settings)}>
+          <IoSettingsOutline />
+          {settings && (
+            <div className="settings showCard" ref={refOut}>
+              <div className="item">Unfriend</div>
+            </div>
+          )}
+        </button>
       </div>
     </>
   );
