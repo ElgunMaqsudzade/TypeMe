@@ -44,6 +44,10 @@ namespace TypeMeApi
             services.AddScoped<IFriendDal, EFFriendDal>();
             services.AddScoped<IStatusService, StatusManager>();
             services.AddScoped<IStatusDal, EFStatusDal>();
+            services.AddScoped<IUserDetailService, UserDetailManager>();
+            services.AddScoped<IUserDetailDal, EFUserDetailDal>();
+            services.AddScoped<IUserLanguageService, UserLanguageManager>();
+            services.AddScoped<IUserLanguageDal, EFUserLanguageDal>();
             services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddControllers();
             services.AddIdentity<AppUser, IdentityRole>(identityOptions =>
@@ -86,12 +90,13 @@ namespace TypeMeApi
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
             app.UseCors(option=>option.WithOrigins("http://jrcomerun-001-site1.ftempurl.com").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

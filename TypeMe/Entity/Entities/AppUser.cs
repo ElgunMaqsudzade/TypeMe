@@ -20,8 +20,6 @@ namespace Entity.Entities
         [Required,DataType(DataType.DateTime)]
         public DateTime Birthday { get; set; }
         public string Image { get; set; }
-        [NotMapped]
-        public IFormFile Photo { get; set; }
         public bool IsDeleted { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? DeleteTime { get; set; }
@@ -29,5 +27,6 @@ namespace Entity.Entities
         public DateTime? UpdateTime { get; set; }
         [Required, DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

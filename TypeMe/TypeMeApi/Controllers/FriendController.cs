@@ -31,26 +31,22 @@ namespace TypeMeApi.Controllers
         }
 
         // GET api/<FriendController>/5
+
         [HttpPost]
-        [Route("getfriends")]
-        public async Task<ActionResult> GetFriends([FromBody] GetFriend getFriends)
+        [Route("getAllfriends")]
+        public async Task<ActionResult> GetAllFriends([FromBody] GetFriend getFriends)
         {
             AppUser user = await _userManager.FindByNameAsync(getFriends.Username);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
                      new Response { Status = "Error", Error = "There is no account with this username." });
-            if ((await _friendService.GetFriends(user.UserName)).Count()==0) return StatusCode(StatusCodes.Status403Forbidden,
-                     new Response { Status = "Error", Error = "This account doesn't have friends" });
             else
             {
                 List<FriendToDo> FriendsList = new List<FriendToDo>();
-                foreach (Friend friendRel in await _friendService.GetFriends(user.UserName))
+                foreach (Friend friendRel in await _friendService.GetAllFriends(user.UserName,getFriends.Status))
                 {
-
                     if (friendRel.FromUserName != user.UserName)
                     {
-
                         AppUser friendUser = await _userManager.FindByNameAsync(friendRel.FromUserName);
-
                         FriendToDo friend = new FriendToDo
                         {
                             Email = friendUser.Email,
@@ -58,10 +54,9 @@ namespace TypeMeApi.Controllers
                             Surname = friendUser.Surname,
                             Image = friendUser.Image,
                             Username = friendUser.UserName,
-                            Status =(await _statusService.GetStaWithIdAsync(friendRel.StatusId)).Name,
-                            Isfromuser = false,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
+                            Isfromuser =true,
                         };
                         FriendsList.Add(friend);
 
@@ -76,12 +71,18 @@ namespace TypeMeApi.Controllers
                             Surname = friendUser.Surname,
                             Image = friendUser.Image,
                             Username = friendUser.UserName,
-                            Status = (await _statusService.GetStaWithIdAsync(friendRel.StatusId)).Name,
-                            Isfromuser = true,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
+                            Isfromuser = false,
                         };
                         FriendsList.Add(friend);
+                    }
+                    else
+                    {
+                        return Ok(new
+                        {
+                            friends = FriendsList,
+                        });
                     }
 
                 }
@@ -92,7 +93,7 @@ namespace TypeMeApi.Controllers
                 });
             }
         }
-     
+
         [HttpPost]
         [Route("addfriend")]
         public async Task AddFriend([FromBody] AddFriend addFriend)
@@ -121,22 +122,26 @@ namespace TypeMeApi.Controllers
             Friend toFriend = await _friendService.Get(deleteFriend.Tousername, deleteFriend.Fromusername);
             if (fromFriend != null && fromFriend.StatusId == 1)
             {
-               await _friendService.Update(fromFriend, 3);
+
+                fromFriend.FromUserName = deleteFriend.Tousername;
+                fromFriend.ToUserName = deleteFriend.Fromusername;
+                await _friendService.Update(fromFriend, 3);
             }
             else if (fromFriend != null && fromFriend.StatusId == 3)
             {
-               await _friendService.Delete(fromFriend);
+
+                await _friendService.Delete(fromFriend);
             }
 
             else if (toFriend != null && toFriend.StatusId == 1)
             {
-                toFriend.FromUserName = deleteFriend.Tousername;
-                toFriend.ToUserName = deleteFriend.Fromusername;
-               await _friendService.Update(toFriend, 3);
+
+                await _friendService.Update(toFriend, 3);
             }
             else if (toFriend != null && toFriend.StatusId == 3)
             {
-               await _friendService.Delete(toFriend);
+
+                await _friendService.Delete(toFriend);
             }
         }
     }

@@ -8,5 +8,6 @@ namespace TypeMeApi.ToDoItems.Friend
     public class GetFriend
     {
         public string Username { get; set; }
+        public int Status { get; set; }
     }
 }

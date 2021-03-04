@@ -17,6 +17,8 @@ namespace DataAccess.Abstract.Concret
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<UserLanguage> UserLanguages { get; set; }
 
     }
 }

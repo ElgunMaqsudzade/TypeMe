@@ -48,7 +48,7 @@ namespace TypeMeApi.Controllers
                     Email = user.Email,
                     Name = user.Name,
                     Surname = user.Surname,
-                    Image = user.Image,
+                    Image =  user.Image,
                     Username = user.UserName,
                     Gender = user.Gender,
                 };
@@ -70,7 +70,7 @@ namespace TypeMeApi.Controllers
                         Email = user.Email,
                         Name = user.Name,
                         Surname = user.Surname,
-                        Image = user.Image,
+                        Image =  user.Image,
                         Username = user.UserName,
                         Gender = user.Gender,
                     };
@@ -108,7 +108,7 @@ namespace TypeMeApi.Controllers
             AppUser newUser = new AppUser()
             {
                 Email = register.Email,
-                Image="default.png",
+                Image= "http://jrcomerun-001-site1.ftempurl.com/images/profile/default.png",
                 Name = register.Name,
                 UserName = loginId,
                 Surname = register.Surname,
@@ -155,6 +155,7 @@ namespace TypeMeApi.Controllers
             }
 
         }
+
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] Login login)
@@ -183,15 +184,16 @@ namespace TypeMeApi.Controllers
                 var token = new JwtSecurityToken(
                     issuer: Configuration["JWT:ValidIssuer"],
                     audience: Configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddMinutes(30),
+                    expires: DateTime.Now.AddMinutes(60),
                     claims: authClaim,
                     signingCredentials: new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256)
                     );
+                
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname, user.Image, user.Gender, user.Birthday, user.Email,username= user.UserName }
+                    user = new { user.Name, user.Surname,  user.Image, user.Gender, user.Birthday, user.Email,username= user.UserName }
 
                 });
             }

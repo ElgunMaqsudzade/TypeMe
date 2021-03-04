@@ -18,26 +18,32 @@ namespace Business.Concret
         }
         public async Task<List<Friend>> GetFriends(string whoseId)
         {
-            //List<AppUser> appUsers = new List<AppUser>();
-            return await _friendDal.GetAllAsync(s => s.FromUserName == whoseId||s.ToUserName==whoseId);
-
+            return await _friendDal.GetAllAsync(s => s.FromUserName == whoseId || s.ToUserName == whoseId);
+        }
+        public async Task<List<Friend>> GetAllFriends(string whoseId, int statusId)
+        {
+            return await _friendDal.GetAllAsync(s => (s.FromUserName == whoseId || s.ToUserName == whoseId) && s.StatusId == statusId);
         }
         public async Task<Friend> Get(string whoseId, string whichId)
         {
-           return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+            return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
+        }
+        public async Task<Friend> GetProfile(string whoseId, string whichId, int statusId)
+        {
+            return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId && s.StatusId == 1);
         }
 
         public async Task<Friend> GetFriendWithId(string whoseId, string whichId)
         {
-            if(await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId) != null)
+            if (await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId) != null)
             {
                 return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
             }
-            else  
+            else
             {
                 return await _friendDal.GetAsync(s => s.ToUserName == whoseId && s.FromUserName == whichId);
             }
-            
+
         }
 
         public async Task Add(Friend friend)
@@ -45,14 +51,14 @@ namespace Business.Concret
             await _friendDal.AddAsync(friend);
         }
 
-        public async Task Update(Friend friend,int statusId)
+        public async Task Update(Friend friend, int statusId)
         {
             friend.StatusId = statusId;
             await _friendDal.UpdateAsync(friend);
         }
-        
 
-        
+
+
 
         public async Task Delete(Friend friend)
         {

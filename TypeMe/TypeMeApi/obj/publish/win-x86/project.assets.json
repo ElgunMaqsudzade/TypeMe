@@ -1646,6 +1646,7 @@
         "dependencies": {
           "Core": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "3.1.11",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.11",
           "System.ComponentModel.Annotations": "5.0.0"
         },
@@ -3496,6 +3497,7 @@
         "dependencies": {
           "Core": "1.0.0",
           "Microsoft.AspNetCore.Http.Features": "3.1.11",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.1.11",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.11",
           "System.ComponentModel.Annotations": "5.0.0"
         },
@@ -8445,11 +8447,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
+      "projectUniqueName": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
       "projectName": "TypeMeApi",
-      "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
+      "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
       "packagesPath": "C:\\Users\\TOSHIBA\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\obj\\publish\\win-x86\\",
+      "outputPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\obj\\publish\\win-x86\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8469,17 +8471,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj": {
-              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Business\\Business.csproj"
+            "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj": {
+              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Business\\Business.csproj"
             },
-            "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Core\\Core.csproj"
+            "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Core\\Core.csproj"
             },
-            "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\DataAccess\\DataAccess.csproj"
+            "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\DataAccess\\DataAccess.csproj"
             },
-            "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj": {
-              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\Entity\\Entity.csproj"
+            "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj": {
+              "projectPath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\Entity\\Entity.csproj"
             }
           }
         }

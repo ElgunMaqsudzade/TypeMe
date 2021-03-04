@@ -152,6 +152,48 @@ namespace DataAccess.Migrations
                     b.ToTable("Statuses");
                 });
 
+            modelBuilder.Entity("Entity.Entities.UserDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StatusMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserLanguageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
+
+                    b.HasIndex("UserLanguageId");
+
+                    b.ToTable("UserDetails");
+                });
+
+            modelBuilder.Entity("Entity.Entities.UserLanguage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserLanguages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -288,6 +330,19 @@ namespace DataAccess.Migrations
                     b.HasOne("Entity.Entities.Status", "Status")
                         .WithMany("Friends")
                         .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entity.Entities.UserDetail", b =>
+                {
+                    b.HasOne("Entity.Entities.AppUser", "AppUser")
+                        .WithOne("UserDetail")
+                        .HasForeignKey("Entity.Entities.UserDetail", "AppUserId");
+
+                    b.HasOne("Entity.Entities.UserLanguage", "UserLanguage")
+                        .WithMany("UserDetails")
+                        .HasForeignKey("UserLanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

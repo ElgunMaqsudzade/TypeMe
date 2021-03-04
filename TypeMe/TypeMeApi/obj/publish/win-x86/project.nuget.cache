@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "55Va7lXpKdw6vxp8apjmaq4jHqF6/sT1UKOu7j5wP0nJR0PPo0MhYGhL4VKYMDjiRRC+P0gNHta6aRcXSVl+nQ==",
+  "dgSpecHash": "BfYGQzxbp3f0cDO9Xt29JKExWiTPYdpo3APNyNpLWWa5Yi5hvNgFciwFG5j6nct34EdkLKSMgudGAFxifP4HlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\Architecture\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
+  "projectFilePath": "C:\\Users\\TOSHIBA\\Desktop\\TypeMe\\TypeMe\\TypeMeApi\\TypeMeApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.11\\microsoft.aspnetcore.authentication.jwtbearer.3.1.11.nupkg.sha512",
     "C:\\Users\\TOSHIBA\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.11\\microsoft.aspnetcore.cryptography.internal.3.1.11.nupkg.sha512",
