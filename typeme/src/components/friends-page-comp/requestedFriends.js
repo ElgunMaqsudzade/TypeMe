@@ -1,54 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
+import { Link } from "react-router-dom";
 
-function RequestedFriends({ myfriends, loading }) {
-  const { AddFriend, addFriendRes } = useGlobalContext();
+function RequestedFriends() {
+  const { AddFriend, RemoveFriend, user, instance } = useGlobalContext();
   const [showPending, setShowPending] = useState(true);
-  const [friends, setFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [pending, setPending] = useState([]);
+  const [outgoing, setOutgoing] = useState([]);
 
   useEffect(() => {
-    if (friends.filter((friend) => !friend.isfromuser).length !== 0) {
-      setShowPending(true);
-    } else {
-      setShowPending(false);
+    setLoading(true);
+    if (user.username !== null) {
+      instance
+        .post("friend/getallfriends", { username: user.username, status: 3 })
+        .then(({ data }) => {
+          setLoading(false);
+          setPending(data.friends.filter((user) => !user.isfromuser));
+          setOutgoing(data.friends.filter((user) => user.isfromuser));
+        })
+        .catch((res) => {
+          console.log(res);
+        });
     }
-  }, [friends]);
-
-  useEffect(() => {
-    setFriends(myfriends.filter((user) => !user.isfromuser));
-  }, [myfriends, loading]);
+  }, [user.username, instance]);
 
   return (
     <>
       <div className="friends-top">
-        {myfriends.filter((friend) => !friend.isfromuser).length !== 0 && (
-          <div
-            className={`friends-top-item ${showPending === true ? "selected" : ""}`}
-            onClick={() => {
-              setShowPending(true);
-              setFriends(myfriends.filter((user) => !user.isfromuser));
-            }}
-          >
-            Pending{" "}
-            <span className="friends-count">
-              {myfriends.filter((friend) => !friend.isfromuser).length}
-            </span>
-          </div>
-        )}
-        {myfriends.filter((friend) => friend.isfromuser).length !== 0 && (
-          <div
-            className={`friends-top-item ${showPending === false ? "selected" : ""}`}
-            onClick={() => {
-              setShowPending(false);
-              setFriends(myfriends.filter((user) => user.isfromuser));
-            }}
-          >
-            Outgoing{" "}
-            <span className="friends-count">
-              {myfriends.filter((friend) => friend.isfromuser).length}
-            </span>
-          </div>
-        )}
+        <div
+          className={`friends-top-item ${showPending === true ? "selected" : ""}`}
+          onClick={() => {
+            setShowPending(true);
+          }}
+        >
+          Pending <span className="friends-count">{pending.length}</span>
+        </div>
+        <div
+          className={`friends-top-item ${showPending === false ? "selected" : ""}`}
+          onClick={() => {
+            setShowPending(false);
+          }}
+        >
+          Outgoing <span className="friends-count">{outgoing.length}</span>
+        </div>
       </div>
       <div className="pending-list">
         {loading ? (
@@ -56,43 +51,53 @@ function RequestedFriends({ myfriends, loading }) {
             <div className="lds-dual-ring"></div>
           </div>
         ) : (
-          <div>
-            {friends.map((friend) => {
+          <>
+            {(showPending ? pending : outgoing).map((friend) => {
               const { image, name, surname, username, isfromuser } = friend;
+              console.log(image);
               return (
                 <div key={username} className="pending-item">
                   <div className="image-holder">
-                    <img src={image && require(`../../images/user/${image}`).default} alt="" />
+                    <img src={image} alt="" />
                   </div>
                   <div className="pending-body">
-                    <div className="name-box">
+                    <Link to={`/user/${username}`} className="name-box">
                       {name} {surname}
-                    </div>
-                    {addFriendRes.added && addFriendRes.username === username ? (
-                      <div className="addfriend-content">
-                        <span style={{ textTransform: "capitalize" }}>{name}</span> is now your
-                        friend.
-                      </div>
-                    ) : !isfromuser ? (
+                    </Link>
+                    {!isfromuser ? (
                       <button
                         className="add-friend"
                         onClick={() => {
                           AddFriend({ tousername: username });
+                          setPending(pending.filter((friend) => friend.username !== username));
                         }}
                       >
                         Add friend
                       </button>
                     ) : (
-                      <button className="remove-friend s-button">Unfollow</button>
+                      <button
+                        className="remove-friend s-button"
+                        onClick={() => {
+                          RemoveFriend({ tousername: username });
+                          setOutgoing(outgoing.filter((friend) => friend.username !== username));
+                        }}
+                      >
+                        Decline
+                      </button>
                     )}
                   </div>
                 </div>
               );
             })}
-            {friends.length === 0 && <div className="no-friends">You aren't following anyone</div>}
-          </div>
+          </>
         )}
       </div>
+      {pending.length === 0 && showPending && (
+        <div className="no-friends">There is no one at pending</div>
+      )}
+      {outgoing.length === 0 && !showPending && (
+        <div className="no-friends">There is no one at outgoing</div>
+      )}
     </>
   );
 }

@@ -4,7 +4,7 @@ const Reducer = (state, action) => {
     return { ...state, createText: payload };
   }
   if (type === "USER_DATA") {
-    return { ...state, user: payload };
+    return { ...state, user: payload.user, token: `Bearer ${payload.token}` };
   }
 
   return { ...state };

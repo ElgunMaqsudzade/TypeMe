@@ -9,7 +9,8 @@ import { Icon16Cancel } from "@vkontakte/icons";
 const LoginRegister = () => {
   const { setOldUsers, oldUsers, resetInfo, shortLogin, setShortLogin } = useGlobalContext();
   const [verifyEmail, setVerifyEmail] = useState(null);
-  const RemoveLocaleUser = (email) => {
+  const RemoveLocaleUser = (email, e) => {
+    e.stopPropagation();
     let newUsers = oldUsers.filter((user) => user.email !== email);
     setOldUsers(newUsers);
   };
@@ -31,18 +32,22 @@ const LoginRegister = () => {
                   {oldUsers.map((user) => {
                     const { name, surname, image, email } = user;
                     return (
-                      <button key={email} className="old-user" onClick={() => setShortLogin(user)}>
+                      <div
+                        key={email}
+                        className="old-user close-card"
+                        onClick={() => setShortLogin(user)}
+                      >
                         <Icon16Cancel
                           className="close-icon"
-                          onClick={() => RemoveLocaleUser(email)}
+                          onClick={(e) => RemoveLocaleUser(email, e)}
                         />
                         <div className="image-holder">
-                          <img src={image && require(`../images/user/${image}`).default} alt="" />
+                          <img src={image} alt="" />
                         </div>
                         <div className="name-box">
                           {name} {surname}
                         </div>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>

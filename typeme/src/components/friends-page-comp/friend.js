@@ -1,9 +1,20 @@
 import React, { useRef, useState } from "react";
+import { useGlobalContext } from "../context";
 import { Link } from "react-router-dom";
 import outside from "../customHooks/showHide";
 import { IoSettingsOutline } from "react-icons/io5";
 
-function Friend({ name, image, surname, hometown, onlinestatus, username }) {
+function Friend({
+  name,
+  image,
+  surname,
+  hometown,
+  onlinestatus,
+  username,
+  setAllFriends,
+  allfriends,
+}) {
+  const { RemoveFriend } = useGlobalContext();
   const [settings, setSettings] = useState(false);
 
   const refOut = useRef(null);
@@ -17,11 +28,11 @@ function Friend({ name, image, surname, hometown, onlinestatus, username }) {
     <>
       <div className="friend">
         <div className="image-holder">
-          <img src={image && require(`../../images/user/${image}`).default} alt="" />
+          <img src={image} alt="" />
           <div className={`check ${onlinestatus ? "online" : "offline"}`}></div>
         </div>
         <div className="friend-body">
-          <Link to="/user" className="friend-name">
+          <Link to={`/user/${username}`} className="friend-name">
             {name} {surname}
           </Link>
           {hometown && <p className="status">{hometown}</p>}
@@ -33,7 +44,15 @@ function Friend({ name, image, surname, hometown, onlinestatus, username }) {
           <IoSettingsOutline />
           {settings && (
             <div className="settings showCard" ref={refOut}>
-              <div className="item">Unfriend</div>
+              <div
+                className="item"
+                onClick={() => {
+                  RemoveFriend({ tousername: username });
+                  setAllFriends(allfriends.filter((friend) => friend.username !== username));
+                }}
+              >
+                Unfriend
+              </div>
             </div>
           )}
         </button>

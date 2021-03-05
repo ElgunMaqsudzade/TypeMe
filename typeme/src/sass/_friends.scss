@@ -9,12 +9,7 @@
     padding: 30px 50px;
     color: $clr-grey;
   }
-  .loading {
-    width: 100%;
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-  }
+
   .pending-list {
     padding: 0 20px;
     .pending-item {
@@ -33,10 +28,15 @@
         }
         padding-top: 9px;
         .name-box {
+          display: block;
+          cursor: pointer;
           font-weight: 700;
           font-size: 13px;
           color: $clr-dark-blue;
           margin-bottom: 9px;
+          &:hover {
+            text-decoration: underline !important;
+          }
         }
         .add-friend {
           opacity: 0.9;

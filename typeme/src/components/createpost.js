@@ -33,12 +33,9 @@ const CreatePost = () => {
       <form>
         <div className="create-main">
           <div className="profile">
-            <Link to="/profile">
+            <Link to={`/user/${user.username}`}>
               <div className="profile-link">
-                <img
-                  src={user.image ? require(`../images/user/${user.image}`).default : null}
-                  alt=""
-                />
+                <img src={user.image} alt="" />
               </div>
             </Link>
           </div>

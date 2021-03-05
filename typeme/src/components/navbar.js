@@ -61,22 +61,15 @@ const Navbar = () => {
             >
               <div className="account-title">{user.name}</div>
               <div className="account-image">
-                <img
-                  src={user.image && require(`../images/user/${user.image}`).default}
-                  alt=""
-                  className="img-fluid"
-                />
+                <img src={user.image} alt="" className="img-fluid" />
               </div>
               <Icon12Dropdown className="arrow-down" />
               {showSettings && (
                 <ul className="settings">
                   <li className="setting-items user-profile">
-                    <Link to="/profile" className="to-profile">
+                    <Link to={`/user/${user.username}`} className="to-profile">
                       <div className="thumbnail">
-                        <img
-                          src={user.image && require(`../images/user/${user.image}`).default}
-                          alt=""
-                        />
+                        <img src={user.image} alt="" />
                       </div>
                       <div className="user-info">
                         <div className="user-name">

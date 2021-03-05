@@ -13,34 +13,6 @@
       border-radius: 3px;
       width: 160px;
       height: 160px;
-      .close-friend {
-        display: none;
-        transition: all 0.2s;
-        width: 18px !important;
-        height: 18px !important;
-        position: absolute;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.15);
-        top: 0;
-        right: 0;
-        border-top-right-radius: 3px;
-        border-bottom-left-radius: 3px;
-        svg {
-          width: 12px !important;
-          height: 12px !important;
-        }
-      }
-      &:hover {
-        .close-friend {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          &:hover {
-            opacity: 1;
-            background-color: rgba(0, 0, 0, 0.6);
-          }
-        }
-      }
     }
     .single-body {
       position: relative;

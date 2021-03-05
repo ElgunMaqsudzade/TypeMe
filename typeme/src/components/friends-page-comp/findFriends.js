@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useGlobalContext } from "../context";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../friends-page-comp/searchInFriends";
 import FindSingle from "../friends-page-comp/findSingle";
 
@@ -12,7 +11,6 @@ function FindFriends({
   findprops,
   Addmore,
 }) {
-  const {} = useGlobalContext();
   const [searchkeyword, setSearchKeyword] = useState("");
   const [showSearchSettings, setShowSearchSettings] = useState(false);
   const [searchParameters, setSearchParameters] = useState({ online: false, gender: "any" });
@@ -20,10 +18,11 @@ function FindFriends({
 
   useEffect(() => {
     let newFriends = myfriends.filter((friend) => {
-      const { status, gender, onlinestatus } = friend;
+      const { gender } = friend;
       if (searchParameters.gender === "any") return friend;
       if (searchParameters.gender === "male") return gender === "male";
       if (searchParameters.gender === "female") return gender === "female";
+      return friend;
     });
     setFriends(newFriends);
   }, [searchkeyword, searchParameters, myfriends, loading]);

@@ -1,0 +1,67 @@
+.my-profile {
+  .page-info {
+    .page-info-top {
+      padding: 0 0 15px;
+      .user-basic-info {
+        position: relative;
+        .user-name {
+          text-transform: capitalize;
+          font-size: 19px;
+          line-height: 25px;
+          font-weight: 400;
+        }
+        .online-status {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          color: $clr-grey;
+        }
+      }
+      .user-current-status {
+        cursor: pointer;
+        color: $clr-grey;
+        line-height: 16px;
+        margin: -2px -6px;
+        padding: 4px 6px;
+        &:hover {
+          background-color: $clr-hover-lgrey;
+        }
+      }
+    }
+    .profile-info {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-top: 1px solid $clr-border-bottom-grey;
+      border-bottom: 1px solid $clr-border-bottom-grey;
+      .full-info {
+        height: 34px;
+        line-height: 32px;
+        background-color: white;
+        border: none;
+        width: 100%;
+        text-align: center;
+        color: $clr-dark-blue;
+        &:hover {
+          background-color: $clr-hover-lgrey;
+        }
+      }
+    }
+    .profile-info-box {
+      width: 100%;
+      display: flex;
+      padding: 5px 0;
+      .info-title {
+        width: 193px;
+        color: $clr-grey;
+      }
+      .info-value {
+        color: $clr-dark-blue;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

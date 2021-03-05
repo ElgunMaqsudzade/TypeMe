@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "./context";
 import "../sass/_login.scss";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
 function Login() {
-  const { setLogged, url, ResetPasswordHandler } = useGlobalContext();
+  const { setLogged, ResetPasswordHandler, instance } = useGlobalContext();
   const [responseError, setResponseError] = useState({ status: null, error: null, loading: false });
-  const [login, setLogin] = useState({ email: null, password: null, logined: false, store: null });
+  const [login, setLogin] = useState({ email: null, password: null });
+  let store = JSON.parse(localStorage.getItem("login"));
 
   useEffect(() => {
     if (responseError.error !== null) {
@@ -19,8 +19,8 @@ function Login() {
   const LoginSubmitHandler = (e) => {
     e.preventDefault();
     setResponseError({ status: null, error: null, loading: true });
-    axios
-      .post(`${url}/api/authenticate/login`, login)
+    instance
+      .post(`/authenticate/login`, login)
       .then((responseData) => {
         localStorage.setItem(
           "login",
@@ -40,14 +40,7 @@ function Login() {
         });
       });
   };
-  let store = JSON.parse(localStorage.getItem("login"));
-  useEffect(() => {
-    if (store && store.logined) {
-      setLogin((prev) => {
-        return { ...prev, logined: true, store: store };
-      });
-    }
-  }, [store]);
+
   return (
     <>
       {store && store.logined ? <Redirect to="/feed" /> : null}

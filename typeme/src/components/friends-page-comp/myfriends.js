@@ -1,35 +1,54 @@
 import React, { useState, useEffect } from "react";
+import { useGlobalContext } from "../context";
 import { Link } from "react-router-dom";
 import SearchBar from "../friends-page-comp/searchInFriends";
 import Friend from "../friends-page-comp/friend";
 
-function Myfriends({ myfriends, loading, HandleFindUsers }) {
+function Myfriends({ HandleFindUsers }) {
+  const { user, instance } = useGlobalContext();
+  const [allfriends, setAllFriends] = useState([]);
+  const [myfriends, setMyFriends] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchkeyword, setSearchKeyword] = useState("");
   const [showSearchSettings, setShowSearchSettings] = useState(false);
   const [searchParameters, setSearchParameters] = useState({ online: false, gender: "any" });
-  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    if (user.username !== null) {
+      instance
+        .post("friend/getallfriends", { username: user.username, status: 1 })
+        .then(({ data }) => {
+          setAllFriends(data.friends);
+          setMyFriends(data.friends);
+          setLoading(false);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, [user.username, instance]);
 
   useEffect(() => {
     let newFriends = myfriends;
     newFriends = myfriends.filter((friend) => {
-      const { name, surname, status, gender, onlinestatus } = friend;
+      const { name, surname, gender, onlinestatus } = friend;
       const main =
         name.toLowerCase().includes(searchkeyword) || surname.toLowerCase().includes(searchkeyword);
-      if (status === "accepted") {
-        if (!searchParameters.online) {
-          if (searchParameters.gender === "any") return main;
-          if (searchParameters.gender === "male") return main && gender === "male";
-          if (searchParameters.gender === "female") return main && gender === "female";
-        } else {
-          const onlineMain = main && onlinestatus;
-          if (searchParameters.gender === "any") return onlineMain;
-          if (searchParameters.gender === "male") return onlineMain && gender === "male";
-          if (searchParameters.gender === "female") return onlineMain && gender === "female";
-        }
+      if (!searchParameters.online) {
+        if (searchParameters.gender === "any") return main;
+        if (searchParameters.gender === "male") return main && gender === "male";
+        if (searchParameters.gender === "female") return main && gender === "female";
+      } else {
+        const onlineMain = main && onlinestatus;
+        if (searchParameters.gender === "any") return onlineMain;
+        if (searchParameters.gender === "male") return onlineMain && gender === "male";
+        if (searchParameters.gender === "female") return onlineMain && gender === "female";
       }
+      return friend;
     });
-    setFriends(newFriends);
-  }, [searchkeyword, searchParameters, myfriends]);
+    setAllFriends(newFriends);
+  }, [searchkeyword, searchParameters, myfriends, loading]);
 
   return (
     <>
@@ -38,10 +57,7 @@ function Myfriends({ myfriends, loading, HandleFindUsers }) {
           className={`friends-top-item ${!searchParameters.online && "selected"}`}
           onClick={() => setSearchParameters({ ...searchParameters, online: false })}
         >
-          All friends{" "}
-          <span className="friends-count">
-            {myfriends.filter((friend) => friend.status === "accepted").length}
-          </span>
+          All friends <span className="friends-count">{myfriends.length}</span>
         </div>
         <div
           className={`friends-top-item ${searchParameters.online && "selected"}`}
@@ -49,7 +65,7 @@ function Myfriends({ myfriends, loading, HandleFindUsers }) {
         >
           Friends online{" "}
           <span className="friends-count">
-            {friends.filter((user) => user.onlinestatus && user.status === "accepted").length}
+            {allfriends.filter((user) => user.onlinestatus).length}
           </span>
         </div>
         <Link className="find-friends" to="/friends/find">
@@ -66,17 +82,27 @@ function Myfriends({ myfriends, loading, HandleFindUsers }) {
           HandleFindUsers={HandleFindUsers}
         />
       </div>
+
       {loading ? (
         <div className="loading">
           <div className="lds-dual-ring"></div>
         </div>
       ) : (
-        <div className="friends-list">
-          {friends.map((friend) => {
-            return <Friend key={friend.email} {...friend} />;
-          })}
-          {friends.length === 0 && <div className="no-friends">No friends were found</div>}
-        </div>
+        <>
+          <div className="friends-list">
+            {allfriends.map((friend) => {
+              return (
+                <Friend
+                  key={friend.email}
+                  {...friend}
+                  setAllFriends={setAllFriends}
+                  allfriends={allfriends}
+                />
+              );
+            })}
+          </div>
+          {allfriends.length === 0 && <div className="no-friends">No friends were found</div>}
+        </>
       )}
     </>
   );

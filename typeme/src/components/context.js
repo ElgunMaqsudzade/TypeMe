@@ -1,23 +1,56 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import reducer from "./reducer";
 import axios from "axios";
-
+import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
-  url: "https://localhost:44303",
+  url: "http://jrcomerun-001-site1.ftempurl.com",
   createText: "",
-  user: { name: null, image: null, surname: null, gender: null, logined: null, username: null },
 };
 const AppProvider = ({ children }) => {
-  const [addFriendRes, setAddFriendRes] = useState({ added: false, username: "" });
-  const [allusers, setAllUsers] = useState([]);
-  const [pathname, setPathname] = useState(null);
+  const [user, setUser] = useState({
+    name: null,
+    image: null,
+    surname: null,
+    gender: null,
+    logined: null,
+    username: null,
+  });
+  const [token, setToken] = useState("");
   const [shortLogin, setShortLogin] = useState(null);
   const [oldUsers, setOldUsers] = useState(null);
   const [logged, setLogged] = useState(null);
   const [state, dispatch] = useReducer(reducer, initialState);
   const [resetInfo, setResetInfo] = useState(null);
+
+  let instance = axios.create({
+    baseURL: "http://jrcomerun-001-site1.ftempurl.com/api/",
+    headers: { Authorization: `Bearer ${token} ` },
+  });
+
+  useEffect(() => {
+    const store = JSON.parse(localStorage.getItem("login"));
+    if (store && store.user) {
+      setUser(store.user);
+      setToken(store.token);
+    }
+  }, [logged]);
+
+  const RefreshUser = () => {
+    instance
+      .post("profile/user", { username: user.username })
+      .then(({ data }) => {
+        localStorage.setItem(
+          "login",
+          JSON.stringify({
+            ...JSON.parse(localStorage.getItem("login")),
+            user: data,
+          })
+        );
+        setUser({ ...user, ...data });
+      })
+      .catch((res) => console.log(res));
+  };
 
   useEffect(() => {
     let oldusers = JSON.parse(localStorage.getItem("oldusers"));
@@ -28,19 +61,8 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("oldusers", JSON.stringify(oldUsers));
   }, [oldUsers]);
 
-  useEffect(() => {
-    const store = JSON.parse(localStorage.getItem("login"));
-    if (store && store.user) {
-      dispatch({ type: "USER_DATA", payload: store.user });
-    }
-  }, [logged]);
-
   const setCreateText = (text) => {
     return dispatch({ type: "CREATE_TEXT", payload: text });
-  };
-
-  const CallUsers = (data) => {
-    console.log(data);
   };
 
   const HandleOldUsers = (data) => {
@@ -62,17 +84,28 @@ const AppProvider = ({ children }) => {
   };
 
   const AddFriend = ({ tousername }) => {
-    axios
-      .post(`${state.url}/api/friend/addfriend`, { fromusername: state.user.username, tousername })
-      .then((res) => setAddFriendRes({ added: true, username: tousername }))
+    instance
+      .post("friend/addfriend", { fromusername: user.username, tousername })
+      .catch((res) => console.log(res));
+  };
+
+  const RemoveFriend = ({ tousername }) => {
+    instance
+      .delete("friend/delete", {
+        data: {
+          fromusername: user.username,
+          tousername,
+        },
+      })
+      .then((res) => console.log(res))
       .catch((res) => console.log(res));
   };
 
   const ResetPasswordHandler = (email) => {
     setShortLogin(null);
     setResetInfo({ email });
-    axios
-      .post(`${state.url}/api/authenticate/foremailrp`, { email })
+    instance
+      .post(`authenticate/foremailrp`, { email })
       .then(({ data, status }) => {
         setResetInfo({ email, data, status });
       })
@@ -85,7 +118,7 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
-        addFriendRes,
+        user,
         setCreateText,
         HandleOldUsers,
         setLogged,
@@ -97,11 +130,10 @@ const AppProvider = ({ children }) => {
         ResetPasswordHandler,
         setShortLogin,
         shortLogin,
-        pathname,
-        setPathname,
-        allusers,
-        CallUsers,
         AddFriend,
+        RemoveFriend,
+        instance,
+        RefreshUser,
       }}
     >
       {children}

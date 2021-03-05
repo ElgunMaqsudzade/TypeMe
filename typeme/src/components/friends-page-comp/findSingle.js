@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { Icon16UserAdd, Icon16Cancel } from "@vkontakte/icons";
+import React from "react";
+import { Icon16UserAdd } from "@vkontakte/icons";
+import { Link } from "react-router-dom";
 function FindSingle({ name, image, surname, username, mediumFriend }) {
   return (
     <>
-      <div ref={mediumFriend} className="find-single">
+      <Link ref={mediumFriend} to={`/user/${username}`} className="find-single">
         <div className="image-holder">
-          <img src={image && require(`../../images/user/${image}`).default} alt="" />
-          <Icon16Cancel className="close-friend" />
+          <img src={image} alt="" />
         </div>
         <div className="single-body">
           <div className="name-box">
@@ -14,7 +14,7 @@ function FindSingle({ name, image, surname, username, mediumFriend }) {
           </div>
           <Icon16UserAdd className="add-friend" />
         </div>
-      </div>
+      </Link>
     </>
   );
 }

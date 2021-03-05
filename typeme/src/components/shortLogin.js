@@ -58,7 +58,7 @@ const ShortLogin = ({ name, surname, image, email }) => {
       <Icon16Cancel className="close-icon" onClick={() => setShortLogin(null)} />
       {responseError.status > 300 && <div className="verify-error">{responseError.error}</div>}
       <div className="image-holder">
-        <img src={image && require(`../images/user/${image}`).default} alt="" />
+        <img src={image} alt="" />
       </div>
       <div className="name-box">
         Log in as{" "}

@@ -4,41 +4,17 @@ import { useLocation } from "react-router-dom";
 import Myfriends from "../components/friends-page-comp/myfriends";
 import FindFriends from "../components/friends-page-comp/findFriends";
 import RequestedFriends from "../components/friends-page-comp/requestedFriends";
-import axios from "axios";
 
 function Friends() {
   let location = useLocation().pathname;
-  const { user } = useGlobalContext();
-  const [requested, setRequested] = useState({ loading: true, myfriends: [] });
-  const [accepted, setAccepted] = useState({ loading: true, myfriends: [] });
+  const { user, instance } = useGlobalContext();
   const [findFriends, setFindFriends] = useState({ loading: true, myfriends: [] });
   const [findprops, setFindprops] = useState({ skip: 0, key: "" });
-  useEffect(() => {
-    if (user.username !== null) {
-      axios
-        .post("https://localhost:44303/api/friend/getfriends", {
-          username: user.username,
-        })
-        .then(({ data }) => {
-          setRequested({
-            loading: false,
-            myfriends: data.friends.filter((friend) => friend.status === "requested"),
-          });
-          setAccepted({
-            loading: false,
-            myfriends: data.friends.filter((friend) => friend.status === "accepted"),
-          });
-        })
-        .catch((res) => {
-          console.log(res);
-        });
-    }
-  }, [user]);
 
   const HandleFindUsers = ({ key, skip }) => {
     setFindprops({ ...findprops, key, skip });
-    axios
-      .post("https://localhost:44303/api/authenticate/find", {
+    instance
+      .post("authenticate/find", {
         key,
         skip,
       })
@@ -49,10 +25,11 @@ function Friends() {
         console.log(res);
       });
   };
+
   const Addmore = () => {
     if (findprops) setFindprops({ ...findprops, skip: findprops.skip + 20 });
-    axios
-      .post("https://localhost:44303/api/authenticate/find", {
+    instance
+      .post("authenticate/find", {
         key: findprops.key,
         skip: findprops.skip,
       })
@@ -72,8 +49,8 @@ function Friends() {
 
   useEffect(() => {
     if (user.username !== null) {
-      axios
-        .get("https://localhost:44303/api/authenticate")
+      instance
+        .get("authenticate")
         .then(({ data }) => {
           setFindFriends({ loading: false, myfriends: data.users });
         })
@@ -81,14 +58,12 @@ function Friends() {
           console.log(res);
         });
     }
-  }, [user]);
+  }, [user, instance]);
 
   return (
     <>
       <div className="friends">
-        {location === "/friends/all" && (
-          <Myfriends {...accepted} HandleFindUsers={HandleFindUsers} />
-        )}
+        {location === "/friends/all" && <Myfriends HandleFindUsers={HandleFindUsers} />}
         {location === "/friends/find" && (
           <FindFriends
             {...findFriends}
@@ -98,7 +73,7 @@ function Friends() {
             setFindprops={setFindprops}
           />
         )}
-        {location === "/friends/requested" && <RequestedFriends {...requested} />}
+        {location === "/friends/requested" && <RequestedFriends />}
       </div>
     </>
   );

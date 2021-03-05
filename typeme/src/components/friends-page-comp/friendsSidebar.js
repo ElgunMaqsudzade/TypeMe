@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useGlobalContext } from "../context";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../sass/_friends-sidebar.scss";
 
@@ -10,7 +9,6 @@ const data = [
 ];
 
 function FriendsSidebar() {
-  const {} = useGlobalContext();
   let location = useLocation().pathname;
   return (
     <>

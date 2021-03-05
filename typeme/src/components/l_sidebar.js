@@ -1,8 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import data from "../data/sidebarData";
+import { useGlobalContext } from "./context";
+import {
+  Icon20Users3Outline,
+  Icon28Profile,
+  Icon20NewsfeedOutline,
+  Icon20MessageOutline,
+  Icon20UsersOutline,
+  Icon20PictureOutline,
+  Icon20MusicOutline,
+  Icon20VideoOutline,
+} from "@vkontakte/icons";
 
 const LSidebar = () => {
+  const { user } = useGlobalContext();
+  const data = [
+    {
+      id: 1,
+      icon: <Icon28Profile />,
+      info: "My profile",
+      link: `/user/${user.username}`,
+    },
+    { id: 2, icon: <Icon20NewsfeedOutline />, info: "News", link: "/feed" },
+    { id: 3, icon: <Icon20MessageOutline />, info: "Messenger", link: "/messenger" },
+    { id: 4, icon: <Icon20UsersOutline />, info: "Friends", link: "/friends/all" },
+    { id: 5, icon: <Icon20Users3Outline />, info: "Groups", link: "/groups" },
+    { id: 6, icon: <Icon20PictureOutline />, info: "Photos", link: "/images" },
+    { id: 7, icon: <Icon20MusicOutline />, info: "Music", link: "/music" },
+    { id: 8, icon: <Icon20VideoOutline />, info: "Videos", link: "/video" },
+  ];
+
   return (
     <aside className="sidebar">
       <ul className="side-items">
