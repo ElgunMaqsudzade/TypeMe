@@ -12,13 +12,15 @@ namespace DataAccess.Abstract.Concret
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Data Source = SQL5102.site4now.net; Initial Catalog = DB_A6F35F_jrcomerun; User Id = DB_A6F35F_jrcomerun_admin; Password = Lene1234");
+            optionsBuilder.UseSqlServer("Data Source=SQL5080.site4now.net;Initial Catalog=DB_A709F1_elgun4000;User Id=DB_A709F1_elgun4000_admin;Password=salam123");
         }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<UserLanguage> UserLanguages { get; set; }
+        public DbSet<Albom> Alboms { get; set; }
+        public DbSet<Image> Images { get; set; }
 
     }
 }

@@ -48,6 +48,10 @@ namespace TypeMeApi
             services.AddScoped<IUserDetailDal, EFUserDetailDal>();
             services.AddScoped<IUserLanguageService, UserLanguageManager>();
             services.AddScoped<IUserLanguageDal, EFUserLanguageDal>();
+            services.AddScoped<IImageService, ImageManager>();
+            services.AddScoped<IImageDal, EFImageDal>();
+            services.AddScoped<IAlbomService, AlbomManager>();
+            services.AddScoped<IAlbomDal, EFAlbomDal>();
             services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddControllers();
             services.AddIdentity<AppUser, IdentityRole>(identityOptions =>

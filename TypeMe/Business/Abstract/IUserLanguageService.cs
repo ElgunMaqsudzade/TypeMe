@@ -8,7 +8,7 @@ namespace Business.Abstract
 {
     public interface IUserLanguageService
     {
-        Task<UserLanguage> GetWithIdAsync(int id);
+        Task<UserLanguage> GetWithIdAsync(int detailId);
         Task<List<UserLanguage>> GetLanguages();
         Task Add(UserLanguage language);
         Task Update(UserLanguage language);

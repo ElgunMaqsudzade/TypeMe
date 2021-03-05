@@ -34,8 +34,6 @@ namespace Business.Concret
             await _languageDal.DeleteAsync(new UserLanguage { Id = id });
         }
 
-        
-
         public async Task Update(UserLanguage language)
         {
             await _languageDal.UpdateAsync(language);

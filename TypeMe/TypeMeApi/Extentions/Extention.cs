@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace TypeMeApi.Extentions
 {
@@ -21,11 +22,10 @@ namespace TypeMeApi.Extentions
         {
             string fileName = Guid.NewGuid().ToString() + photo.FileName;
             string path = Path.Combine(root, folder, fileName);
-
             using (FileStream fileStream = new FileStream(path, FileMode.Create))
             {
                 await photo.CopyToAsync(fileStream);
-            }
+            };
             return fileName;
         }
     }

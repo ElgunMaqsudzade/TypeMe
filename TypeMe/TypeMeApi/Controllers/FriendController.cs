@@ -33,7 +33,7 @@ namespace TypeMeApi.Controllers
         // GET api/<FriendController>/5
 
         [HttpPost]
-        [Route("getAllfriends")]
+        [Route("getallfriends")]
         public async Task<ActionResult> GetAllFriends([FromBody] GetFriend getFriends)
         {
             AppUser user = await _userManager.FindByNameAsync(getFriends.Username);

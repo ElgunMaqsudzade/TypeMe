@@ -8,7 +8,7 @@ namespace Business.Abstract
 {
     public interface IUserDetailService
     {
-        Task<UserDetail> GetWithIdAsync(string id);
+        Task<UserDetail> GetWithIdAsync(string appUserId);
         Task<List<UserDetail>> GetDetails();
         Task Add(UserDetail detail);
         Task Update(UserDetail detail);

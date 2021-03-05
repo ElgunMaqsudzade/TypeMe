@@ -20,9 +20,9 @@ namespace Business.Concret
             return await _detailDal.GetAllAsync();
         }
 
-        public async Task<UserDetail> GetWithIdAsync(string id)
+        public async Task<UserDetail> GetWithIdAsync(string appUserId)
         {
-            return await _detailDal.GetAsync(d => d.AppUserId == id);
+            return await _detailDal.GetAsync(d => d.AppUserId == appUserId);
         }
         public async Task Add(UserDetail detail)
         {
@@ -34,16 +34,9 @@ namespace Business.Concret
            await _detailDal.DeleteAsync(new UserDetail { AppUserId = id });
         }
 
-       
-
         public async Task Update(UserDetail detail)
         {
             await _detailDal.UpdateAsync(detail);
-        }
-
-        public Task<List<UserDetail>> GetDeails()
-        {
-            throw new NotImplementedException();
         }
     }
 }

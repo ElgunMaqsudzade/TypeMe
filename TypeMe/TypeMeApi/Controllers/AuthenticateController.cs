@@ -1,4 +1,5 @@
-﻿using Entity.Entities;
+﻿using Business.Abstract;
+using Entity.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -27,13 +28,15 @@ namespace TypeMeApi.Controllers
     {
 
         private readonly UserManager<AppUser> _userManager;
+        private readonly IUserDetailService _detailService;
         public IConfiguration Configuration { get; }
 
-        public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration, IUserDetailService detailService)
         {
 
             _userManager = userManager;
             Configuration = configuration;
+            _detailService = detailService;
         }
         // GET: api/<AuthenticateController>
         [HttpGet]
@@ -81,7 +84,7 @@ namespace TypeMeApi.Controllers
         }
 
             // POST api/<AuthenticateController>
-            [HttpPost]
+        [HttpPost]
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Register register)
         {
@@ -108,7 +111,7 @@ namespace TypeMeApi.Controllers
             AppUser newUser = new AppUser()
             {
                 Email = register.Email,
-                Image= "http://jrcomerun-001-site1.ftempurl.com/images/profile/default.png",
+                Image= "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png",
                 Name = register.Name,
                 UserName = loginId,
                 Surname = register.Surname,
@@ -142,8 +145,9 @@ namespace TypeMeApi.Controllers
                 var messageSubject = "Account Confrim";
                 //***********     Send Message to Email     ***********
                 await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
-
-
+                UserDetail userDetail = new UserDetail();
+                userDetail.AppUserId = newUser.Id;
+                await _detailService.Add(userDetail);
 
                 return Ok(new
                 {
