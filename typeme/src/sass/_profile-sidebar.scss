@@ -4,6 +4,7 @@
     position: relative;
     cursor: pointer;
     max-width: 225px;
+    max-height: 225px;
     border-radius: 2px;
     overflow: hidden;
     font-size: 12.5px;
@@ -164,10 +165,11 @@
   overflow: hidden;
   border-radius: 4px;
   position: absolute;
+  width: 1000px;
+  min-width: 650px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 650px;
   background-color: white;
   .preview-top {
     background-color: $clr-hover-lgrey;
@@ -201,13 +203,16 @@
       padding: 15px 0 30px;
     }
     .preview-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       border-radius: 4px;
       overflow: hidden;
-      max-width: 500px;
-      min-height: 200px;
-      min-width: 200px;
     }
     .crop-preview {
+      text-align: center;
       display: none;
     }
     .crop-preview.show {

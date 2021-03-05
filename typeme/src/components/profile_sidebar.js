@@ -2,7 +2,12 @@ import React, { useEffect, useState, useRef, createRef } from "react";
 import { useGlobalContext } from "./context";
 import { useParams } from "react-router-dom";
 import ReactCrop from "react-image-crop";
-import { image64toCanvasRef } from "./customHooks/ReuseableUtils";
+import Resizer from "react-image-file-resizer";
+import {
+  image64toCanvasRef,
+  extractImageFileExtensionFromBase64,
+  base64StringtoFile,
+} from "./customHooks/ReuseableUtils";
 import "react-image-crop/lib/ReactCrop.scss";
 import Friends from "./profile/profile_friends";
 import "../sass/_profile-sidebar.scss";
@@ -13,7 +18,7 @@ function Profile_sidebar() {
   const { instance, user, RefreshUser } = useGlobalContext();
   const { username } = useParams();
   const [imageLoading, setImageLoading] = useState(false);
-  const [profileImage, setProfileImage] = useState(null);
+  const [profileImage, setProfileImage] = useState();
   const [profile, setProfile] = useState({});
   const [crop, setCrop] = useState({
     aspect: 1 / 1,
@@ -22,11 +27,11 @@ function Profile_sidebar() {
     height: 180,
   });
   const [preview, setPreview] = useState(null);
-  const [cropPreview, setCropPreview] = useState(null);
   const [cropPreviewShow, setCropPreviewShow] = useState(false);
   const [showavatar, setShowavatar] = useState(false);
   const modal = useRef(null);
   const imagePreviewCanvasRef = createRef();
+  const imgRef = createRef();
 
   const Cancel = () => {
     setProfileImage(null);
@@ -40,14 +45,20 @@ function Profile_sidebar() {
 
   useEffect(() => {
     if (profileImage) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        let fdata = new FormData();
-        fdata.append("photo", profileImage);
-        fdata.append("username", user.username);
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(profileImage);
+      Resizer.imageFileResizer(
+        profileImage,
+        900,
+        600,
+        "JPEG",
+        100,
+        0,
+        (res) => {
+          setPreview(res);
+        },
+        "base64",
+        200,
+        200
+      );
     } else {
       setPreview(null);
       setShowavatar(false);
@@ -62,10 +73,21 @@ function Profile_sidebar() {
     }
   }, [profileImage, user.username]);
 
-  const SendImage = () => {
+  useEffect(() => {
+    if (preview) {
+      console.log(imgRef);
+    }
+  }, [preview]);
+
+  const SendProfileImage = () => {
     setImageLoading(true);
+    const canvasRef = imagePreviewCanvasRef.current;
+    const fileExtension = extractImageFileExtensionFromBase64(preview);
+    const filename = "User_Image." + fileExtension;
+    const imgData64 = canvasRef.toDataURL("image/" + fileExtension);
+    const newSendImage = base64StringtoFile(imgData64, filename);
     let fdata = new FormData();
-    fdata.append("photo", profileImage);
+    fdata.append("photo", newSendImage);
     fdata.append("username", user.username);
     instance
       .put("/profile/changeimage", fdata)
@@ -77,16 +99,32 @@ function Profile_sidebar() {
       })
       .catch((res) => console.log(res));
   };
+  const SendAlbomImage = () => {
+    setImageLoading(true);
+    let fdata = new FormData();
+    fdata.append("photo", profileImage);
+    fdata.append("username", user.username);
+    instance
+      .put("/profile/saveimage", fdata)
+      .then((res) => {
+        RefreshUser();
+        setImageLoading(false);
+        setShowavatar(false);
+        setProfileImage(null);
+      })
+      .catch((res) => console.log(res));
+  };
 
-  const CropImageLoaded = (image) => {};
+  const CropImageLoaded = (crop) => {
+    setCrop(crop);
+  };
   const HandleCropOnChange = (crop) => {
     setCrop(crop);
   };
   const HandleCropComplete = (crop) => {
     const canvasRef = imagePreviewCanvasRef.current;
-    const imgSrc = preview;
-    console.log(crop);
-    image64toCanvasRef(canvasRef, imgSrc, crop);
+    const image64 = preview;
+    image64toCanvasRef(canvasRef, image64, crop);
   };
 
   useEffect(() => {
@@ -104,7 +142,7 @@ function Profile_sidebar() {
         <div className="page-block profile-box">
           <div className="avatar close-card" onClick={() => setShowavatar(true)}>
             {profile.image !==
-              "http://jrcomerun-001-site1.ftempurl.com/images/profile/default.png" && (
+              "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png" && (
               <Icon16Cancel
                 className="close-icon"
                 onClick={(e) => {
@@ -197,23 +235,30 @@ function Profile_sidebar() {
                     className={`crop-preview ${cropPreviewShow ? "show" : ""}`}
                     ref={imagePreviewCanvasRef}
                   ></canvas>
-                  {!cropPreviewShow && (
+                  <div className={`crop-preview ${!cropPreviewShow ? "show" : ""}`}>
                     <ReactCrop
                       src={preview}
                       crop={crop}
                       minWidth={200}
                       minHeight={200}
+                      maxWidth={900}
+                      maxHeight={600}
                       onChange={HandleCropOnChange}
                       onImageLoaded={CropImageLoaded}
                       onComplete={HandleCropComplete}
                     />
-                  )}
+                  </div>
                 </div>
               </div>
               <div className="preview-footer">
                 <button
                   onClick={() => {
-                    setCropPreviewShow(true);
+                    if (cropPreviewShow) {
+                      SendProfileImage();
+                      SendAlbomImage();
+                    } else {
+                      setCropPreviewShow(true);
+                    }
                   }}
                   className="save-btn"
                 >
@@ -231,7 +276,11 @@ function Profile_sidebar() {
                 <button
                   className="cancel-btn"
                   onClick={() => {
-                    setCropPreviewShow(false);
+                    if (cropPreviewShow) {
+                      setCropPreviewShow(false);
+                    } else {
+                      Cancel();
+                    }
                   }}
                 >
                   Back
