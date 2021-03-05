@@ -6,10 +6,9 @@ import "../sass/_register.scss";
 import DatePicker from "react-date-picker";
 import { Icon20CalendarOutline, Icon16Cancel } from "@vkontakte/icons";
 import { RiArrowRightSFill } from "react-icons/ri";
-import axios from "axios";
 
 function Register({ setVerifyEmail }) {
-  const { url } = useGlobalContext();
+  const { instance } = useGlobalContext();
   const [resError, setResError] = useState({
     error: null,
     status: null,
@@ -66,8 +65,8 @@ function Register({ setVerifyEmail }) {
               values.birthday.getMonth() + 1
             }-${values.birthday.getFullYear()}`,
           };
-          axios
-            .post(`${url}/api/authenticate/register`, user)
+          instance
+            .post(`authenticate/register`, user)
             .then((responseData) => {
               const { response } = responseData.data;
               setResError({ status: response.status, error: response.error, loading: false });

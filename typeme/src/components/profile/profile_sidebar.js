@@ -1,37 +1,47 @@
 import React, { useEffect, useState, useRef, createRef } from "react";
-import { useGlobalContext } from "./context";
+import { useGlobalContext } from "../context";
 import { useParams } from "react-router-dom";
 import ReactCrop from "react-image-crop";
 import Resizer from "react-image-file-resizer";
+import DeletePhoto from "./DeletePhoto";
 import {
   image64toCanvasRef,
   extractImageFileExtensionFromBase64,
   base64StringtoFile,
-} from "./customHooks/ReuseableUtils";
+} from "../customHooks/ReuseableUtils";
 import "react-image-crop/lib/ReactCrop.scss";
-import Friends from "./profile/profile_friends";
-import "../sass/_profile-sidebar.scss";
+import Friends from "./profile_friends";
+import "../../sass/_profile-sidebar.scss";
 import { Icon16Cancel, Icon24Upload } from "@vkontakte/icons";
-import outClick from "./customHooks/showHide";
+import outClick from "../customHooks/showHide";
 
 function Profile_sidebar() {
-  const { instance, user, RefreshUser } = useGlobalContext();
+  const {
+    instance,
+    user,
+    RefreshUser,
+    setDeleteModal,
+    deleteModal,
+    AddFriend,
+    RemoveFriend,
+  } = useGlobalContext();
+  const [friends, setFriends] = useState([]);
   const { username } = useParams();
+  const [ImgWidth, setImgWidth] = useState("650px");
   const [imageLoading, setImageLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
   const [profile, setProfile] = useState({});
   const [crop, setCrop] = useState({
     aspect: 1 / 1,
     unit: "px",
-    width: 180,
-    height: 180,
+    width: 200,
+    height: 200,
   });
   const [preview, setPreview] = useState(null);
   const [cropPreviewShow, setCropPreviewShow] = useState(false);
   const [showavatar, setShowavatar] = useState(false);
   const modal = useRef(null);
   const imagePreviewCanvasRef = createRef();
-  const imgRef = createRef();
 
   const Cancel = () => {
     setProfileImage(null);
@@ -44,6 +54,18 @@ function Profile_sidebar() {
   });
 
   useEffect(() => {
+    instance
+      .post("friend/getallfriends", {
+        username: user.username,
+        status: 1,
+      })
+      .then(({ data }) => {
+        setFriends(data.friends);
+      })
+      .catch((res) => console.log(res));
+  }, [user.username, instance]);
+
+  useEffect(() => {
     if (profileImage) {
       Resizer.imageFileResizer(
         profileImage,
@@ -54,6 +76,11 @@ function Profile_sidebar() {
         0,
         (res) => {
           setPreview(res);
+          var i = new Image();
+          i.onload = function () {
+            setImgWidth(`${i.width}px`);
+          };
+          i.src = res;
         },
         "base64",
         200,
@@ -72,12 +99,6 @@ function Profile_sidebar() {
       });
     }
   }, [profileImage, user.username]);
-
-  useEffect(() => {
-    if (preview) {
-      console.log(imgRef);
-    }
-  }, [preview]);
 
   const SendProfileImage = () => {
     setImageLoading(true);
@@ -140,31 +161,72 @@ function Profile_sidebar() {
     <>
       <div className="profile-sidebar">
         <div className="page-block profile-box">
-          <div className="avatar close-card" onClick={() => setShowavatar(true)}>
+          <div
+            className="avatar close-card"
+            onClick={() => {
+              if (user.username === username) setShowavatar(true);
+            }}
+          >
             {profile.image !==
-              "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png" && (
-              <Icon16Cancel
-                className="close-icon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-              />
-            )}
+              "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png" &&
+              user.username === username && (
+                <Icon16Cancel
+                  className="close-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeleteModal(true);
+                  }}
+                />
+              )}
 
             <img src={profile.image} alt="" />
-            <div className="text-box">
-              <div className="avatar-text">
-                <Icon24Upload className="avatar-icon" />
-                Upload photo
+            {user.username === username && (
+              <div className="text-box">
+                <div className="avatar-text">
+                  <Icon24Upload className="avatar-icon" />
+                  Upload photo
+                </div>
               </div>
-            </div>
+            )}
           </div>
-          <div className="edit">Edit</div>
+          <div className="profile-sidebar-settings">
+            {user.username === username ? (
+              <>
+                <div className="edit profile-sidebar-main-item">Edit</div>
+              </>
+            ) : (
+              <>
+                <div className="write profile-sidebar-main-item">Write message</div>
+                {friends.map((friend) => {
+                  if (friend.username === username) {
+                    return true;
+                  }
+                }) === true ? (
+                  <>
+                    <div
+                      className="add-friend profile-sidebar-main-item"
+                      onClick={() => RemoveFriend({ tousername: username })}
+                    >
+                      Unfriend
+                    </div>
+                  </>
+                ) : (
+                  <div
+                    className="add-friend profile-sidebar-main-item"
+                    onClick={() => AddFriend({ tousername: username })}
+                  >
+                    Add friend
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
         <div className="page-block">
           <Friends />
         </div>
       </div>
+      {deleteModal && <DeletePhoto />}
       {showavatar &&
         (!preview ? (
           <div className="modal-box">
@@ -238,6 +300,7 @@ function Profile_sidebar() {
                   <div className={`crop-preview ${!cropPreviewShow ? "show" : ""}`}>
                     <ReactCrop
                       src={preview}
+                      style={{ width: ImgWidth }}
                       crop={crop}
                       minWidth={200}
                       minHeight={200}
@@ -257,7 +320,9 @@ function Profile_sidebar() {
                       SendProfileImage();
                       SendAlbomImage();
                     } else {
-                      setCropPreviewShow(true);
+                      if (crop.width >= 200) {
+                        setCropPreviewShow(true);
+                      }
                     }
                   }}
                   className="save-btn"

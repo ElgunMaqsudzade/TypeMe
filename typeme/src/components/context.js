@@ -16,6 +16,7 @@ const AppProvider = ({ children }) => {
     logined: null,
     username: null,
   });
+  const [deleteModal, setDeleteModal] = useState(false);
   const [token, setToken] = useState("");
   const [shortLogin, setShortLogin] = useState(null);
   const [oldUsers, setOldUsers] = useState(null);
@@ -66,6 +67,7 @@ const AppProvider = ({ children }) => {
   };
 
   const HandleOldUsers = (data) => {
+    console.log(data);
     if (oldUsers === null) {
       setOldUsers([data]);
     }
@@ -73,8 +75,18 @@ const AppProvider = ({ children }) => {
       let isDub = false;
       oldUsers.forEach((oldUser) => {
         if (oldUser.email === data.email) {
-          isDub = true;
-          return;
+          if (
+            oldUser.image === data.image &&
+            oldUser.name === data.name &&
+            oldUser.surname === data.surname
+          ) {
+            isDub = true;
+            return;
+          } else {
+            oldUser.image = data.image;
+            oldUser.name = data.name;
+            oldUser.surname = data.surname;
+          }
         }
       });
       if (!isDub) {
@@ -134,6 +146,8 @@ const AppProvider = ({ children }) => {
         RemoveFriend,
         instance,
         RefreshUser,
+        deleteModal,
+        setDeleteModal,
       }}
     >
       {children}

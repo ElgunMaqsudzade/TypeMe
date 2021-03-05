@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
 import { Link, useParams } from "react-router-dom";
-import PSidebar from "../components/profile_sidebar";
+import PSidebar from "../components/profile/profile_sidebar";
 
 const Profile = () => {
-  const { instance } = useGlobalContext();
+  const { instance, user } = useGlobalContext();
   const { username } = useParams();
   const [profileLoading, setProfileLoading] = useState(true);
   const [profile, setProfile] = useState({});

@@ -98,6 +98,17 @@ button {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
   position: fixed;
 }
+.modal-holder {
+  overflow: hidden;
+  border-radius: 4px;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 650px;
+  height: 260px;
+  background-color: white;
+}
 .main-btn {
   cursor: pointer;
   border-radius: 3px;
@@ -113,7 +124,40 @@ button {
     opacity: 0.88;
   }
 }
-
+.main-btn-slim {
+  cursor: pointer;
+  font-size: 12.5px;
+  border-radius: 3px;
+  line-height: 30px;
+  position: relative;
+  min-width: 67px;
+  height: 30px;
+  text-align: center;
+  background-color: $clr-main-blue;
+  border: none;
+  color: white;
+  padding: 0 16px;
+  margin: 0 10px;
+  &:hover {
+    opacity: 0.88;
+  }
+}
+.minor-btn-slim {
+  cursor: pointer;
+  font-size: 12.5px;
+  border-radius: 3px;
+  line-height: 30px;
+  height: 30px;
+  text-align: center;
+  background-color: white;
+  border: none;
+  color: $clr-main-blue;
+  padding: 0 16px;
+  margin: 0 10px;
+  &:hover {
+    background-color: $clr-hover-blue;
+  }
+}
 .s-button {
   opacity: 0.9;
   width: 90px;
@@ -195,8 +239,8 @@ button {
   .close-icon {
     display: none;
     transition: all 0.2s;
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    height: 20px !important;
     position: absolute;
     color: white;
     background-color: rgba(0, 0, 0, 0.15);
@@ -205,8 +249,8 @@ button {
     border-top-right-radius: 3px;
     border-bottom-left-radius: 3px;
     svg {
-      width: 12px !important;
-      height: 12px !important;
+      width: 14px !important;
+      height: 14px !important;
     }
   }
 }

@@ -9,7 +9,7 @@ function Profile_friends() {
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(false);
     instance
       .post("friend/getallfriends", {
         username: username,
@@ -17,7 +17,6 @@ function Profile_friends() {
       })
       .then(({ data }) => {
         setFriends(data.friends);
-        setLoading(false);
       })
       .catch((res) => console.log(res));
   }, [username, instance]);
