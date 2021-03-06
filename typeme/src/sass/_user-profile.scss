@@ -19,6 +19,9 @@
         }
       }
       .user-current-status {
+        border: none;
+        width: 100%;
+        text-align: left;
         cursor: pointer;
         color: $clr-grey;
         line-height: 16px;

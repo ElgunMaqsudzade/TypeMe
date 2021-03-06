@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
 import { Link, useParams } from "react-router-dom";
 import PSidebar from "../components/profile/profile_sidebar";
+import InputField from "../components/profile/modalInputField";
 
 const Profile = () => {
-  const { instance, user } = useGlobalContext();
+  const { instance, user, text, profileLoading, setProfileLoading } = useGlobalContext();
   const { username } = useParams();
-  const [profileLoading, setProfileLoading] = useState(true);
+  const [statusMessage, setstatusMessage] = useState({
+    show: false,
+    message: "set a status message",
+  });
   const [profile, setProfile] = useState({});
   const [showinfo, setShowinfo] = useState(false);
   const { name, surname, statusmessage } = profile;
@@ -17,14 +21,27 @@ const Profile = () => {
   ];
 
   useEffect(() => {
+    setstatusMessage((prev) => {
+      return { ...prev, message: text };
+    });
+  }, [text]);
+
+  useEffect(() => {
+    setProfileLoading(true);
     instance
       .post("/profile/user", { username: username })
       .then(({ data }) => {
-        setProfileLoading(false);
         setProfile(data);
+        setProfileLoading(false);
       })
       .catch((res) => console.log(res));
-  }, [username, instance]);
+    // instance
+    //   .post("/profile/addetailuser", { username: username })
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //   })
+    //   .catch((res) => console.log(res));
+  }, [username]);
 
   return (
     <>
@@ -49,9 +66,21 @@ const Profile = () => {
                   </div>
                   <div className="online-status">{"online"}</div>
                 </div>
-                <div className="user-current-status">
-                  {statusmessage ? "hey" : "set a status message"}
-                </div>
+                {statusmessage ? (
+                  <div className="user-current-status">{statusMessage.message}</div>
+                ) : (
+                  user.username === username && (
+                    <>
+                      <button
+                        className="user-current-status"
+                        onClick={() => setstatusMessage({ ...statusMessage, show: true })}
+                      >
+                        {statusMessage.message}
+                      </button>
+                    </>
+                  )
+                )}
+                {statusMessage.show && <InputField />}
               </div>
               <div className="profile-info">
                 {info.length > 0 && (

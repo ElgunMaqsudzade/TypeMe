@@ -2,10 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import { useGlobalContext } from "../components/context";
 import { Icon16Cancel } from "@vkontakte/icons";
 import useOutsideClick from "../components/customHooks/showHide";
-import axios from "axios";
 
 const ShortLogin = ({ name, surname, image, email }) => {
-  const { setLogged, ResetPasswordHandler, setShortLogin, url } = useGlobalContext();
+  const { setLogged, ResetPasswordHandler, setShortLogin, instance } = useGlobalContext();
   const refShortLoginBox = useRef(null);
   const [responseError, setResponseError] = useState({ status: null, error: null, loading: false });
   const [login, setLogin] = useState({ email: null, password: null, logined: false, store: null });
@@ -31,8 +30,8 @@ const ShortLogin = ({ name, surname, image, email }) => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     setResponseError({ status: null, error: null, loading: true });
-    axios
-      .post(`${url}/api/authenticate/login`, login)
+    instance
+      .post(`/authenticate/login`, login)
       .then((responseData) => {
         localStorage.setItem(
           "login",
@@ -46,6 +45,7 @@ const ShortLogin = ({ name, surname, image, email }) => {
         setShortLogin(null);
       })
       .catch(({ response }) => {
+        console.log(response);
         setResponseError({
           status: response.status,
           error: response.data.error,

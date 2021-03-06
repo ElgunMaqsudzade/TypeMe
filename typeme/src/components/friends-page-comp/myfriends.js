@@ -97,6 +97,7 @@ function Myfriends({ HandleFindUsers }) {
                   {...friend}
                   setAllFriends={setAllFriends}
                   allfriends={allfriends}
+                  setMyFriends={setMyFriends}
                 />
               );
             })}

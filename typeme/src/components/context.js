@@ -4,10 +4,11 @@ import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
-  url: "http://jrcomerun-001-site1.ftempurl.com",
+  url: "http://elgun20000-001-site1.btempurl.com/",
   createText: "",
 };
 const AppProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const [user, setUser] = useState({
     name: null,
     image: null,
@@ -16,28 +17,32 @@ const AppProvider = ({ children }) => {
     logined: null,
     username: null,
   });
-  const [deleteModal, setDeleteModal] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [text, setText] = useState(null);
   const [token, setToken] = useState("");
   const [shortLogin, setShortLogin] = useState(null);
   const [oldUsers, setOldUsers] = useState(null);
-  const [logged, setLogged] = useState(null);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [logged, setLogged] = useState(false);
   const [resetInfo, setResetInfo] = useState(null);
 
   let instance = axios.create({
-    baseURL: "http://jrcomerun-001-site1.ftempurl.com/api/",
+    baseURL: "http://elgun20000-001-site1.btempurl.com/api/",
     headers: { Authorization: `Bearer ${token} ` },
   });
 
   useEffect(() => {
-    const store = JSON.parse(localStorage.getItem("login"));
-    if (store && store.user) {
-      setUser(store.user);
-      setToken(store.token);
+    if (!logged) {
+      const store = JSON.parse(localStorage.getItem("login"));
+      if (store && store.user) {
+        setUser(store.user);
+        setToken(store.token);
+        setLogged(true);
+      }
     }
   }, [logged]);
 
   const RefreshUser = () => {
+    setProfileLoading(true);
     instance
       .post("profile/user", { username: user.username })
       .then(({ data }) => {
@@ -49,6 +54,7 @@ const AppProvider = ({ children }) => {
           })
         );
         setUser({ ...user, ...data });
+        setProfileLoading(false);
       })
       .catch((res) => console.log(res));
   };
@@ -64,6 +70,15 @@ const AppProvider = ({ children }) => {
 
   const setCreateText = (text) => {
     return dispatch({ type: "CREATE_TEXT", payload: text });
+  };
+
+  const EditInfo = ({ id, statusmessage }) => {
+    instance
+      .post("/profile/adddetailuser", { language: id, username: user.name, statusmessage })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((res) => console.log(res));
   };
 
   const HandleOldUsers = (data) => {
@@ -96,12 +111,15 @@ const AppProvider = ({ children }) => {
   };
 
   const AddFriend = ({ tousername }) => {
+    setProfileLoading(true);
     instance
       .post("friend/addfriend", { fromusername: user.username, tousername })
+      .then(() => setProfileLoading(false))
       .catch((res) => console.log(res));
   };
 
   const RemoveFriend = ({ tousername }) => {
+    setProfileLoading(true);
     instance
       .delete("friend/delete", {
         data: {
@@ -109,7 +127,7 @@ const AppProvider = ({ children }) => {
           tousername,
         },
       })
-      .then((res) => console.log(res))
+      .then(() => setProfileLoading(false))
       .catch((res) => console.log(res));
   };
 
@@ -130,6 +148,9 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
+        setProfileLoading,
+        profileLoading,
+        setText,
         user,
         setCreateText,
         HandleOldUsers,
@@ -146,8 +167,8 @@ const AppProvider = ({ children }) => {
         RemoveFriend,
         instance,
         RefreshUser,
-        deleteModal,
-        setDeleteModal,
+        EditInfo,
+        text,
       }}
     >
       {children}

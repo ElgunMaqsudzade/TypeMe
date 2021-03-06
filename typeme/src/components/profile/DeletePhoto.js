@@ -4,8 +4,8 @@ import outside from "../customHooks/showHide";
 import { Icon16Cancel } from "@vkontakte/icons";
 import "../../sass/_deleteModal.scss";
 
-function DeletePhoto() {
-  const { deleteModal, setDeleteModal, instance, user, RefreshUser } = useGlobalContext();
+function DeletePhoto({ deleteModal, setDeleteModal }) {
+  const { instance, user, RefreshUser } = useGlobalContext();
   const [loading, setLoading] = useState(false);
   const deleteModalRef = createRef();
 

@@ -13,6 +13,7 @@ function Friend({
   username,
   setAllFriends,
   allfriends,
+  setMyFriends,
 }) {
   const { RemoveFriend } = useGlobalContext();
   const [settings, setSettings] = useState(false);
@@ -49,6 +50,7 @@ function Friend({
                 onClick={() => {
                   RemoveFriend({ tousername: username });
                   setAllFriends(allfriends.filter((friend) => friend.username !== username));
+                  setMyFriends(allfriends.filter((friend) => friend.username !== username));
                 }}
               >
                 Unfriend

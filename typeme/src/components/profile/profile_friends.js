@@ -5,11 +5,11 @@ import { Link, useParams } from "react-router-dom";
 function Profile_friends() {
   const { instance } = useGlobalContext();
   const { username } = useParams();
-  const [loading, setLoading] = useState(true);
+  const [loadingFriends, setLoadingFriends] = useState(true);
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    setLoading(false);
+    setLoadingFriends(true);
     instance
       .post("friend/getallfriends", {
         username: username,
@@ -17,6 +17,7 @@ function Profile_friends() {
       })
       .then(({ data }) => {
         setFriends(data.friends);
+        setLoadingFriends(false);
       })
       .catch((res) => console.log(res));
   }, [username, instance]);
@@ -27,7 +28,7 @@ function Profile_friends() {
         Friends <span className="profile-friends-count">{friends.length}</span>
       </div>
       <div className="profile-friends-body">
-        {loading ? (
+        {loadingFriends ? (
           <div className="loading">
             <div className="lds-dual-ring"></div>
           </div>

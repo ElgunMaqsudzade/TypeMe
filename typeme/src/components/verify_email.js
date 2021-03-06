@@ -1,34 +1,19 @@
 import React, { useState } from "react";
 import { useGlobalContext } from "../components/context";
-import axios from "axios";
 
 function VerifyEmail({ setVerifyEmail, config, data }) {
-  const { url } = useGlobalContext();
+  const { instance } = useGlobalContext();
   const [responseError, setResponseError] = useState({ status: null, error: null, loading: false });
   const [recoverCode, setRecoverCode] = useState("");
   let email = JSON.parse(config.data).email;
-
-  const CancelHandler = (e) => {
-    e.preventDefault();
-    axios
-      .delete(`${url}/api/authenticate/delete`, {
-        data: {
-          email,
-        },
-      })
-      .catch(({ response }) => {
-        console.log(response);
-      });
-    setVerifyEmail(null);
-  };
 
   const SubmitHandler = (e) => {
     e.preventDefault();
     setResponseError({ ...responseError, loading: true });
     const { confirmationstring, confirmationtoken } = data;
     if (recoverCode === confirmationstring) {
-      axios
-        .post(`${url}/api/authenticate/verifyemail`, {
+      instance
+        .post(`/authenticate/verifyemail`, {
           email,
           token: confirmationtoken,
         })
@@ -86,7 +71,7 @@ function VerifyEmail({ setVerifyEmail, config, data }) {
                 "Continue"
               )}
             </button>
-            <button className="cancel-btn" onClick={(e) => CancelHandler(e)}>
+            <button className="cancel-btn" onClick={() => setVerifyEmail(null)}>
               Cancel
             </button>
           </div>

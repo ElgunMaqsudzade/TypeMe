@@ -12,7 +12,7 @@ import {
 import "react-image-crop/lib/ReactCrop.scss";
 import Friends from "./profile_friends";
 import "../../sass/_profile-sidebar.scss";
-import { Icon16Cancel, Icon24Upload } from "@vkontakte/icons";
+import { Icon16Cancel, Icon24Upload, Icon24ReportOutline } from "@vkontakte/icons";
 import outClick from "../customHooks/showHide";
 
 function Profile_sidebar() {
@@ -20,13 +20,17 @@ function Profile_sidebar() {
     instance,
     user,
     RefreshUser,
-    setDeleteModal,
-    deleteModal,
     AddFriend,
     RemoveFriend,
+    setProfileLoading,
   } = useGlobalContext();
-  const [friends, setFriends] = useState([]);
   const { username } = useParams();
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [isFriend, setIsFriend] = useState(false);
+  const [isReqFriend, setIsReqFriend] = useState(null);
+  const [userfriends, setUserFriends] = useState([]);
+  const [userReqfriends, setUserReqFriends] = useState([]);
+  const [friendOptions, setFriendOptions] = useState({ showFriendSettings: false });
   const [ImgWidth, setImgWidth] = useState("650px");
   const [imageLoading, setImageLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
@@ -42,10 +46,17 @@ function Profile_sidebar() {
   const [showavatar, setShowavatar] = useState(false);
   const modal = useRef(null);
   const imagePreviewCanvasRef = createRef();
+  const friendSettings = createRef();
 
   const Cancel = () => {
     setProfileImage(null);
   };
+
+  outClick(friendSettings, () => {
+    if (friendOptions.showFriendSettings) {
+      return setFriendOptions({ ...friendOptions, showFriendSettings: false });
+    }
+  });
 
   outClick(modal, () => {
     if (showavatar) {
@@ -54,15 +65,57 @@ function Profile_sidebar() {
   });
 
   useEffect(() => {
-    instance
-      .post("friend/getallfriends", {
-        username: user.username,
-        status: 1,
-      })
-      .then(({ data }) => {
-        setFriends(data.friends);
-      })
-      .catch((res) => console.log(res));
+    setIsFriend(false);
+    userfriends.map((friend) => {
+      if (friend.username === username) {
+        return setIsFriend(true);
+      }
+    });
+  }, [username, userfriends]);
+
+  useEffect(() => {
+    setIsReqFriend(null);
+    userReqfriends.map((friend) => {
+      if (friend.username === username) {
+        if (friend.isfromuser) {
+          return setIsReqFriend(true);
+        } else {
+          return setIsReqFriend(false);
+        }
+      }
+    });
+  }, [username, userReqfriends]);
+
+  useEffect(() => {
+    if (user.username && instance) {
+      instance
+        .post("friend/getallfriends", {
+          username: user.username,
+          status: 1,
+        })
+        .then(({ data }) => {
+          setUserFriends(data.friends);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, [user.username, instance]);
+
+  useEffect(() => {
+    if (user.username && instance) {
+      instance
+        .post("friend/getallfriends", {
+          username: user.username,
+          status: 3,
+        })
+        .then(({ data }) => {
+          setUserReqFriends(data.friends);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
   }, [user.username, instance]);
 
   useEffect(() => {
@@ -167,8 +220,8 @@ function Profile_sidebar() {
               if (user.username === username) setShowavatar(true);
             }}
           >
-            {profile.image !==
-              "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png" &&
+            {profile.image &&
+              !profile.image.includes("cutedProfile/default.png") &&
               user.username === username && (
                 <Icon16Cancel
                   className="close-icon"
@@ -192,32 +245,84 @@ function Profile_sidebar() {
           <div className="profile-sidebar-settings">
             {user.username === username ? (
               <>
-                <div className="edit profile-sidebar-main-item">Edit</div>
+                <div className="edit profile-sidebar-minor-item">Edit</div>
               </>
             ) : (
               <>
                 <div className="write profile-sidebar-main-item">Write message</div>
-                {friends.map((friend) => {
-                  if (friend.username === username) {
-                    return true;
-                  }
-                }) === true ? (
+                {isReqFriend === null ? (
                   <>
-                    <div
-                      className="add-friend profile-sidebar-main-item"
-                      onClick={() => RemoveFriend({ tousername: username })}
-                    >
-                      Unfriend
-                    </div>
+                    {isFriend === true ? (
+                      <>
+                        <div className="sidebar-item-holder">
+                          <div
+                            ref={friendSettings}
+                            className={`profile-sidebar-minor-item dropdown ${
+                              friendOptions.showFriendSettings ? "active" : ""
+                            }`}
+                            onClick={() =>
+                              setFriendOptions({
+                                ...friendOptions,
+                                showFriendSettings: !friendOptions.showFriendSettings,
+                              })
+                            }
+                          >
+                            You're friends
+                          </div>
+                          {friendOptions.showFriendSettings && (
+                            <>
+                              <div className="profile-sidebar-friend-settings">
+                                <div
+                                  className="friend-settings-item"
+                                  onClick={() => RemoveFriend({ tousername: username })}
+                                >
+                                  Unfriend
+                                </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div
+                        className="add-friend profile-sidebar-main-item"
+                        onClick={() => AddFriend({ tousername: username })}
+                      >
+                        Add friend
+                      </div>
+                    )}
                   </>
                 ) : (
-                  <div
-                    className="add-friend profile-sidebar-main-item"
-                    onClick={() => AddFriend({ tousername: username })}
-                  >
-                    Add friend
-                  </div>
+                  <>
+                    {isReqFriend === true ? (
+                      <>
+                        <div
+                          className="add-friend profile-sidebar-main-item"
+                          onClick={() => RemoveFriend({ tousername: username })}
+                        >
+                          Unfollow
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          className="add-friend profile-sidebar-main-item"
+                          onClick={() => AddFriend({ tousername: username })}
+                        >
+                          AddFriend
+                        </div>
+                        <div className="following">{profile.name} is following you</div>
+                      </>
+                    )}
+                  </>
                 )}
+                <div className="sidebar-minor-items">
+                  <hr className="divider" />
+                  <div className="sidebar-minor-item">
+                    <Icon24ReportOutline className="sidebar-minor-item-icon" />
+                    Report
+                  </div>
+                </div>
               </>
             )}
           </div>
@@ -226,7 +331,7 @@ function Profile_sidebar() {
           <Friends />
         </div>
       </div>
-      {deleteModal && <DeletePhoto />}
+      {deleteModal && <DeletePhoto setDeleteModal={setDeleteModal} deleteModal={deleteModal} />}
       {showavatar &&
         (!preview ? (
           <div className="modal-box">
