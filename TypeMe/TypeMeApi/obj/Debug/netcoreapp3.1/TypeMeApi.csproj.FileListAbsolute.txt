@@ -154,8 +154,6 @@ C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\obj\Debug\netcoreapp3.1\TypeMeA
 C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\obj\Debug\netcoreapp3.1\TypeMeApi.dll
 C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\obj\Debug\netcoreapp3.1\TypeMeApi.pdb
 C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\obj\Debug\netcoreapp3.1\TypeMeApi.genruntimeconfig.cache
-C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
-C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
-C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
-C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\TOSHIBA\Desktop\TypeMe\TypeMe\TypeMeApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

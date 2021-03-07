@@ -11,6 +11,6 @@ namespace Entity.Entities
         public string Name { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public virtual List<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

@@ -97,7 +97,7 @@ namespace TypeMeApi
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors(option=>option.WithOrigins("http://jrcomerun-001-site1.ftempurl.com").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(option=>option.WithOrigins("http://localhost:3000/").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
             app.UseAuthentication();
             app.UseAuthorization();

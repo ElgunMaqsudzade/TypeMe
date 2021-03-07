@@ -5,6 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210307122940_CreateTables.cs" />
+    <Compile Remove="Migrations\20210307122940_CreateTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307123222_CreateTables.cs" />
+    <Compile Remove="Migrations\20210307123222_CreateTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307130512_CreateProfileTables.cs" />
+    <Compile Remove="Migrations\20210307130512_CreateProfileTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307130707_CreateProfileTables.cs" />
+    <Compile Remove="Migrations\20210307130707_CreateProfileTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307133849_CreateTables.cs" />
+    <Compile Remove="Migrations\20210307133849_CreateTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307202209_CreateTables.cs" />
+    <Compile Remove="Migrations\20210307202209_CreateTables.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.11">

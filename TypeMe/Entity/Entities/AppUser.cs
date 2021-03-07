@@ -28,6 +28,6 @@ namespace Entity.Entities
         [Required, DataType(DataType.DateTime)]
         public DateTime CreateTime { get; set; }
         public virtual UserDetail UserDetail { get; set; }
-        public virtual List<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

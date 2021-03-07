@@ -38,5 +38,6 @@ namespace Business.Concret
         {
             await _detailDal.UpdateAsync(detail);
         }
+
     }
 }

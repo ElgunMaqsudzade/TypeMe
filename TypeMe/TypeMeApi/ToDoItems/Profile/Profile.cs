@@ -7,6 +7,6 @@ namespace TypeMeApi.ToDoItems.Profile
 {
     public class Profile
     {
-        public string username { get; set; }
+        public string Username { get; set; }
     }
 }

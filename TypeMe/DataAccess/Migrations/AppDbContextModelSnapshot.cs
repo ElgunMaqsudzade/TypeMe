@@ -210,7 +210,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("StatusMessage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserLanguageId")
+                    b.Property<int>("UserLanguageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -407,7 +407,9 @@ namespace DataAccess.Migrations
 
                     b.HasOne("Entity.Entities.UserLanguage", "UserLanguage")
                         .WithMany("UserDetails")
-                        .HasForeignKey("UserLanguageId");
+                        .HasForeignKey("UserLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

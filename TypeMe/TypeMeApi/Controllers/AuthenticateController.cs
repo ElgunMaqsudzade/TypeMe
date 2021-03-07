@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using TypeMeApi.DAL;
 using TypeMeApi.Extentions;
 using TypeMeApi.ToDoItems;
 using TypeMeApi.ToDoItems.Authenticate;
@@ -28,15 +29,13 @@ namespace TypeMeApi.Controllers
     {
 
         private readonly UserManager<AppUser> _userManager;
-        private readonly IUserDetailService _detailService;
         public IConfiguration Configuration { get; }
 
-        public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration, IUserDetailService detailService)
+        public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration)
         {
 
             _userManager = userManager;
             Configuration = configuration;
-            _detailService = detailService;
         }
         // GET: api/<AuthenticateController>
         [HttpGet]
@@ -99,27 +98,31 @@ namespace TypeMeApi.Controllers
                 }
                 else
                 {
-                    AppUser user = await _userManager.FindByEmailAsync(register.Email);
-                    await _userManager.DeleteAsync(user);
-                    await _userManager.UpdateAsync(user);
+                    await _userManager.DeleteAsync(appUser);
                 }
 
             }
 
             var birthday = DateTime.ParseExact(register.Birthday, "d-M-yyyy", null);
             string loginId = Guid.NewGuid().ToString("N");
+            //UserDetail userDetail = new UserDetail();
+
             AppUser newUser = new AppUser()
             {
                 Email = register.Email,
-                Image= "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png",
+                Image= "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/default.png",
                 Name = register.Name,
                 UserName = loginId,
                 Surname = register.Surname,
                 Gender = register.Gender,
                 Birthday = birthday,
                 CreateTime = DateTime.UtcNow,
+                //UserDetail = userDetail
             };
+            //userDetail.AppUserId = newUser.Id;
+            //await _detailService.Add(userDetail);
             IdentityResult identityResult = await _userManager.CreateAsync(newUser, register.Password);
+            
             if (!identityResult.Succeeded)
             {
                 return StatusCode(StatusCodes.Status403Forbidden,
@@ -136,7 +139,7 @@ namespace TypeMeApi.Controllers
                 }
                 var finalString = new String(stringChars);
 
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                
                 var mailto = newUser.Email;
                 var messageBody = $"<div><h3>Hello {newUser.Name}</h3>" +
                     $"</br> <p>We received a request to confirm your Typeme account.</p>"
@@ -145,9 +148,8 @@ namespace TypeMeApi.Controllers
                 var messageSubject = "Account Confrim";
                 //***********     Send Message to Email     ***********
                 await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
-                UserDetail userDetail = new UserDetail();
-                userDetail.AppUserId = newUser.Id;
-                await _detailService.Add(userDetail);
+                AppUser appUser2 = await _userManager.FindByEmailAsync(register.Email);
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser2);
 
                 return Ok(new
                 {
@@ -181,7 +183,6 @@ namespace TypeMeApi.Controllers
                 if (user.EmailConfirmed == false)
                 {
                     await _userManager.DeleteAsync(user);
-                    await _userManager.UpdateAsync(user);
                     return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "Your account wasn't confirmed." });
                 }
                 var signInKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]));
@@ -233,11 +234,6 @@ namespace TypeMeApi.Controllers
             }
         }
         // PUT api/<AuthenticateController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-
-        }
         // DELETE api/<AuthenticateController>/5
         [HttpDelete("{delete}")]
         public async Task Delete([FromBody] DeleteUser delete)
@@ -271,7 +267,7 @@ namespace TypeMeApi.Controllers
             $"</br></br><span style='padding: 8px 16px 8px 16px;background-color: #dce1e6;text-align: center;border-radius: 7px;'>{resetToken} </span></div>";
             var messageSubject = "Account Confrim";
             //***********     Send Message to Email     ***********
-            await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
+             await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
             return Ok(new
             {
                 confirmationstring = resetToken,

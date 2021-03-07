@@ -22,11 +22,9 @@ namespace TypeMeApi.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IFriendService _friendService;
-        private readonly IStatusService _statusService;
-        public FriendController(IFriendService friendService, IStatusService statusService, UserManager<AppUser> userManager)
+        public FriendController(IFriendService friendService,  UserManager<AppUser> userManager)
         {
             _friendService = friendService;
-            _statusService = statusService;
             _userManager = userManager;
         }
 
@@ -56,7 +54,7 @@ namespace TypeMeApi.Controllers
                             Username = friendUser.UserName,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
-                            Isfromuser =true,
+                            Isfromuser =false,
                         };
                         FriendsList.Add(friend);
 
@@ -73,7 +71,7 @@ namespace TypeMeApi.Controllers
                             Username = friendUser.UserName,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
-                            Isfromuser = false,
+                            Isfromuser = true,
                         };
                         FriendsList.Add(friend);
                     }

@@ -236,7 +236,7 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StatusMessage = table.Column<string>(nullable: true),
                     AppUserId = table.Column<string>(nullable: true),
-                    UserLanguageId = table.Column<int>(nullable: true)
+                    UserLanguageId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,7 +252,7 @@ namespace DataAccess.Migrations
                         column: x => x.UserLanguageId,
                         principalTable: "UserLanguages",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

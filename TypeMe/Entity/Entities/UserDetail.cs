@@ -13,7 +13,7 @@ namespace Entity.Entities
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }
-        public int? UserLanguageId { get; set; }
+        public int UserLanguageId { get; set; }
         public UserLanguage UserLanguage { get; set; }
     }
 }

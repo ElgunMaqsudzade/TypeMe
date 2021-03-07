@@ -1,15 +1,11 @@
 ﻿using Business.Abstract;
 using Entity.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using TypeMeApi.Extentions;
 using TypeMeApi.ToDoItems;
@@ -27,42 +23,115 @@ namespace TypeMeApi.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IWebHostEnvironment _env;
         private readonly IAlbomService _albomService;
-        private readonly IFriendService _friendService;
         private readonly IImageService _imageService;
         private readonly IUserDetailService _detailService;
-        private readonly IUserLanguageService _languageService;
-        public ProfileController(UserManager<AppUser> userManager, IFriendService friendService,
-                                              IWebHostEnvironment env,IAlbomService albomService,
+        private readonly IUserLanguageService _userLanguage;
+        public ProfileController(UserManager<AppUser> userManager,
+                                              IWebHostEnvironment env, IAlbomService albomService,
                                               IImageService imageService, IUserDetailService detailService,
-                                              IUserLanguageService languageService)
+                                              IUserLanguageService userLanguage)
         {
             _userManager = userManager;
-            _friendService = friendService;
             _env = env;
             _albomService = albomService;
             _imageService = imageService;
             _imageService = imageService;
             _detailService = detailService;
-            _languageService = languageService;
+            _userLanguage = userLanguage;
         }
-        // GET: api/<ProfileController>
+        [HttpGet]
+        [Route("getalllanguages")]
+        public async Task<ActionResult> GetAllLanguages()
+        {
+            List<UserLanguage> languages = await _userLanguage.GetLanguages();
+            return Ok(languages);
+        }
+
         [HttpGet("{profile}")]
         [Route("getdetailuser")]
-        public async Task<ActionResult> getdetailuser(Profile profile)
+        public async Task<ActionResult> GetDetailProfile(Profile profile)
         {
-            AppUser user = await _userManager.FindByNameAsync(profile.username);
-            UserDetail detail = await _detailService.GetWithIdAsync(user.Id);
+            AppUser user = await _userManager.FindByNameAsync(profile.Username);
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
+                new Response { Status = "Error", Error = "There is no account with this username." });
+            if (await _detailService.GetWithIdAsync(user.Id) != null)
+            {
+                UserDetail detail = await _detailService.GetWithIdAsync(user.Id);
+                string language = (await _userLanguage.GetWithIdAsync(detail.Id)).Name;
+                return Ok(new { language, detail.StatusMessage });
+            }
+            return Ok();
 
-            return Ok(new { detail.StatusMessage });
         }
+        [HttpPost]
+        [Route("adddetailuser")]
+        public async Task<ActionResult> AddDetailProfile(ProfileDetail profile)
+        {
+            AppUser user = await _userManager.FindByNameAsync(profile.Username);
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
+                new Response { Status = "Error", Error = "There is no account with this username." });
+            //if (_detailService.GetWithIdAsync(user.Id) != null)
+            //{
+            //    UserDetail updateDetail = await _detailService.GetWithIdAsync(user.Id);
+            //    updateDetail.UserLanguageId = profile.Language;
+            //    updateDetail.StatusMessage = profile.Statusmessage;
+            //    await _detailService.Update(updateDetail);
+            //    return Ok();
 
+            //}
+            //else
+            //{
+            UserDetail addDetail = new UserDetail();
+            addDetail.AppUserId = user.Id;
+
+            //addDetail.UserLanguage = await _userLanguage.GetWithIdAsync(1);
+            addDetail.UserLanguageId = 1;
+            addDetail.StatusMessage = "fhgfhgfh";
+
+            await _detailService.Add(addDetail);
+
+            return Ok();
+            //}
+
+
+        }
+        [HttpPost]
+        [Route("addetailuser")]
+        public async Task<ActionResult> AdDetailProfile(ProfileDetail profile)
+        {
+            AppUser user = await _userManager.FindByNameAsync(profile.Username);
+            if (user == null) return StatusCode(StatusCodes.Status403Forbidden,
+                new Response { Status = "Error", Error = "There is no account with this username." });
+            if (_detailService.GetWithIdAsync(user.Id) != null)
+            {
+                UserDetail updateDetail = await _detailService.GetWithIdAsync(user.Id);
+                updateDetail.UserLanguageId = profile.Language;
+                updateDetail.StatusMessage = profile.Statusmessage;
+                await _detailService.Update(updateDetail);
+            }
+            else if (_detailService.GetWithIdAsync(user.Id) == null)
+            {
+                UserDetail addDetail = new UserDetail();
+                addDetail.AppUserId = user.Id;
+
+                addDetail.UserLanguageId = profile.Language;
+                addDetail.StatusMessage = profile.Statusmessage;
+
+                await _detailService.Add(addDetail);
+                user.UserDetail = addDetail;
+                await _userManager.UpdateAsync(user);
+
+            }
+            return Ok();
+
+        }
         // POST api/<ProfileController>
         [HttpPost]
         [Route("user")]
         public async Task<ActionResult> Profile([FromBody] Profile getProfile)
         {
 
-            AppUser user = await _userManager.FindByNameAsync(getProfile.username);
+            AppUser user = await _userManager.FindByNameAsync(getProfile.Username);
             GetProfile profile = new GetProfile
             {
                 Email = user.Email,
@@ -87,8 +156,8 @@ namespace TypeMeApi.Controllers
             AppUser user = await _userManager.FindByNameAsync(profile.Username);
             string folder = Path.Combine("images", "profile");
             string filename = await profile.Photo.SaveImageAsync(_env.WebRootPath, folder);
-            
-           
+
+
             Image image = new Image();
             if (await _albomService.GetWithINameAsync("My profile photos", user.Id) == null)
             {
@@ -102,8 +171,8 @@ namespace TypeMeApi.Controllers
             {
                 image.AlbomId = (await _albomService.GetWithINameAsync("My profile photos", user.Id)).Id;
             }
-            
-            image.Link = "http://jrcomerun-001-site1.ftempurl.com/images/profile/"+ filename;
+
+            image.Link = "http://elgun20000-001-site1.btempurl.com/images/profile/" + filename;
             await _imageService.Add(image);
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -119,7 +188,7 @@ namespace TypeMeApi.Controllers
             string folder = Path.Combine("images", "cutedProfile");
             AppUser user = await _userManager.FindByNameAsync(profile.Username);
             string filename = await profile.Photo.SaveImageAsync(_env.WebRootPath, folder);
-            if (user.Image != "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png")
+            if (user.Image != "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/default.png")
             {
                 string path = Path.Combine(_env.WebRootPath, user.Image);
                 if (System.IO.File.Exists(path))
@@ -128,7 +197,7 @@ namespace TypeMeApi.Controllers
 
                 }
             }
-            user.Image = "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/" + filename;
+            user.Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + filename;
             await _userManager.UpdateAsync(user);
             return Ok();
         }
@@ -145,7 +214,7 @@ namespace TypeMeApi.Controllers
                 System.IO.File.Delete(path);
 
             }
-            user.Image = "http://jrcomerun-001-site1.ftempurl.com/images/cutedProfile/default.png";
+            user.Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/default.png";
             await _userManager.UpdateAsync(user);
         }
     }

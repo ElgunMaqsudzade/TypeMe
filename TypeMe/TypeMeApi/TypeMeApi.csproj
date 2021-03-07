@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210224151807_IdentityUser.cs" />
     <Compile Remove="Migrations\20210224151807_IdentityUser.Designer.cs" />
+    <Compile Remove="Migrations\20210307202448_gfgfg.cs" />
+    <Compile Remove="Migrations\20210307202448_gfgfg.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +34,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
   </ItemGroup>
 
 
