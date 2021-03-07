@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
 import { Link, useHistory, useParams } from "react-router-dom";
+import CreatePost from "../components/createpost";
 import PSidebar from "../components/profile/profile_sidebar";
 import InputField from "../components/profile/modalInputField";
 
@@ -119,6 +120,9 @@ const Profile = () => {
               )}
             </div>
             <div className="page-counts"></div>
+          </div>
+          <div className="posts">
+            <CreatePost />
           </div>
         </div>
       </div>

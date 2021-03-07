@@ -11,6 +11,7 @@ import Messenger from "./pages/messenger";
 import Friends from "./pages/friends";
 import ScrollToTop from "./components/scrolltotop";
 import FriendsSidebar from "./components/friends-page-comp/friendsSidebar";
+import Photos from "./pages/photos";
 
 function App() {
   const store = JSON.parse(localStorage.getItem("login"));
@@ -85,6 +86,19 @@ function App() {
                           <FriendsSidebar />
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </Route>
+              <Route exact path="/photos/:username">
+                <div className="page_header">
+                  <Navbar />
+                </div>
+                <div className="container page_layout">
+                  <div className="row">
+                    <LSidebar />
+                    <div className="col-9 offset-3">
+                      <Photos />
                     </div>
                   </div>
                 </div>

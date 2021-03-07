@@ -37,15 +37,8 @@
           &:hover {
             opacity: 1;
           }
-          &:hover + .emoji-box {
-            display: block;
-          }
         }
         .emoji-box {
-          display: none;
-          &:hover {
-            display: block;
-          }
           &::after {
             content: "";
             position: absolute;
@@ -70,150 +63,36 @@
       }
     }
   }
-  .submit-part {
-    height: 0px;
-    .create-submit {
-      display: none;
-    }
-    .create-settings {
-      display: none;
-    }
-    .create-more {
-      display: none;
-    }
-  }
-  .submit-part.expanded {
-    height: auto;
-    display: block;
-    position: relative;
-    border-top: 1px solid $clr-border-bottom-grey;
-    padding: 24px 20px 24px;
-    border-radius: 0 0 4px 4px;
-    .create-submit {
-      display: block;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 20px;
-      .create-s-btn {
-        border: none;
-        color: white;
-        background-color: $clr-main-blue;
-        padding: 7px 16px 8px;
-        text-align: center;
-        font-size: 12.5px;
-        border-radius: 4px;
-      }
-    }
-    .create-more {
-      display: block;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 150px;
-      position: absolute;
-      &::before {
-        content: "|";
-        position: absolute;
-        color: $clr-grey;
-        top: 50%;
-        transform: translateY(-50%);
-        left: -12px;
-      }
-    }
-    .create-settings {
-      top: 50%;
-      transform: translateY(-50%);
-      right: 80px;
-      position: absolute;
-      display: flex;
-      align-self: center;
-    }
-    .create-medias {
-      top: 50%;
-      transform: translateY(-50%);
-      left: 20px;
-    }
-  }
-  .create-medias {
-    top: 26px;
-    transform: translateY(-50%);
-    right: 20px;
-    position: absolute;
+  .create-footer {
+    border-radius: 0 0 4 4px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    background: #fafbfc;
+    border-top: 1px solid $clr-border-bottom-grey;
+    padding: 13px 20px 12px;
   }
-  .create-m-icon {
-    display: flex;
-    justify-content: center;
-    color: $clr-grey;
-    width: 40px !important;
-    height: 22px !important;
-    svg {
-      width: 22px;
-      height: 22px;
+
+  .short-adds {
+    .photo {
+      margin: 0 5px;
       cursor: pointer;
-      opacity: 0.8;
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-  .post-settings {
-    display: none;
-  }
-  .post-settings.expanded {
-    height: auto;
-    display: block;
-    border-top: 1px solid $clr-border-bottom-grey;
-    padding: 12px 20px;
-    border-radius: 0 0 4px 4px;
-    display: flex;
-    align-items: center;
-    .post-item {
-      display: flex;
-      align-items: center;
       color: $clr-grey;
-      margin-right: 30px;
-      background-color: transparent;
-      border: none;
-      .Icon {
-        margin-left: 2px;
-        color: $clr-grey;
-        opacity: 0.6;
-      }
-    }
-    .post-security {
-      position: relative;
-    }
-    .post-topic {
-      position: relative;
-    }
-    .post-content {
-      display: flex;
-      flex-direction: column;
-      min-width: 60px;
-      width: 210px;
-      position: absolute;
-      top: 20px;
-      left: -12px;
-      border-radius: 8px !important;
-      border: 0 !important;
-      color: black;
-      box-shadow: 0 5px 26px 0 rgba(0, 0, 0, 0.32) !important;
-      background-color: white;
-      z-index: 200;
-      padding: 8px 0;
-      .content-item {
-        cursor: pointer;
-        padding: 8px 0px 9px 12px;
-        line-height: 1.27em;
-        text-transform: capitalize;
+      top: 10px;
+      right: 15px;
+      transition: all 0.2s;
+      svg {
+        opacity: 0.8;
         &:hover {
-          background-color: $clr-light;
+          opacity: 1;
         }
       }
-      .content-item.checked {
-      }
     }
+  }
+  .short-adds.closed {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
   }
 }

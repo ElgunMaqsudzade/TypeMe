@@ -4,11 +4,9 @@ import { useGlobalContext } from "./../components/context";
 
 const App = () => {
   const { setCreateText, createText } = useGlobalContext();
-
   const onEmojiClick = (event, emojiObject) => {
     setCreateText(createText + emojiObject.emoji);
   };
-
   return (
     <>
       <Picker

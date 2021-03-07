@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import Emoji from "../components/emoji_picker";
 import {
   Icon20CameraOutline,
-  Icon20VideoOutline,
-  Icon20MusicOutline,
   Icon28SettingsOutline,
   Icon20SmileOutline,
   Icon12Dropdown,
@@ -15,19 +13,24 @@ import {
 
 const CreatePost = () => {
   const { setCreateText, createText, user } = useGlobalContext();
+  const [showEmoji, setShowEmoji] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [showPostSecurity, setShowPostSecurity] = useState(false);
-  const [showPostTopic, setShowPostTopic] = useState(false);
   let refCard = useRef(null);
-  let refPostSettings = useRef(null);
+  const emojiRef = useRef();
+
   useOutsideClick(refCard, () => {
     if (!createText) {
       setShowSubmit(false);
-      setShowPostSecurity(false);
-      setShowPostTopic(false);
+      setShowEmoji(false);
     }
   });
+  useOutsideClick(emojiRef, () => {
+    if (showEmoji) {
+      setShowEmoji(false);
+    }
+  });
+
   return (
     <div className="create mCard" ref={refCard}>
       <form>
@@ -46,70 +49,37 @@ const CreatePost = () => {
                 showSubmit={showSubmit}
                 placeholder={"What's new?"}
               />
+              {!showSubmit && (
+                <div className="short-adds closed">
+                  <Icon20CameraOutline className="photo" />
+                </div>
+              )}
             </div>
             <div className="text-smile">
-              {showSubmit && <Icon20SmileOutline />}
-              <div className={`emoji-box`}>
-                <Emoji />
-              </div>
+              {showSubmit && (
+                <Icon20SmileOutline
+                  className="emoji-toggler"
+                  onClick={() => setShowEmoji(!showEmoji)}
+                />
+              )}
+              {showEmoji && (
+                <div ref={emojiRef} className={`emoji-box`}>
+                  <Emoji />
+                </div>
+              )}
             </div>
           </div>
         </div>
-        <div ref={refPostSettings} className={`post-settings ${showSubmit ? "expanded" : ""}`}>
-          <div className="post-security">
-            <button
-              type="button"
-              className="post-item"
-              onClick={() => {
-                setShowPostSecurity(!showPostSecurity);
-                setShowPostTopic(false);
-              }}
-            >
-              Public post
-              <Icon12Dropdown />
-            </button>
-            {showPostSecurity && (
-              <ul className="post-s-content post-content">
-                <li className="content-item">Public Post</li>
-                <li className="content-item">Friends Only</li>
-              </ul>
-            )}
+        {showSubmit && (
+          <div className="create-footer">
+            <div className="footer-options">
+              <div className="short-adds">
+                <Icon20CameraOutline className="photo" />
+              </div>
+            </div>
+            <button className="main-btn-slim">Post</button>
           </div>
-          <div className="post-topic">
-            <button
-              type="button"
-              className="post-item"
-              onClick={() => {
-                setShowPostSecurity(false);
-                setShowPostTopic(!showPostTopic);
-              }}
-            >
-              Topic
-              <Icon12Dropdown />
-            </button>
-            {showPostTopic && (
-              <ul className="post-t-content post-content">
-                <li className="content-item">adsa</li>
-              </ul>
-            )}
-          </div>
-        </div>
-        <div className={`submit-part ${showSubmit ? "expanded" : ""}`}>
-          <div className="create-medias">
-            <Icon20CameraOutline className="create-m-photo create-m-icon" />
-            <Icon20VideoOutline className="create-m-video create-m-icon" />
-            <Icon20MusicOutline className="create-m-music create-m-icon" />
-          </div>
-          <div className="create-more">hey</div>
-          <div className="create-settings" onMouseOver={() => setShowSettings()}>
-            <Icon28SettingsOutline className="create-settings-icon create-m-icon" />
-          </div>
-          <div className="create-submit">
-            <button type="submit" className="create-s-btn">
-              Post
-            </button>
-          </div>
-        </div>
+        )}
       </form>
     </div>
   );

@@ -158,6 +158,34 @@ button {
     background-color: $clr-hover-blue;
   }
 }
+.main-btn-slimer {
+  cursor: pointer;
+  font-size: 12.5px;
+  border-radius: 3px;
+  text-align: center;
+  background-color: $clr-main-blue;
+  border: none;
+  color: white;
+  padding: 4px 16px;
+  margin: 0 10px;
+  &:hover {
+    opacity: 0.88;
+  }
+}
+.minor-btn-slimer {
+  cursor: pointer;
+  font-size: 12.5px;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #dfe6ed;
+  border: none;
+  color: $clr-main-blue;
+  padding: 4px 16px;
+  margin: 0 10px;
+  &:hover {
+    opacity: 0.88;
+  }
+}
 .s-button {
   opacity: 0.9;
   width: 90px;
@@ -253,4 +281,7 @@ button {
       height: 14px !important;
     }
   }
+}
+.emoji-search {
+  padding: 5px 10px !important;
 }

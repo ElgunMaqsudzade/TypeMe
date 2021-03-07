@@ -4,7 +4,7 @@ import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
-  url: "http://elgun20000-001-site1.btempurl.com",
+  url: "http://jrcomerun-001-site1.ftempurl.com",
   createText: "",
 };
 const AppProvider = ({ children }) => {
@@ -26,7 +26,7 @@ const AppProvider = ({ children }) => {
   const [resetInfo, setResetInfo] = useState(null);
 
   let instance = axios.create({
-    baseURL: "http://elgun20000-001-site1.btempurl.com/api/",
+    baseURL: "http://jrcomerun-001-site1.ftempurl.com/api",
     headers: { Authorization: `Bearer ${token} ` },
   });
 
@@ -73,7 +73,6 @@ const AppProvider = ({ children }) => {
   };
 
   const EditInfo = ({ id, statusmessage }) => {
-    console.log(statusmessage);
     instance
       .post("/profile/adddetailuser", { language: id, username: user.username, statusmessage })
       .then(({ data }) => {
@@ -83,7 +82,6 @@ const AppProvider = ({ children }) => {
   };
 
   const HandleOldUsers = (data) => {
-    console.log(data);
     if (oldUsers === null) {
       setOldUsers([data]);
     }

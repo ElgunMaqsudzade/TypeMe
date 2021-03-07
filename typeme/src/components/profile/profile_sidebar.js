@@ -120,7 +120,7 @@ function Profile_sidebar() {
       Resizer.imageFileResizer(
         profileImage,
         900,
-        600,
+        500,
         "JPEG",
         100,
         0,
