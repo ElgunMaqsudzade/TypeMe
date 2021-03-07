@@ -1,0 +1,60 @@
+@import "./main/variables";
+.editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: 1px solid $clr-f-card-grey;
+  border-radius: 2px;
+  background-color: #fafbfc;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  padding: 15px;
+  .input-field {
+    padding: 5px 24px 6px 9px;
+    margin: 0 0 10px;
+    border-radius: 3px;
+    border: 1px solid $clr-f-card-grey;
+    background: white;
+    width: 100%;
+    min-height: 28px;
+    line-height: 14px;
+    outline: 0;
+  }
+  .smile-icon {
+    position: absolute;
+    top: 19px;
+    right: 23px;
+    cursor: pointer;
+    color: $clr-f-card-grey;
+    transition: all 0.2s;
+    .Icon {
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  .emoji-box {
+    position: absolute;
+    top: 45px;
+    right: -3px;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px;
+      border-color: transparent transparent $clr-border-bottom-grey transparent;
+      top: -12px;
+      right: 29px;
+    }
+  }
+  .emoji-picker-react {
+    border: 1px solid $clr-border-bottom-grey;
+
+    z-index: 100;
+    width: 250px;
+    height: 260px;
+  }
+}

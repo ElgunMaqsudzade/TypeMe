@@ -4,7 +4,7 @@ import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
-  url: "http://elgun20000-001-site1.btempurl.com/",
+  url: "http://elgun20000-001-site1.btempurl.com",
   createText: "",
 };
 const AppProvider = ({ children }) => {
@@ -18,7 +18,7 @@ const AppProvider = ({ children }) => {
     username: null,
   });
   const [profileLoading, setProfileLoading] = useState(true);
-  const [text, setText] = useState(null);
+  const [friendsLoading, setFriendsLoading] = useState(true);
   const [token, setToken] = useState("");
   const [shortLogin, setShortLogin] = useState(null);
   const [oldUsers, setOldUsers] = useState(null);
@@ -73,8 +73,9 @@ const AppProvider = ({ children }) => {
   };
 
   const EditInfo = ({ id, statusmessage }) => {
+    console.log(statusmessage);
     instance
-      .post("/profile/adddetailuser", { language: id, username: user.name, statusmessage })
+      .post("/profile/adddetailuser", { language: id, username: user.username, statusmessage })
       .then(({ data }) => {
         console.log(data);
       })
@@ -111,15 +112,14 @@ const AppProvider = ({ children }) => {
   };
 
   const AddFriend = ({ tousername }) => {
-    setProfileLoading(true);
     instance
       .post("friend/addfriend", { fromusername: user.username, tousername })
-      .then(() => setProfileLoading(false))
+      .then(() => setFriendsLoading(true))
       .catch((res) => console.log(res));
   };
 
   const RemoveFriend = ({ tousername }) => {
-    setProfileLoading(true);
+    setFriendsLoading(true);
     instance
       .delete("friend/delete", {
         data: {
@@ -127,7 +127,7 @@ const AppProvider = ({ children }) => {
           tousername,
         },
       })
-      .then(() => setProfileLoading(false))
+      .then(() => setFriendsLoading(true))
       .catch((res) => console.log(res));
   };
 
@@ -150,7 +150,6 @@ const AppProvider = ({ children }) => {
         ...state,
         setProfileLoading,
         profileLoading,
-        setText,
         user,
         setCreateText,
         HandleOldUsers,
@@ -168,7 +167,9 @@ const AppProvider = ({ children }) => {
         instance,
         RefreshUser,
         EditInfo,
-        text,
+        profileLoading,
+        setFriendsLoading,
+        friendsLoading,
       }}
     >
       {children}

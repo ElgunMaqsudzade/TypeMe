@@ -54,6 +54,7 @@ function Login() {
           />
           <input
             type="password"
+            autoComplete="off"
             placeholder="Password"
             onChange={(e) => setLogin({ ...login, password: e.target.value })}
           />

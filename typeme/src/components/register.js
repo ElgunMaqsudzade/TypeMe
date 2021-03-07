@@ -140,6 +140,7 @@ function Register({ setVerifyEmail }) {
                     name="password"
                     className="reg-inp"
                     placeholder="Enter your password"
+                    autoComplete="off"
                   />
                   {errors.password && touched.password && (
                     <div className="input-feedback">
@@ -154,6 +155,7 @@ function Register({ setVerifyEmail }) {
                     name="checkpassword"
                     className="reg-inp"
                     placeholder="Re-enter your password"
+                    autoComplete="off"
                   />
                   {errors.checkpassword && touched.checkpassword && (
                     <div className="input-feedback">

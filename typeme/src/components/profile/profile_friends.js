@@ -3,24 +3,25 @@ import { useGlobalContext } from "../context";
 import { Link, useParams } from "react-router-dom";
 
 function Profile_friends() {
-  const { instance } = useGlobalContext();
-  const { username } = useParams();
-  const [loadingFriends, setLoadingFriends] = useState(true);
+  const { instance, friendsLoading, setFriendsLoading } = useGlobalContext();
   const [friends, setFriends] = useState([]);
+  const { username } = useParams();
 
   useEffect(() => {
-    setLoadingFriends(true);
-    instance
-      .post("friend/getallfriends", {
-        username: username,
-        status: 1,
-      })
-      .then(({ data }) => {
-        setFriends(data.friends);
-        setLoadingFriends(false);
-      })
-      .catch((res) => console.log(res));
-  }, [username, instance]);
+    if (username) {
+      instance
+        .post("friend/getallfriends", {
+          username: username,
+          status: 1,
+        })
+        .then(({ data }) => {
+          setFriends(data.friends);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+    }
+  }, [friendsLoading, username]);
 
   return (
     <div className="profile-friends">
@@ -28,7 +29,7 @@ function Profile_friends() {
         Friends <span className="profile-friends-count">{friends.length}</span>
       </div>
       <div className="profile-friends-body">
-        {loadingFriends ? (
+        {friendsLoading ? (
           <div className="loading">
             <div className="lds-dual-ring"></div>
           </div>

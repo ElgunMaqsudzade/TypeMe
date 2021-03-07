@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import PSidebar from "../components/profile/profile_sidebar";
 import InputField from "../components/profile/modalInputField";
 
 const Profile = () => {
-  const { instance, user, text, profileLoading, setProfileLoading } = useGlobalContext();
+  const history = useHistory();
+  const { instance, user, profileLoading, setProfileLoading, EditInfo } = useGlobalContext();
   const { username } = useParams();
-  const [statusMessage, setstatusMessage] = useState({
-    show: false,
-    message: "set a status message",
-  });
+  const [statusMessage, setstatusMessage] = useState("");
+  const [statusInput, setStatusInput] = useState(false);
   const [profile, setProfile] = useState({});
   const [showinfo, setShowinfo] = useState(false);
   const { name, surname, statusmessage } = profile;
@@ -21,10 +20,8 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    setstatusMessage((prev) => {
-      return { ...prev, message: text };
-    });
-  }, [text]);
+    setShowinfo(false);
+  }, [username]);
 
   useEffect(() => {
     setProfileLoading(true);
@@ -34,7 +31,9 @@ const Profile = () => {
         setProfile(data);
         setProfileLoading(false);
       })
-      .catch((res) => console.log(res));
+      .catch((res) => {
+        history.push("/error");
+      });
     // instance
     //   .post("/profile/addetailuser", { username: username })
     //   .then(({ data }) => {
@@ -42,6 +41,11 @@ const Profile = () => {
     //   })
     //   .catch((res) => console.log(res));
   }, [username]);
+
+  const HandleSave = (text) => {
+    setstatusMessage(text);
+    EditInfo({ statusmessage: text });
+  };
 
   return (
     <>
@@ -67,20 +71,24 @@ const Profile = () => {
                   <div className="online-status">{"online"}</div>
                 </div>
                 {statusmessage ? (
-                  <div className="user-current-status">{statusMessage.message}</div>
+                  <div className="user-current-status">{statusMessage}</div>
                 ) : (
                   user.username === username && (
                     <>
-                      <button
-                        className="user-current-status"
-                        onClick={() => setstatusMessage({ ...statusMessage, show: true })}
-                      >
-                        {statusMessage.message}
+                      <button className="user-current-status" onClick={() => setStatusInput(true)}>
+                        {statusMessage ? statusMessage : "set a status message"}
                       </button>
                     </>
                   )
                 )}
-                {statusMessage.show && <InputField />}
+                {statusInput && (
+                  <InputField
+                    setShowInput={setStatusInput}
+                    showInput={statusInput}
+                    handleSave={HandleSave}
+                    info={statusMessage}
+                  />
+                )}
               </div>
               <div className="profile-info">
                 {info.length > 0 && (

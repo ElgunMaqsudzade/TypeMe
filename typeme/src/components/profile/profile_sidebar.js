@@ -22,7 +22,8 @@ function Profile_sidebar() {
     RefreshUser,
     AddFriend,
     RemoveFriend,
-    setProfileLoading,
+    friendsLoading,
+    setFriendsLoading,
   } = useGlobalContext();
   const { username } = useParams();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -65,16 +66,13 @@ function Profile_sidebar() {
   });
 
   useEffect(() => {
+    setIsReqFriend(null);
     setIsFriend(false);
     userfriends.map((friend) => {
       if (friend.username === username) {
         return setIsFriend(true);
       }
     });
-  }, [username, userfriends]);
-
-  useEffect(() => {
-    setIsReqFriend(null);
     userReqfriends.map((friend) => {
       if (friend.username === username) {
         if (friend.isfromuser) {
@@ -84,10 +82,10 @@ function Profile_sidebar() {
         }
       }
     });
-  }, [username, userReqfriends]);
+  }, [username, userfriends, userReqfriends]);
 
   useEffect(() => {
-    if (user.username && instance) {
+    if (user.username && friendsLoading) {
       instance
         .post("friend/getallfriends", {
           username: user.username,
@@ -99,11 +97,6 @@ function Profile_sidebar() {
         .catch((res) => {
           console.log(res);
         });
-    }
-  }, [user.username, instance]);
-
-  useEffect(() => {
-    if (user.username && instance) {
       instance
         .post("friend/getallfriends", {
           username: user.username,
@@ -111,12 +104,16 @@ function Profile_sidebar() {
         })
         .then(({ data }) => {
           setUserReqFriends(data.friends);
+          setFriendsLoading(false);
         })
         .catch((res) => {
           console.log(res);
         });
+      setFriendOptions((prev) => {
+        return { ...prev, showFriendSettings: false };
+      });
     }
-  }, [user.username, instance]);
+  }, [user.username, friendsLoading]);
 
   useEffect(() => {
     if (profileImage) {
@@ -250,69 +247,66 @@ function Profile_sidebar() {
             ) : (
               <>
                 <div className="write profile-sidebar-main-item">Write message</div>
-                {isReqFriend === null ? (
-                  <>
-                    {isFriend === true ? (
+                {isFriend ? (
+                  <div className="sidebar-item-holder">
+                    <div
+                      ref={friendSettings}
+                      className={`profile-sidebar-minor-item dropdown ${
+                        friendOptions.showFriendSettings ? "active" : ""
+                      }`}
+                      onClick={() =>
+                        setFriendOptions({
+                          ...friendOptions,
+                          showFriendSettings: !friendOptions.showFriendSettings,
+                        })
+                      }
+                    >
+                      You're friends
+                    </div>
+                    {friendOptions.showFriendSettings && (
                       <>
-                        <div className="sidebar-item-holder">
+                        <div className="profile-sidebar-friend-settings">
                           <div
-                            ref={friendSettings}
-                            className={`profile-sidebar-minor-item dropdown ${
-                              friendOptions.showFriendSettings ? "active" : ""
-                            }`}
-                            onClick={() =>
-                              setFriendOptions({
-                                ...friendOptions,
-                                showFriendSettings: !friendOptions.showFriendSettings,
-                              })
-                            }
+                            className="friend-settings-item"
+                            onClick={() => RemoveFriend({ tousername: username })}
                           >
-                            You're friends
+                            Unfriend
                           </div>
-                          {friendOptions.showFriendSettings && (
-                            <>
-                              <div className="profile-sidebar-friend-settings">
-                                <div
-                                  className="friend-settings-item"
-                                  onClick={() => RemoveFriend({ tousername: username })}
-                                >
-                                  Unfriend
-                                </div>
-                              </div>
-                            </>
-                          )}
                         </div>
                       </>
-                    ) : (
-                      <div
-                        className="add-friend profile-sidebar-main-item"
-                        onClick={() => AddFriend({ tousername: username })}
-                      >
-                        Add friend
-                      </div>
                     )}
-                  </>
+                  </div>
                 ) : (
                   <>
-                    {isReqFriend === true ? (
-                      <>
-                        <div
-                          className="add-friend profile-sidebar-main-item"
-                          onClick={() => RemoveFriend({ tousername: username })}
-                        >
-                          Unfollow
+                    <div
+                      className="add-friend profile-sidebar-main-item"
+                      onClick={() => {
+                        if (isReqFriend) {
+                          RemoveFriend({ tousername: username });
+                        } else if (!isReqFriend) {
+                          AddFriend({ tousername: username });
+                        } else {
+                          AddFriend({ tousername: username });
+                        }
+                      }}
+                    >
+                      {friendsLoading ? (
+                        <div className="lds-ellipsis slim">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
                         </div>
-                      </>
-                    ) : (
-                      <>
-                        <div
-                          className="add-friend profile-sidebar-main-item"
-                          onClick={() => AddFriend({ tousername: username })}
-                        >
-                          AddFriend
-                        </div>
-                        <div className="following">{profile.name} is following you</div>
-                      </>
+                      ) : isReqFriend === null ? (
+                        "Add friend"
+                      ) : isReqFriend ? (
+                        "Unfollow"
+                      ) : (
+                        "Add friend"
+                      )}
+                    </div>
+                    {!isReqFriend && (
+                      <div className="following">{profile.name} is following you</div>
                     )}
                   </>
                 )}

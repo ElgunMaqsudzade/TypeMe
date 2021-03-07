@@ -5,8 +5,8 @@ import { useGlobalContext } from "./../components/context";
 const App = () => {
   const { setCreateText, createText } = useGlobalContext();
 
-  const onEmojiClick = (emojiObject) => {
-    setCreateText(createText + `&#x${emojiObject.unified};`);
+  const onEmojiClick = (event, emojiObject) => {
+    setCreateText(createText + emojiObject.emoji);
   };
 
   return (
