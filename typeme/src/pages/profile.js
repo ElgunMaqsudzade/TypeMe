@@ -10,15 +10,11 @@ const Profile = () => {
   const { instance, user, profileLoading, setProfileLoading, EditInfo } = useGlobalContext();
   const { username } = useParams();
   const [statusMessage, setstatusMessage] = useState("");
+  const [info, setInfo] = useState([]);
   const [statusInput, setStatusInput] = useState(false);
   const [profile, setProfile] = useState({});
   const [showinfo, setShowinfo] = useState(false);
-  const { name, surname, statusmessage } = profile;
-
-  const info = [
-    { title: "Language", value: "English" },
-    { title: "Language", value: "English" },
-  ];
+  const { name, surname } = profile;
 
   useEffect(() => {
     setShowinfo(false);
@@ -35,18 +31,25 @@ const Profile = () => {
       .catch((res) => {
         history.push("/error");
       });
-    // instance
-    //   .post("/profile/addetailuser", { username: username })
-    //   .then(({ data }) => {
-    //     console.log(data);
-    //   })
-    //   .catch((res) => console.log(res));
+    instance
+      .post("/profile/getdetailuser", { username: username })
+      .then(({ data }) => {
+        setstatusMessage(data.statusmessage);
+        setInfo(
+          Object.keys(data.profileinfo).map((i) => {
+            return { title: i, value: data.profileinfo[i] };
+          })
+        );
+      })
+      .catch((res) => console.log(res));
   }, [username]);
 
   const HandleSave = (text) => {
     setstatusMessage(text);
     EditInfo({ statusmessage: text });
   };
+
+  const data = { info: { tim: "dsa", john: "dsds", key: "dsdsdsa" } };
 
   return (
     <>
@@ -71,14 +74,14 @@ const Profile = () => {
                   </div>
                   <div className="online-status">{"online"}</div>
                 </div>
-                {statusmessage ? (
-                  <div className="user-current-status">{statusMessage}</div>
+                {user.username === username ? (
+                  <button className="user-current-status" onClick={() => setStatusInput(true)}>
+                    {statusMessage ? statusMessage : "set a status message"}
+                  </button>
                 ) : (
-                  user.username === username && (
+                  statusMessage && (
                     <>
-                      <button className="user-current-status" onClick={() => setStatusInput(true)}>
-                        {statusMessage ? statusMessage : "set a status message"}
-                      </button>
+                      <div className="user-current-status">{statusMessage}</div>
                     </>
                   )
                 )}

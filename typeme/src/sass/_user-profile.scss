@@ -33,8 +33,7 @@
       }
     }
     .profile-info {
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding: 10px 0;
       border-top: 1px solid $clr-border-bottom-grey;
       border-bottom: 1px solid $clr-border-bottom-grey;
       .full-info {
@@ -50,6 +49,9 @@
         }
       }
     }
+    .profile-full-info {
+      padding: 10px 0;
+    }
     .profile-info-box {
       width: 100%;
       display: flex;
@@ -57,8 +59,10 @@
       .info-title {
         width: 193px;
         color: $clr-grey;
+        text-transform: capitalize;
       }
       .info-value {
+        text-transform: capitalize;
         color: $clr-dark-blue;
         cursor: pointer;
         &:hover {

@@ -305,7 +305,7 @@ function Profile_sidebar() {
                         "Add friend"
                       )}
                     </div>
-                    {!isReqFriend && (
+                    {isReqFriend === false && (
                       <div className="following">{profile.name} is following you</div>
                     )}
                   </>

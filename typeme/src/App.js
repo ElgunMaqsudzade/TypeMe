@@ -19,7 +19,7 @@ function App() {
     <>
       <div className="page">
         <Router>
-          {!store || !store.logined ? <Redirect to="/" /> : null}
+          {/* {!store || !store.logined ? <Redirect to="/" /> : null} */}
           <ScrollToTop>
             <Switch>
               <Route exact path="/feed">

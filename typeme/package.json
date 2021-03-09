@@ -16,7 +16,6 @@
     "formik": "^2.2.6",
     "is-online": "^9.0.0",
     "node-sass": "^4.14.1",
-    "proxy": "http://jrcomerun-001-site1.ftempurl.com",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-chat-engine": "^1.6.1",
