@@ -44,16 +44,7 @@ function DeletePhoto({ deleteModal, setDeleteModal }) {
               Cancel
             </button>
             <button className="submit-btn main-btn-slim" onClick={() => DeleteTumbnail()}>
-              {loading ? (
-                <div className="lds-ellipsis slim">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              ) : (
-                "Delete"
-              )}
+              {loading ? <div className="lds-dual-ring slim"></div> : "Delete"}
             </button>
           </div>
         </div>

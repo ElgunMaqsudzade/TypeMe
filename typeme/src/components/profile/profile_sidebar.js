@@ -137,7 +137,6 @@ function Profile_sidebar() {
         200
       );
     } else {
-      setPreview(null);
       setShowavatar(false);
       setCropPreviewShow(false);
       setImageLoading(false);
@@ -172,18 +171,24 @@ function Profile_sidebar() {
   };
   const SendAlbomImage = () => {
     setImageLoading(true);
+    const fileExtension = extractImageFileExtensionFromBase64(preview);
+    const filename = "UserFull_Image." + fileExtension;
+    const newSendImage = base64StringtoFile(preview, filename);
     let fdata = new FormData();
-    fdata.append("photo", profileImage);
+    fdata.append("photo", newSendImage);
     fdata.append("username", user.username);
     instance
       .put("/profile/saveimage", fdata)
       .then((res) => {
+        setPreview(null);
         RefreshUser();
         setImageLoading(false);
         setShowavatar(false);
         setProfileImage(null);
       })
-      .catch((res) => console.log(res));
+      .catch((res) => {
+        console.log(res);
+      });
   };
 
   const CropImageLoaded = (crop) => {

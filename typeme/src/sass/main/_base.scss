@@ -160,31 +160,34 @@ button {
   }
 }
 .main-btn-slimer {
+  position: relative;
   cursor: pointer;
   font-size: 12.5px;
   border-radius: 3px;
   text-align: center;
   background-color: $clr-main-blue;
   border: none;
-  color: white;
+  color: white !important;
   padding: 4px 16px;
   margin: 0 10px;
+  opacity: 1 !important;
   &:hover {
-    opacity: 0.88;
+    opacity: 0.88 !important;
   }
 }
 .minor-btn-slimer {
+  position: relative;
   cursor: pointer;
   font-size: 12.5px;
   border-radius: 3px;
   text-align: center;
   background-color: #dfe6ed;
   border: none;
-  color: $clr-main-blue;
+  color: $clr-main-blue !important;
   padding: 4px 16px;
   margin: 0 10px;
   &:hover {
-    opacity: 0.88;
+    opacity: 0.88 !important;
   }
 }
 .s-button {
@@ -201,7 +204,17 @@ button {
     opacity: 1;
   }
 }
-
+.main-label {
+  margin: 18px 0 12px;
+  text-align: center;
+  font-weight: 500;
+}
+.main-input {
+  padding: 5px 9px 7px;
+  border-radius: 3px;
+  width: 100%;
+  border: 1px solid $clr-f-card-grey;
+}
 .showCard {
   text-align: left;
   min-width: 200px;
@@ -285,4 +298,68 @@ button {
 }
 .emoji-search {
   padding: 5px 10px !important;
+}
+.topside {
+  padding: 14px 20px;
+  min-height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $clr-border-bottom-grey;
+  .name-box {
+    font-size: 15px;
+    .count {
+      margin-left: 7px;
+      color: $clr-grey;
+      font-size: 14px;
+    }
+  }
+  .breadcrumps {
+    display: flex;
+    .breadcrump {
+      font-size: 15px;
+      margin-right: 20px;
+      display: flex;
+      align-items: center;
+      .between-icon {
+        color: $clr-grey;
+        width: 18px !important;
+        height: 18px !important;
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+      }
+      .count {
+        color: $clr-grey;
+        margin-left: 10px;
+      }
+    }
+    .link {
+      cursor: pointer;
+      color: $clr-grey !important;
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
+  }
+}
+.body-side {
+  padding: 15px;
+}
+.footer-side {
+  padding: 14px 20px;
+  min-height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid $clr-border-bottom-grey;
+  .name-box {
+    font-size: 15px;
+    .count {
+      margin-left: 7px;
+      color: $clr-grey;
+      font-size: 14px;
+    }
+  }
 }

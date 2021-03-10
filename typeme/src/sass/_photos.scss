@@ -1,26 +1,18 @@
 .images {
-  .topside {
-    padding: 14px 20px;
-    min-height: 54px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid $clr-border-bottom-grey;
-    .name-box {
-      font-size: 15px;
-      .count {
-        margin-left: 7px;
-        color: $clr-grey;
-        font-size: 14px;
-      }
-    }
-  }
-  .body-content.no-album {
-    display: block;
-    padding: 60px 20px;
+  .empty {
+    display: block !important;
+    padding: 60px 20px !important;
     text-align: center;
     color: $clr-grey;
     font-size: 13px;
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
+    .add-photo-btn {
+      width: 96px;
+      height: 25px;
+    }
   }
   .body-content {
     padding: 15px;
@@ -62,7 +54,40 @@
         opacity: 0.8;
         color: white;
       }
-      .album-edit {
+      &:hover {
+        .edit-shortcut {
+          opacity: 1;
+        }
+      }
+      .edit-shortcut {
+        transition: all 0.2s;
+        opacity: 0;
+        top: 0px;
+        right: 0px;
+        position: absolute;
+        display: flex;
+        margin: 8px;
+        padding: 3px;
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 0;
+        .edit-icon {
+          color: white;
+          cursor: pointer;
+          opacity: 0.7;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 22px !important;
+          height: 22px !important;
+          svg {
+            width: 17px !important;
+            height: 17px !important;
+          }
+          &:hover {
+            opacity: 1;
+          }
+        }
       }
     }
     .album.no-cover {
@@ -84,114 +109,75 @@
     }
   }
   .add-photos {
-    .breadcrumps {
-      .breadcrump {
-        font-size: 16px;
-        margin-right: 20px;
-        display: flex;
-        align-items: center;
-        &:first-of-type {
-          cursor: pointer;
-          color: $clr-grey;
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-        .between-icon {
-          color: $clr-grey;
-          width: 18px !important;
-          height: 18px !important;
-          svg {
-            width: 18px !important;
-            height: 18px !important;
-          }
-        }
-      }
-    }
     .image-box {
       padding: 18px 17px 10px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
       grid-gap: 10px;
-      .added-image {
-        cursor: pointer;
-        position: relative;
-        height: 127px;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center 35%;
-        background-color: #f0f2f5;
-        &:hover {
-          .image-options {
-            opacity: 1;
-          }
-        }
-        .image-restore {
-          z-index: 1;
-          position: absolute;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(255, 255, 255, 0.8);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          .restore {
-            border: none;
-            background-color: transparent;
-            color: $clr-dark-blue;
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline;
-            }
-          }
-        }
-        .image-options {
-          transition: all 0.2s;
-          opacity: 0;
-          top: 0px;
-          right: 0px;
-          position: absolute;
-          display: flex;
-          margin: 8px;
-          padding: 3px;
-          border-radius: 3px;
-          background: rgba(0, 0, 0, 0.4);
-          z-index: 0;
-          .image-option {
-            color: white;
-            cursor: pointer;
-            opacity: 0.7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 22px !important;
-            height: 22px !important;
-            svg {
-              width: 17px !important;
-              height: 17px !important;
-            }
-            &:hover {
-              opacity: 1;
-            }
-          }
-        }
-      }
     }
-    .footer-side {
-      padding: 14px 20px;
-      min-height: 54px;
+  }
+
+  .images-box-mini {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-gap: 10px;
+    .image {
+      height: 127px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-color: #f0f2f5;
+    }
+    .image.small-img {
+      background-size: inherit;
+      background-position: center;
+    }
+  }
+  .edit-side {
+    position: relative;
+    padding: 20px 30px 40px;
+    .title {
+      margin: 18px 0 12px;
+      text-align: center;
+      font-weight: 500;
+    }
+    .cover {
+      height: 139px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      background-color: #f0f2f5;
+    }
+    .cover.small-img {
+      background-size: inherit;
+      background-position: center;
+    }
+    .title-inp {
+      padding: 5px 9px 7px;
+      border-radius: 3px;
+      width: 100%;
+      border: 1px solid $clr-f-card-grey;
+    }
+    .save-btn {
+      margin: 10px 0;
+      float: right;
+    }
+  }
+  .footer-lg-side {
+    padding: 0 17px 10px;
+    .footer-title {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: space-between;
+      background-color: white;
+      padding: 19px 0 18px;
       border-top: 1px solid $clr-border-bottom-grey;
-      .name-box {
-        font-size: 15px;
-        .count {
-          margin-left: 7px;
-          color: $clr-grey;
-          font-size: 14px;
+      .options {
+        .option {
+          color: $clr-dark-blue;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
