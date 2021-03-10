@@ -82,7 +82,7 @@ function Photos() {
 
   const DeleteAlbum = (id) => {
     instance
-      .delete("/albom/deletealbom", { data: { albumid: id } })
+      .delete("/albom/deletealbom", { data: { albumid: id, username: username } })
       .then(() => {
         history.push(`/photos/${username}`);
         setPhotosLoading(true);
@@ -90,6 +90,20 @@ function Photos() {
       .catch((res) => console.log(res));
   };
 
+  const ChangeAlbumName = (id, albumName) => {
+    instance
+      .put("albom/editalbom", { albumid: id, albumname: albumName })
+      .then((res) => setPhotosLoading(true))
+      .catch((res) => console.log(res));
+  };
+  const ChangeCover = (id, imageid) => {
+    instance
+      .post("albom/changecoveralbom", { albumid: id, imageid: imageid })
+      .then((res) => {
+        setPhotosLoading(true);
+      })
+      .catch((res) => console.log(res));
+  };
   if (photosLoading) {
     return (
       <>
@@ -122,6 +136,8 @@ function Photos() {
             setAlbumImages={setAlbumImages}
             {...album}
             DeleteAlbum={DeleteAlbum}
+            ChangeAlbumName={ChangeAlbumName}
+            ChangeCover={ChangeCover}
           />
         );
       }

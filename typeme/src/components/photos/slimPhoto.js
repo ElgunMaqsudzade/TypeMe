@@ -22,7 +22,8 @@ function SlimPhoto({ id, photo, setImages, images }) {
     setLoading(true);
     instance
       .delete("/albom/deleteimage", { data: { imageid: id, username: user.username } })
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         setLoading(false);
         setImages(images.filter((image) => image.id !== id));
         Cancel();

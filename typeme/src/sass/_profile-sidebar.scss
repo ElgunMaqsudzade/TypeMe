@@ -12,8 +12,9 @@
     .text-box {
       background-color: rgba(0, 0, 0, 0.6);
       position: absolute;
-      bottom: -50px;
-      height: 50px;
+      bottom: -15px;
+      opacity: 0;
+      height: 40px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -51,6 +52,7 @@
     &:hover {
       .text-box {
         bottom: 0;
+        opacity: 1;
       }
     }
   }

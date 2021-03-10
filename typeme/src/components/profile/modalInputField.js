@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../../sass/_inputField.scss";
 import ContentEditable from "react-contenteditable";
 import outclick from "../customHooks/showHide";
