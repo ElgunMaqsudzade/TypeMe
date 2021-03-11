@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
-import { useQuery } from "../customHooks/useQuery";
-import { Icon24BrowserForward, Icon28AddSquareOutline, Icon16Cancel } from "@vkontakte/icons";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { Icon24BrowserForward } from "@vkontakte/icons";
 
-function SingleAlbum({ id, name, cover, images, AddPhotoHandler }) {
+function SingleAlbum({ id, name, images, AddPhotoHandler }) {
   const { username } = useParams();
-  const history = useHistory();
-  const [addSinglePhoto, setAddSinglePhoto] = useState();
-  const query = useQuery();
 
   return (
     <div className="images mCard">

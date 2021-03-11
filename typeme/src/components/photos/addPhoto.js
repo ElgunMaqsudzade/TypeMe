@@ -23,7 +23,6 @@ function AddPhoto({
   const { username } = useParams();
   const query = useQuery();
   const [preview, setPreview] = useState([]);
-  const [options, setOptions] = useState([]);
   const photoInp = React.useRef(null);
 
   useEffect(() => {
@@ -121,10 +120,12 @@ function AddPhoto({
                 })
               : "You didn't add any photos"}
           </div>
-          <div className="footer-side">
-            <button className="main-btn-slim">Post to my wall</button>
-            <button className="minor-btn-slim">Add to album</button>
-          </div>
+          {query.get("album") === "" && (
+            <div className="footer-side">
+              <button className="main-btn-slim">Post to my wall</button>
+              <button className="minor-btn-slim">Add to album</button>
+            </div>
+          )}
         </div>
       </div>
       <input

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useQuery } from "../components/customHooks/useQuery";
-import { Icon24PenOutline } from "@vkontakte/icons";
+import { Icon24PenOutline, Icon20DeleteOutline } from "@vkontakte/icons";
 import Album from "../components/photos/singleAlbum";
+import Recycle from "../components/photos/recycle";
 import EditAlbum from "../components/photos/editAlbum";
 import AddPhoto from "../components/photos/addPhoto";
 import CreateAlbum from "../components/photos/newAlbum";
@@ -114,6 +115,8 @@ function Photos() {
         </div>
       </>
     );
+  } else if (query.get("act") === "recycle") {
+    return <Recycle setPhotosLoading={setPhotosLoading} albums={albums} />;
   } else if (query.get("act") === "addphoto") {
     return (
       <AddPhoto
@@ -134,6 +137,8 @@ function Photos() {
           <EditAlbum
             key={album.id}
             setAlbumImages={setAlbumImages}
+            albums={albums}
+            setPhotosLoading={setPhotosLoading}
             {...album}
             DeleteAlbum={DeleteAlbum}
             ChangeAlbumName={ChangeAlbumName}
@@ -177,6 +182,13 @@ function Photos() {
                 My albums <span className="count">{albums.length > 0 && albums.length}</span>
               </div>
               <div className="buttons">
+                <Link
+                  to={`/photos/${username}?act=recycle`}
+                  className="recycle-bin-btn minor-btn-slimer"
+                >
+                  <Icon20DeleteOutline className="recycle-icon" />
+                  Recycle bin
+                </Link>
                 <button className="minor-btn-slimer" onClick={() => setShowCreateAlbum(true)}>
                   New album
                 </button>
@@ -194,9 +206,13 @@ function Photos() {
                         to={`/photos/${username}?album=${id}`}
                         key={id}
                         style={{
-                          backgroundImage: `url(${images.length === 0 ? Camera : cover})`,
+                          backgroundImage: `url(${
+                            images.length === 0 || cover === null ? Camera : cover
+                          })`,
                         }}
-                        className={`album ${images.length === 0 ? "no-cover" : ""}`}
+                        className={`album ${cover === null ? "small-img" : ""} ${
+                          images.length === 0 ? "no-cover" : ""
+                        }`}
                       >
                         <div className="edit-shortcut">
                           <Icon24PenOutline

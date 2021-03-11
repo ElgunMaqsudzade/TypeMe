@@ -1,0 +1,102 @@
+@import "./main/variables";
+.recycle {
+  .footer-lg-side {
+    padding: 0 17px 10px;
+
+    .footer-title {
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 19px 0 18px;
+      border-top: 1px solid $clr-border-bottom-grey;
+      .options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .option {
+          margin: 0 10px;
+          color: $clr-dark-blue;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .images-box-mini {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-gap: 10px;
+      .image {
+        height: 127px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: #f0f2f5;
+      }
+      .image.small-img {
+        background-size: inherit;
+        background-position: center;
+      }
+    }
+    .empty {
+      display: block !important;
+      padding: 60px 20px !important;
+      text-align: center;
+      color: $clr-grey;
+      font-size: 13px;
+    }
+    .empty-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .empty-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px !important;
+        height: 40px !important;
+        margin-bottom: 10px;
+        svg {
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+    }
+  }
+  .albums-modal {
+    width: 750px;
+    .albums-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-gap: 5px;
+      .albums-image {
+        cursor: pointer;
+        height: 165px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-color: #f0f2f5;
+        .icon-holder {
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .move-icon {
+            opacity: 0;
+            color: white;
+            font-size: 40px;
+          }
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            .move-icon {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
