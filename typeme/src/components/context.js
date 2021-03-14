@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
+import { useQuery } from "./customHooks/useQuery";
 import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
   url: "http://elgun20000-001-site1.btempurl.com/",
-  createText: "",
 };
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -66,13 +66,9 @@ const AppProvider = ({ children }) => {
     localStorage.setItem("oldusers", JSON.stringify(oldUsers));
   }, [oldUsers]);
 
-  const setCreateText = (text) => {
-    return dispatch({ type: "CREATE_TEXT", payload: text });
-  };
-
   const EditInfo = ({ id, statusmessage }) => {
     instance
-      .post("/profile/adddetailuser", { language: id, username: user.username, statusmessage })
+      .put("/profile/adddetailuser", { language: id, username: user.username, statusmessage })
       .catch((res) => console.log(res));
   };
 
@@ -106,7 +102,7 @@ const AppProvider = ({ children }) => {
 
   const AddFriend = ({ tousername }) => {
     instance
-      .post("friend/addfriend", { fromusername: user.username, tousername })
+      .put("friend/addfriend", { fromusername: user.username, tousername })
       .then(() => setFriendsLoading(true))
       .catch((res) => console.log(res));
   };
@@ -144,7 +140,6 @@ const AppProvider = ({ children }) => {
         setProfileLoading,
         profileLoading,
         user,
-        setCreateText,
         HandleOldUsers,
         setLogged,
         logged,

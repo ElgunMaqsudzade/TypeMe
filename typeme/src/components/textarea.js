@@ -1,27 +1,23 @@
 import React, { useRef } from "react";
 import ContentEditable from "react-contenteditable";
-import { useGlobalContext } from "./../components/context";
 
-function Textarea({ placeholder, setShowSubmit, showSubmit }) {
-  const { setCreateText, createText } = useGlobalContext();
+function Textarea({ placeholder, setShowSubmit, showSubmit, setText, text }) {
   const textarea = useRef(null);
   const FocusHandler = () => {
-    setShowSubmit(true);
+    if (setShowSubmit) setShowSubmit(true);
   };
   return (
     <>
       <div className="textarea-box">
         <ContentEditable
-          className={`textarea ${showSubmit ? "expanded" : ""}`}
+          className={`textarea ${showSubmit && (showSubmit ? "expanded" : "")}`}
           innerRef={textarea}
-          html={createText}
+          html={text}
           disabled={false}
           onFocus={FocusHandler}
-          onChange={() => setCreateText(textarea.current.innerText)}
+          onChange={() => setText(textarea.current.innerText)}
         />
-        {!createText && (
-          <div className={`placeholder ${showSubmit ? "focus" : ""}`}>{placeholder}</div>
-        )}
+        {!text && <div className={`placeholder ${showSubmit ? "focus" : ""}`}>{placeholder}</div>}
       </div>
     </>
   );

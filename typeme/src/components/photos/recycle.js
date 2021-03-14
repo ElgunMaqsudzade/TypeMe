@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../context";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useQuery } from "../customHooks/useQuery";
 import { FiPlusCircle } from "react-icons/fi";
 import outside from "../customHooks/showHide";
@@ -13,10 +13,13 @@ import {
   Icon28AddSquareOutline,
 } from "@vkontakte/icons";
 import "../../sass/_recycle.scss";
+import Imagemodal from "../imagemodal";
 
-function Recycle({ setPhotosLoading, albums }) {
+function Recycle({ setPhotosLoading, albums, ExitImage }) {
   const { instance, user } = useGlobalContext();
   const query = useQuery();
+  const location = useLocation();
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
@@ -152,10 +155,22 @@ function Recycle({ setPhotosLoading, albums }) {
             <div className="options">
               {checked.length > 0 ? (
                 <>
-                  <div className="option" onClick={() => ChangeMultiImage()}>
+                  <div
+                    className="option"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      ChangeMultiImage();
+                    }}
+                  >
                     Move to album
                   </div>
-                  <div className="option" onClick={() => setShowDeleteAllModal(true)}>
+                  <div
+                    className="option"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowDeleteAllModal(true);
+                    }}
+                  >
                     Delete
                   </div>
                   <div className="option" onClick={() => setChecked([])}>
@@ -190,21 +205,28 @@ function Recycle({ setPhotosLoading, albums }) {
                         style={{
                           backgroundImage: `url(${photo})`,
                         }}
+                        onClick={() => {
+                          history.push(`${location.pathname + location.search}&image=${id}`);
+                        }}
                       >
                         {(query.get("act") === "edit" || query.get("act") === "recycle") &&
                           (checked.includes(id) ? (
                             <Icon24CheckCircleOn
                               className={`check-icon on`}
-                              onClick={() =>
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
                                 setChecked((prev) => {
                                   return prev.filter((check) => check !== id);
-                                })
-                              }
+                                });
+                              }}
                             />
                           ) : (
                             <Icon24CheckCircleOff
                               className={`check-icon`}
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
                                 if (checked.length === 0) {
                                   setChecked([...checked, id]);
                                 } else if (checked.length > 0) {
@@ -220,11 +242,17 @@ function Recycle({ setPhotosLoading, albums }) {
                         <div className="image-options">
                           <Icon28AddSquareOutline
                             className="image-option"
-                            onClick={() => ChangeAlbum(id)}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              ChangeAlbum(id);
+                            }}
                           />
                           <Icon16Cancel
                             className="image-option"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
                               setSingleId(id);
                               setShowModal(true);
                             }}
@@ -235,7 +263,13 @@ function Recycle({ setPhotosLoading, albums }) {
                             <div ref={deleteModalRef} className="modal-holder delete-modal">
                               <div className="modal-top">
                                 Warning
-                                <Icon16Cancel className="modal-top-icon" onClick={() => Cancel()} />
+                                <Icon16Cancel
+                                  className="modal-top-icon"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    Cancel();
+                                  }}
+                                />
                               </div>
                               <div className="modal-body">
                                 Are you sure you want to move this photo to Recycle Bin?
@@ -243,13 +277,19 @@ function Recycle({ setPhotosLoading, albums }) {
                               <div className="modal-footer">
                                 <button
                                   className="cancel-btn minor-btn-slim"
-                                  onClick={() => Cancel()}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    Cancel();
+                                  }}
                                 >
                                   Cancel
                                 </button>
                                 <button
                                   className="main-btn-slim"
-                                  onClick={() => DeleteImage(singleId)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    DeleteImage(singleId);
+                                  }}
                                 >
                                   {loading !== false ? (
                                     <div className="lds-dual-ring slim"></div>
@@ -274,12 +314,19 @@ function Recycle({ setPhotosLoading, albums }) {
             )}
           </div>
         </div>
+        <Imagemodal images={images} />
         {showAlbumsModal && (
           <div className="modal-box">
             <div ref={albumModal} className="modal-holder albums-modal delete-modal">
               <div className="albums-top modal-top">
                 Move the photo to an album To a new album
-                <Icon16Cancel className="modal-top-icon" onClick={() => CancelAlbumModal()} />
+                <Icon16Cancel
+                  className="modal-top-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    CancelAlbumModal();
+                  }}
+                />
               </div>
               <div className="albums-body modal-body">
                 {albums.map((album) => {
@@ -305,13 +352,20 @@ function Recycle({ setPhotosLoading, albums }) {
                 })}
               </div>
               <div className="footer-side justify-content-end">
-                <div className="main-btn-slimer" onClick={() => CancelAlbumModal()}>
+                <div
+                  className="main-btn-slimer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    CancelAlbumModal();
+                  }}
+                >
                   Close
                 </div>
               </div>
             </div>
           </div>
         )}
+
         {showDeleteAllModal && (
           <div className="modal-box">
             <div ref={deleteAllModalRef} className="modal-holder delete-modal">
@@ -319,7 +373,10 @@ function Recycle({ setPhotosLoading, albums }) {
                 Warning
                 <Icon16Cancel
                   className="modal-top-icon"
-                  onClick={() => setShowDeleteAllModal(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDeleteAllModal(false);
+                  }}
                 />
               </div>
               <div className="modal-body">
@@ -328,7 +385,10 @@ function Recycle({ setPhotosLoading, albums }) {
               <div className="modal-footer">
                 <button
                   className="cancel-btn minor-btn-slim"
-                  onClick={() => setShowDeleteAllModal(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDeleteAllModal(false);
+                  }}
                 >
                   Cancel
                 </button>

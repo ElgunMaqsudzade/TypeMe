@@ -1,5 +1,7 @@
 @import "./main/variables";
 .profile-sidebar {
+  position: fixed;
+  width: 254px;
   .avatar {
     position: relative;
     cursor: pointer;

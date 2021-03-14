@@ -1,9 +1,11 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Icon24BrowserForward } from "@vkontakte/icons";
+import Imagemodal from "../imagemodal";
 
 function SingleAlbum({ id, name, images, AddPhotoHandler }) {
   const { username } = useParams();
+  const location = useLocation();
 
   return (
     <div className="images mCard">
@@ -21,7 +23,6 @@ function SingleAlbum({ id, name, images, AddPhotoHandler }) {
             </div>
           </div>
           <div className="buttons">
-            <button className="minor-btn-slimer">Download Album</button>
             <Link to={`/photos/${username}?album=${id}&act=edit`} className="minor-btn-slimer">
               Edit Album
             </Link>
@@ -41,18 +42,20 @@ function SingleAlbum({ id, name, images, AddPhotoHandler }) {
                   imgwidth = img.width;
                 };
                 return (
-                  <div
+                  <Link
                     key={id}
+                    to={`${location.pathname}${location.search}&image=${id}`}
                     className={`image ${imgwidth < 200 ? "small-img" : ""}`}
                     style={{
                       backgroundImage: `url(${photo})`,
                     }}
-                  ></div>
+                  ></Link>
                 );
               })
             : "There are no photos in this album"}
         </div>
       </div>
+      <Imagemodal images={images} />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   base64StringtoFile,
 } from "../customHooks/ReuseableUtils";
 import { Icon24BrowserForward } from "@vkontakte/icons";
+import Imagemodal from "../imagemodal";
 
 function AddPhoto({
   addPhoto,
@@ -128,6 +129,7 @@ function AddPhoto({
           )}
         </div>
       </div>
+      <Imagemodal images={preview} />
       <input
         ref={photoInp}
         type="file"

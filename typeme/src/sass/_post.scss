@@ -1,0 +1,339 @@
+@import "./main/variables";
+.post {
+  .post-topside {
+    display: flex;
+    padding: 15px 20px 0;
+    .user-avatar {
+      margin-right: 10px;
+      overflow: hidden;
+      border-radius: 50%;
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+    }
+    .user-info {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      .fullname {
+        margin-bottom: 3px;
+        font-size: 13px;
+        font-weight: 500;
+        color: $clr-dark-blue;
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+      .time {
+        cursor: pointer;
+        font-size: 11px;
+        color: $clr-grey;
+        &:hover {
+          text-decoration: underline !important;
+        }
+      }
+    }
+  }
+  .post-content {
+    padding: 8px 20px 20px;
+    .description {
+      padding: 3px 0 10px;
+      font-size: 13px;
+    }
+    .images {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .post-image {
+        width: 100%;
+        position: relative;
+        background-color: white;
+        cursor: pointer;
+      }
+    }
+  }
+  .post-popularity {
+    padding: 0 20px;
+    .post-numbers {
+      border-top: 1px solid $clr-border-bottom;
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .main-box {
+        display: flex;
+        justify-content: center;
+        .item {
+          cursor: pointer;
+          color: $clr-grey;
+          padding: 0 3px;
+          margin-right: 20px;
+          display: flex;
+          align-items: center;
+          .item-icon {
+            margin-right: 5px;
+            width: 24px !important;
+            height: 24px !important;
+            opacity: 0.7;
+            svg {
+              width: 24px !important;
+              height: 24px !important;
+            }
+            &:hover {
+              opacity: 1;
+            }
+          }
+          .item-icon.liked {
+            color: red;
+          }
+        }
+      }
+      .minor-box {
+        display: flex;
+        .item {
+          padding: 0 3px;
+          color: $clr-grey;
+          margin-left: 20px;
+          display: flex;
+          align-items: center;
+          .item-icon {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+  .post-comments {
+    border-top: 1px solid $clr-border-bottom;
+    padding: 0 20px;
+    .comments-box {
+      padding-top: 10px;
+      .comment {
+        display: flex;
+        padding: 7px 0;
+        .avatar-box {
+          width: 34px;
+          height: 34px;
+          overflow: hidden;
+          margin-right: 10px;
+          border-radius: 50%;
+        }
+        .comment-content {
+          flex-grow: 1;
+          .comment-body {
+            &:hover {
+              .single-comment-like {
+                opacity: 0.6 !important;
+              }
+            }
+          }
+          .name-box {
+            color: $clr-dark-blue;
+            font-weight: 500;
+            &:hover {
+              text-decoration: underline !important;
+            }
+          }
+          .comment-description {
+            font-size: 12.5px;
+          }
+        }
+        .comment-footer {
+          width: 100%;
+          padding-top: 4px;
+          display: flex;
+          justify-content: space-between;
+          .main-items {
+            display: flex;
+            .time {
+            }
+            .reply-btn {
+              border: none;
+              background: transparent;
+              font-size: 11px;
+              color: $clr-dark-blue;
+              &:hover {
+                text-decoration: underline !important;
+              }
+            }
+          }
+          .minor-items {
+            .single-item {
+              .single-comment-like {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                .Icon {
+                  width: 14px !important;
+                  height: 14px !important;
+                  margin-right: 3px;
+                  svg {
+                    width: 14px !important;
+                    height: 14px !important;
+                  }
+                }
+                span {
+                  opacity: 0;
+                }
+                color: $clr-grey;
+                opacity: 0;
+                &:hover {
+                  opacity: 1 !important;
+                }
+              }
+              .single-comment-like.haslike {
+                opacity: 0.6 !important;
+                span {
+                  opacity: 1 !important;
+                }
+              }
+
+              .single-comment-like.liked {
+                opacity: 1 !important;
+                color: red;
+              }
+            }
+          }
+        }
+        .childcomments-toggler {
+          padding-top: 10px;
+          color: $clr-dark-blue;
+          font-size: 12px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          border: none;
+          background-color: transparent;
+          span {
+            margin: 0 3px;
+            font-weight: 700;
+          }
+        }
+      }
+      .reply-comment {
+        .comment-body {
+          display: flex;
+          width: 100%;
+          dis
+          .avatar-box {
+            width: 24px;
+            height: 24px;
+          }
+        }
+        .reply-info {
+          margin-left: 10px;
+          font-size: 12px;
+          color: $clr-grey !important;
+          .repliedto {
+            color: $clr-grey !important;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline !important;
+            }
+          }
+        }
+      }
+    }
+    .create-comment.reply-area {
+      padding: 12px 0;
+      .avatar-box {
+        margin: 3px 0;
+        width: 24px;
+        height: 24px;
+        margin-right: 7px;
+      }
+      .comment-input {
+        .textarea-box {
+          padding: 5px 35px 5px 10px;
+          width: 369px;
+          .placeholder {
+            top: 5px;
+            left: 10px;
+          }
+        }
+        .emoji-toggler {
+          top: 5px;
+        }
+      }
+      .send-btn {
+        top: 15px;
+      }
+    }
+    .create-comment {
+      position: relative;
+      padding: 12px 0;
+      display: flex;
+      .avatar-box {
+        width: 34px;
+        height: 34px;
+        margin-right: 10px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: block;
+      }
+      .comment-input {
+        position: relative;
+        .textarea-box {
+          border: 1px solid $clr-border-bottom;
+          z-index: 0;
+          border-radius: 6px;
+          width: 400px;
+          padding: 7px 35px 7px 13px;
+          .textarea {
+            min-height: auto;
+          }
+          .placeholder {
+            top: 7px;
+            left: 13px;
+          }
+        }
+        .emoji-toggler {
+          cursor: pointer;
+          position: absolute;
+          color: #828a99;
+          opacity: 0.7;
+          top: 7px;
+          right: 10px;
+          &:hover {
+            opacity: 1;
+          }
+        }
+        .emoji-toggler.on {
+          opacity: 1;
+        }
+      }
+      .emoji-holder {
+        background-color: white;
+        z-index: 100;
+        top: 48px;
+        position: absolute;
+        z-index: 1000000;
+        right: 60px;
+        &::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-width: 6px;
+          border-color: transparent transparent $clr-border-bottom-grey transparent;
+          top: -11px;
+          right: 9px;
+        }
+      }
+      .emoji-picker-react {
+        border: 1px solid $clr-border-bottom-grey;
+        width: 250px;
+        height: 260px;
+      }
+      .send-btn {
+        position: absolute;
+        top: 17px;
+        right: 10px;
+        border: none;
+        color: $clr-grey;
+        background-color: transparent;
+      }
+    }
+  }
+}

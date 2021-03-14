@@ -1,0 +1,88 @@
+@import "./main/variables";
+.upload {
+  height: auto;
+  width: 550px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  .modal-body {
+    padding: 0;
+    .upload-local {
+      font-weight: 500;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border: none;
+      color: $clr-dark-blue;
+      background-color: $clr-light;
+      &:hover {
+        background-color: $clr-hover-blue;
+      }
+      .add-icon {
+        margin-right: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 18px !important;
+        height: 18px !important;
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+      }
+    }
+    .albums {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-gap: 5px;
+      .album {
+        cursor: pointer;
+        height: 130px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: $clr-light;
+        position: relative;
+        .albom-title-wrap {
+          padding: 35px 12px 9px;
+          color: white;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+        .album-name {
+          position: absolute;
+          bottom: 10px;
+          left: 15px;
+          font-weight: 700;
+          color: white;
+          text-transform: capitalize;
+        }
+        .image-count {
+          position: absolute;
+          bottom: 10px;
+          right: 15px;
+          font-size: 13px;
+          opacity: 0.8;
+          color: white;
+        }
+      }
+    }
+    .images {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+      grid-gap: 5px;
+    }
+    .upload-footer {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        width: auto;
+      }
+    }
+  }
+}

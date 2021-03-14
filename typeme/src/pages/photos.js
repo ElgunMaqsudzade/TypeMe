@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, useLocation } from "react-router-dom";
 import { useQuery } from "../components/customHooks/useQuery";
+import Imagemodal from "../components/imagemodal";
 import { Icon24PenOutline, Icon20DeleteOutline } from "@vkontakte/icons";
 import Album from "../components/photos/singleAlbum";
 import Recycle from "../components/photos/recycle";
@@ -99,7 +100,7 @@ function Photos() {
   };
   const ChangeCover = (id, imageid) => {
     instance
-      .post("albom/changecoveralbom", { albumid: id, imageid: imageid })
+      .put("albom/changecoveralbom", { albumid: id, imageid: imageid })
       .then((res) => {
         setPhotosLoading(true);
       })
@@ -257,19 +258,21 @@ function Photos() {
                 {images.map((image) => {
                   const { id, photo } = image;
                   return (
-                    <div
+                    <Link
+                      to={`/photos/${username}?image=${id}`}
                       key={id}
                       className="image"
                       style={{
                         backgroundImage: `url(${photo})`,
                       }}
-                    ></div>
+                    ></Link>
                   );
                 })}
               </div>
             </div>
           )}
         </div>
+        <Imagemodal images={images} />
         {showCreateAlbum && (
           <CreateAlbum
             show={showCreateAlbum}

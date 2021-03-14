@@ -6,6 +6,7 @@ import outside from "../customHooks/showHide";
 import { Icon24BrowserForward, Icon24Gallery, Icon16Cancel } from "@vkontakte/icons";
 import { FiPlusCircle } from "react-icons/fi";
 import SlimPhoto from "./slimPhoto";
+import Imagemodal from "../imagemodal";
 
 function EditAlbum({
   id,
@@ -186,13 +187,31 @@ function EditAlbum({
             <div className="options">
               {checked.length > 0 ? (
                 <>
-                  <div className="option" onClick={() => ChangeMultiImage()}>
+                  <div
+                    className="option"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      ChangeMultiImage();
+                    }}
+                  >
                     Move to album
                   </div>
-                  <div className="option" onClick={() => setShowModal(true)}>
+                  <div
+                    className="option"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowModal(true);
+                    }}
+                  >
                     Delete
                   </div>
-                  <div className="option" onClick={() => setChecked([])}>
+                  <div
+                    className="option"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setChecked([]);
+                    }}
+                  >
                     Remove selection
                   </div>
                 </>
@@ -260,9 +279,9 @@ function EditAlbum({
                   return (
                     <div
                       key={album.id}
-                      className="albums-image"
+                      className={`albums-image ${album.cover === null ? "small-image" : ""}`}
                       style={{
-                        backgroundImage: `url(${album.cover})`,
+                        backgroundImage: `url(${album.cover === null ? Camera : album.cover})`,
                       }}
                     >
                       <div
@@ -286,6 +305,7 @@ function EditAlbum({
           </div>
         </div>
       )}
+      <Imagemodal images={images} />
       {showModal && (
         <div className="modal-box">
           <div ref={deleteModalRef} className="modal-holder delete-modal">

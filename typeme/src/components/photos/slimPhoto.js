@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGlobalContext } from "../context";
+import { useLocation, useHistory } from "react-router-dom";
 import {
   Icon28AddSquareOutline,
   Icon16Cancel,
@@ -13,6 +14,8 @@ import "../../sass/_slimPhoto.scss";
 function SlimPhoto({ id, photo, setImages, images, ischecked, setChecked, ChangeAlbum }) {
   const { instance, user } = useGlobalContext();
   const query = useQuery();
+  const location = useLocation();
+  const history = useHistory();
   const [imgwidth, setImgwidth] = useState();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -51,59 +54,85 @@ function SlimPhoto({ id, photo, setImages, images, ischecked, setChecked, Change
   };
 
   return (
-    <div
-      className={`image ${imgwidth < 200 ? "small-img" : ""}`}
-      style={{
-        backgroundImage: `url(${photo})`,
-      }}
-    >
-      {(query.get("act") === "edit" || query.get("act") === "recycle") &&
-        (ischecked.includes(id) ? (
-          <Icon24CheckCircleOn
-            className={`check-icon on`}
-            onClick={() =>
-              setChecked((prev) => {
-                return prev.filter((check) => check !== id);
-              })
-            }
-          />
-        ) : (
-          <Icon24CheckCircleOff
-            className={`check-icon`}
-            onClick={() => {
-              if (ischecked.length === 0) {
-                setChecked([...ischecked, id]);
-              } else if (ischecked.length > 0) {
-                ischecked.map((num) => {
-                  if (num !== id) {
-                    return setChecked([...ischecked, id]);
-                  }
+    <>
+      <div
+        onClick={() => {
+          history.push(`${location.pathname}${location.search}&image=${id}`);
+        }}
+        className={`image ${imgwidth < 200 ? "small-img" : ""}`}
+        style={{
+          backgroundImage: `url(${photo})`,
+        }}
+      >
+        {(query.get("act") === "edit" || query.get("act") === "recycle") &&
+          (ischecked.includes(id) ? (
+            <Icon24CheckCircleOn
+              className={`check-icon on`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setChecked((prev) => {
+                  return prev.filter((check) => check !== id);
                 });
-              }
+              }}
+            />
+          ) : (
+            <Icon24CheckCircleOff
+              className={`check-icon`}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (ischecked.length === 0) {
+                  setChecked([...ischecked, id]);
+                } else if (ischecked.length > 0) {
+                  ischecked.map((num) => {
+                    if (num !== id) {
+                      return setChecked([...ischecked, id]);
+                    }
+                  });
+                }
+              }}
+            />
+          ))}
+        <div className="image-options">
+          {query.get("act") !== "addphoto" && (
+            <Icon28AddSquareOutline
+              className="image-option"
+              onClick={(e) => {
+                e.stopPropagation();
+                ChangeAlbum(id);
+              }}
+            />
+          )}
+          <Icon16Cancel
+            className="image-option"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowModal(true);
             }}
           />
-        ))}
-      <div className="image-options">
-        <Icon28AddSquareOutline className="image-option" onClick={() => ChangeAlbum(id)} />
-        <Icon16Cancel
-          className="image-option"
-          onClick={() => {
-            setShowModal(true);
-          }}
-        />
+        </div>
       </div>
       {showModal && (
         <div className="modal-box">
           <div ref={deleteModalRef} className="modal-holder delete-modal">
             <div className="modal-top">
               Warning
-              <Icon16Cancel className="modal-top-icon" onClick={() => Cancel()} />
+              <Icon16Cancel
+                className="modal-top-icon"
+                onClick={(e) => {
+                  Cancel();
+                }}
+              />
             </div>
             <div className="modal-body">
               Are you sure you want to move this photo to Recycle Bin?
             </div>
             <div className="modal-footer">
-              <button className="cancel-btn minor-btn-slim" onClick={() => Cancel()}>
+              <button
+                className="cancel-btn minor-btn-slim"
+                onClick={(e) => {
+                  Cancel();
+                }}
+              >
                 Cancel
               </button>
               <button className="main-btn-slim" onClick={() => DeleteImage()}>
@@ -113,7 +142,7 @@ function SlimPhoto({ id, photo, setImages, images, ischecked, setChecked, Change
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

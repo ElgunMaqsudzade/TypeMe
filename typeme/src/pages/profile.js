@@ -4,6 +4,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import CreatePost from "../components/createpost";
 import PSidebar from "../components/profile/profile_sidebar";
 import InputField from "../components/profile/modalInputField";
+import Post from "../components/post";
 
 const Profile = () => {
   const history = useHistory();
@@ -13,6 +14,7 @@ const Profile = () => {
   const [info, setInfo] = useState([]);
   const [statusInput, setStatusInput] = useState(false);
   const [profile, setProfile] = useState({});
+  const [profilePosts, setProfilePosts] = useState([]);
   const [showinfo, setShowinfo] = useState(false);
   const { name, surname } = profile;
 
@@ -35,21 +37,33 @@ const Profile = () => {
       .post("/profile/getdetailuser", { username: username })
       .then(({ data }) => {
         setstatusMessage(data.statusmessage);
+
         setInfo(
-          Object.keys(data.profileinfo).map((i) => {
-            return { title: i, value: data.profileinfo[i] };
-          })
+          Object.keys(data.profileinfo)
+            .map((i) => {
+              return { title: i, value: data.profileinfo[i] };
+            })
+            .filter((v) => v.value !== null)
         );
       })
       .catch((res) => console.log(res));
   }, [username]);
+  useEffect(() => {
+    if (user.username) {
+      instance
+        .post("post/getposts", {
+          username: user.username,
+          postusername: username,
+        })
+        .then(({ data }) => setProfilePosts(data))
+        .catch((res) => console.log(res));
+    }
+  }, [username, user.username]);
 
   const HandleSave = (text) => {
     setstatusMessage(text);
     EditInfo({ statusmessage: text });
   };
-
-  const data = { info: { tim: "dsa", john: "dsds", key: "dsdsdsa" } };
 
   return (
     <>
@@ -62,7 +76,7 @@ const Profile = () => {
       </div>
       <div
         style={{ marginLeft: "-15px" }}
-        className={`col-8 ${!profileLoading ? "d-block" : "d-none"}`}
+        className={`col-8  ${!profileLoading ? "d-block" : "d-none"}`}
       >
         <div className="my-profile">
           <div className="page-block">
@@ -101,9 +115,11 @@ const Profile = () => {
                     <div className="info-value">{info[0].value}</div>
                   </div>
                 )}
-                <button className="full-info" onClick={() => setShowinfo(!showinfo)}>
-                  Show full information
-                </button>
+                {info.filter((userinfo) => info[0] !== userinfo).length > 0 && (
+                  <button className="full-info" onClick={() => setShowinfo(!showinfo)}>
+                    Show full information
+                  </button>
+                )}
               </div>
               {showinfo && (
                 <div className="profile-full-info">
@@ -124,8 +140,13 @@ const Profile = () => {
             </div>
             <div className="page-counts"></div>
           </div>
-          <div className="posts">
+          <div className="profile-content">
             <CreatePost />
+            <div className="user-posts">
+              {profilePosts.map((post) => {
+                return <Post key={post.id} posts={profilePosts} {...post} poster={post.user} />;
+              })}
+            </div>
           </div>
         </div>
       </div>
