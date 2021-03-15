@@ -427,4 +427,40 @@
       }
     }
   }
+
+  .postimages.single-row {
+    grid-template-columns: minmax(0, 1fr);
+    .image {
+      transition: all 0.2s;
+      height: 287px;
+      .exit-icon {
+        top: 7px;
+        right: 7px;
+        width: 20px !important;
+        height: 20px !important;
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+      }
+    }
+  }
+}
+.user-posts {
+  .user-posts-topside {
+    display: flex;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom: 1px solid $clr-border-bottom;
+    background-color: white;
+    padding: 0 10px;
+    margin-bottom: 0;
+    .item {
+      z-index: 100;
+      border-bottom: 1px solid $clr-main-blue;
+      padding: 16px 6px 15px;
+      margin: 0 4px -1px;
+      cursor: pointer;
+    }
+  }
 }

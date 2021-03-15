@@ -86,7 +86,7 @@ function Profile_sidebar() {
   }, [username, userfriends, userReqfriends]);
 
   useEffect(() => {
-    if (user.username && friendsLoading && username) {
+    if (user.username) {
       instance
         .post("friend/getallfriends", {
           username: user.username,
@@ -115,7 +115,7 @@ function Profile_sidebar() {
         return { ...prev, showFriendSettings: false };
       });
     }
-  }, [user.username, friendsLoading, username]);
+  }, [user.username, username, friendsLoading]);
 
   useEffect(() => {
     if (profileImage) {

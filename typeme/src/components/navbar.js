@@ -14,7 +14,8 @@ const Navbar = () => {
   const { user, HandleOldUsers, instance } = useGlobalContext();
   const [showSettings, setShowSettings] = useState(null);
   const [findUsers, setFindUsers] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState(null);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
 
   const settings = useRef(null);
@@ -22,6 +23,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (searchKeyword) {
+      setSearchLoading(true);
       instance
         .post("authenticate/find", {
           key: searchKeyword,
@@ -29,6 +31,7 @@ const Navbar = () => {
         })
         .then(({ data }) => {
           setFindUsers(data.users);
+          setSearchLoading(false);
         })
         .catch((res) => {
           console.log(res);
@@ -36,6 +39,12 @@ const Navbar = () => {
       if (!showUsers) {
         setShowUsers(true);
       }
+    }
+  }, [searchKeyword]);
+
+  useEffect(() => {
+    if (searchKeyword === "") {
+      setFindUsers([]);
     }
   }, [searchKeyword]);
 
@@ -90,9 +99,16 @@ const Navbar = () => {
                   onFocus={() => setShowUsers(true)}
                 />
               </form>
-              {showUsers && (
-                <div className="users">
-                  {findUsers.length > 0 &&
+              {showUsers > 0 && (
+                <div
+                  className={`users ${searchLoading ? "" : findUsers.length === 0 ? "d-none" : ""}`}
+                >
+                  {searchLoading ? (
+                    <div className="loading">
+                      <div className="lds-dual-ring medium"></div>
+                    </div>
+                  ) : (
+                    findUsers.length > 0 &&
                     findUsers.slice(0, 8).map((per) => {
                       const { username, name, surname, image } = per;
                       return (
@@ -105,7 +121,8 @@ const Navbar = () => {
                           </div>
                         </Link>
                       );
-                    })}
+                    })
+                  )}
                 </div>
               )}
             </div>

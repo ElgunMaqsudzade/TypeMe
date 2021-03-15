@@ -72,9 +72,13 @@ const CreatePost = ({
 
   useEffect(() => {
     setAlbumsLoading(true);
-    if (username) {
+    if (username || user.username) {
+      let albumuser = user.username;
+      if (username) {
+        albumuser = username;
+      }
       instance
-        .post("albom/getuseralboms", { username: username })
+        .post("albom/getuseralboms", { username: albumuser })
         .then(({ data }) => {
           setAlbums(data.filter((album) => album.images.length !== 0));
           let array = [];
@@ -90,7 +94,7 @@ const CreatePost = ({
         })
         .catch((res) => console.log(res));
     }
-  }, [showUpload, username]);
+  }, [showUpload, username, user.username]);
 
   const SubmitHandler = () => {
     instance
