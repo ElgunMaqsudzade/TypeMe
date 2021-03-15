@@ -1,8 +1,27 @@
 @import "./main/variables";
+.post.topcard {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 0px $clr-s-card-grey;
+}
 .post {
   .post-topside {
     display: flex;
     padding: 15px 20px 0;
+    position: relative;
+    .dropdown {
+      top: 20px;
+      right: 20px;
+      position: absolute;
+      .dropdown-icon {
+        cursor: pointer;
+        color: $clr-grey;
+        opacity: 0.5;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
     .user-avatar {
       margin-right: 10px;
       overflow: hidden;
@@ -40,15 +59,12 @@
       padding: 3px 0 10px;
       font-size: 13px;
     }
-    .images {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .postimages {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-gap: 5px;
       .post-image {
-        width: 100%;
-        position: relative;
-        background-color: white;
-        cursor: pointer;
+        height: 150px;
       }
     }
   }
@@ -125,6 +141,31 @@
               .single-comment-like {
                 opacity: 0.6 !important;
               }
+              .option-item {
+                opacity: 0.5 !important;
+              }
+            }
+            .comment-top-info {
+              display: flex;
+              justify-content: space-between;
+              .options {
+                display: flex;
+                align-items: center;
+                .option-item {
+                  cursor: pointer;
+                  margin-right: 5px;
+                  width: 13px !important;
+                  height: 13px !important;
+                  opacity: 0;
+                  &:hover {
+                    opacity: 0.8 !important;
+                  }
+                  svg {
+                    width: 13px !important;
+                    height: 13px !important;
+                  }
+                }
+              }
             }
           }
           .name-box {
@@ -145,7 +186,15 @@
           justify-content: space-between;
           .main-items {
             display: flex;
+            align-items: center;
             .time {
+              margin-right: 8px;
+              cursor: pointer;
+              font-size: 11px;
+              color: $clr-grey;
+              &:hover {
+                text-decoration: underline !important;
+              }
             }
             .reply-btn {
               border: none;
@@ -210,29 +259,6 @@
           }
         }
       }
-      .reply-comment {
-        .comment-body {
-          display: flex;
-          width: 100%;
-          dis
-          .avatar-box {
-            width: 24px;
-            height: 24px;
-          }
-        }
-        .reply-info {
-          margin-left: 10px;
-          font-size: 12px;
-          color: $clr-grey !important;
-          .repliedto {
-            color: $clr-grey !important;
-            cursor: pointer;
-            &:hover {
-              text-decoration: underline !important;
-            }
-          }
-        }
-      }
     }
     .create-comment.reply-area {
       padding: 12px 0;
@@ -256,7 +282,22 @@
         }
       }
       .send-btn {
+        .Icon {
+          width: 24px !important;
+          height: 24px !important;
+          svg {
+            width: 24px !important;
+            height: 24px !important;
+          }
+        }
         top: 15px;
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+      .close-btn {
+        top: 15px;
+        right: 45px;
       }
     }
     .create-comment {
@@ -331,8 +372,58 @@
         top: 17px;
         right: 10px;
         border: none;
+        opacity: 0.4;
         color: $clr-grey;
         background-color: transparent;
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+    .reply-comment {
+      flex-direction: column;
+      .edit-btn {
+        position: absolute;
+        top: 18px !important;
+        right: 10px;
+        border: none;
+        opacity: 0.4;
+        color: $clr-grey;
+        background-color: transparent;
+        &:hover {
+          opacity: 0.6;
+        }
+        .Icon {
+          width: 18px !important;
+          height: 18px !important;
+          svg {
+            width: 18px !important;
+            height: 18px !important;
+          }
+        }
+      }
+      .close-btn {
+        right: 30px !important;
+      }
+      .comment-body {
+        display: flex;
+        width: 100%;
+        .avatar-box {
+          width: 24px;
+          height: 24px;
+        }
+      }
+      .reply-info {
+        margin-left: 10px;
+        font-size: 12px;
+        color: $clr-grey !important;
+        .repliedto {
+          color: $clr-grey !important;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline !important;
+          }
+        }
       }
     }
   }

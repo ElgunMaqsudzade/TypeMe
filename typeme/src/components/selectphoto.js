@@ -5,7 +5,7 @@ import {
   extractImageFileExtensionFromBase64,
   base64StringtoFile,
 } from "./customHooks/ReuseableUtils";
-import { Link, useParams } from "react-router-dom";
+import Camera from "../images/camera_big.png";
 import "../sass/_selecetphoto.scss";
 import Shadow from "../images/shadow.png";
 import {
@@ -124,14 +124,18 @@ function Selectphoto({ albums, setShow, albumsLoading, uploadRef, UploadPhoto })
                   }}
                 />
                 {images.length === 0 ? (
-                  <div className="albums">
-                    {albums.length > 0 ? (
-                      albums.map((album) => {
+                  albums.length > 0 ? (
+                    <div className="albums">
+                      {albums.map((album) => {
                         return (
                           <div
                             key={album.id}
-                            style={{ backgroundImage: `url(${album.cover})` }}
-                            className="album"
+                            style={{
+                              backgroundImage: `url(${
+                                album.cover === null ? Camera : album.cover
+                              })`,
+                            }}
+                            className={`album ${album.cover === null ? "small-image" : ""}`}
                             onClick={(e) => {
                               e.stopPropagation();
                               PhotoHandler(album.id);
@@ -148,11 +152,11 @@ function Selectphoto({ albums, setShow, albumsLoading, uploadRef, UploadPhoto })
                             </div>
                           </div>
                         );
-                      })
-                    ) : (
-                      <div className="empty">You have no photos</div>
-                    )}
-                  </div>
+                      })}
+                    </div>
+                  ) : (
+                    <div className="empty">You have no photos</div>
+                  )
                 ) : (
                   <div className="images">
                     {images.map((image) => {

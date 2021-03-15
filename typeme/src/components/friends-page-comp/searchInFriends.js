@@ -4,18 +4,18 @@ import { IoMdArrowDropup } from "react-icons/io";
 import "../../sass/_searchInFriends.scss";
 import useOutsideClick from "../customHooks/showHide";
 import genders from "../../data/genderdata";
+import { useHistory } from "react-router-dom";
 
 function SearchInFriends({
-  HandleFindUsers,
   showSearchSettings,
   setShowSearchSettings,
   searchkeyword,
   setSearchKeyword,
   setSearchParameters,
   searchParameters,
-  setFindprops,
 }) {
   const refSettings = useRef(null);
+  const history = useHistory();
 
   useOutsideClick(refSettings, () => {
     if (showSearchSettings) {
@@ -29,7 +29,7 @@ function SearchInFriends({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            HandleFindUsers({ key: searchkeyword, skip: 0 });
+            history.push(`/friends/find?keyword=${searchkeyword}`);
           }}
         >
           <input
@@ -38,7 +38,9 @@ function SearchInFriends({
             className="search-inp"
             placeholder="Search friends"
             value={searchkeyword}
-            onChange={(e) => setSearchKeyword(e.target.value.toLowerCase())}
+            onChange={(e) => {
+              setSearchKeyword(e.target.value.toLowerCase());
+            }}
           />
           <div className="search-settings">
             <button

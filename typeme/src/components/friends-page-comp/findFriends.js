@@ -3,15 +3,7 @@ import { useGlobalContext } from "../context";
 import SearchBar from "../friends-page-comp/searchInFriends";
 import FindSingle from "../friends-page-comp/findSingle";
 
-function FindFriends({
-  myfriends,
-  loading,
-  HandleFindUsers,
-  usersCount,
-  setFindprops,
-  findprops,
-  Addmore,
-}) {
+function FindFriends({ myfriends, loading, usersCount, setFindprops, findprops, Addmore }) {
   const { user } = useGlobalContext();
   const [searchkeyword, setSearchKeyword] = useState("");
   const [showSearchSettings, setShowSearchSettings] = useState(false);
@@ -19,15 +11,13 @@ function FindFriends({
   const [friends, setFriends] = useState([]);
 
   useEffect(() => {
-    let newFriends = myfriends
-      .filter((friend) => friend.username !== user.username)
-      .filter((friend) => {
-        const { gender } = friend;
-        if (searchParameters.gender === "any") return friend;
-        if (searchParameters.gender === "male") return gender === "male";
-        if (searchParameters.gender === "female") return gender === "female";
-        return friend;
-      });
+    let newFriends = myfriends.filter((friend) => {
+      const { gender } = friend;
+      if (searchParameters.gender === "any") return friend;
+      if (searchParameters.gender === "male") return gender === "male";
+      if (searchParameters.gender === "female") return gender === "female";
+      return friend;
+    });
     setFriends(newFriends);
   }, [searchkeyword, searchParameters, myfriends, loading, user]);
 
@@ -46,7 +36,6 @@ function FindFriends({
           searchkeyword={searchkeyword}
           showSearchSettings={showSearchSettings}
           setShowSearchSettings={setShowSearchSettings}
-          HandleFindUsers={HandleFindUsers}
           setFindprops={setFindprops}
         />
       </div>
@@ -58,12 +47,12 @@ function FindFriends({
         ) : (
           <>
             {friends.map((friend) => {
-              return <FindSingle key={friend.email} {...friend} />;
+              return <FindSingle key={friend.email} {...friend} user={user} />;
             })}
-            {friends.length === 0 && <div className="no-friends">No friends were found</div>}
           </>
         )}
       </div>
+      {friends.length === 0 && <div className="no-friends">No friends were found</div>}
       {usersCount > findprops.skip + 20 && (
         <div className="findmore">
           <button

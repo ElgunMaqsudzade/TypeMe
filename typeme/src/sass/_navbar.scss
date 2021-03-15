@@ -55,6 +55,36 @@
             color: $clr-grey;
           }
         }
+        .users {
+          background-color: white;
+          width: 100%;
+          position: absolute;
+          top: 40px;
+          font-size: 12px;
+          color: $clr-dark-blue;
+          border: 1px solid $clr-border-bottom;
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+          border-bottom-right-radius: 4px;
+          border-bottom-left-radius: 4px;
+          overflow: hidden;
+          .user {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px 10px;
+            height: 49px;
+            &:hover {
+              background-color: $clr-hover-blue;
+            }
+            .img-holder {
+              margin-right: 10px;
+              border-radius: 50%;
+              width: 34px;
+              height: 34px;
+              overflow: hidden;
+            }
+          }
+        }
       }
     }
     .nav-minor {

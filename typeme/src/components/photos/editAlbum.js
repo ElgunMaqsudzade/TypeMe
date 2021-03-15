@@ -6,6 +6,7 @@ import outside from "../customHooks/showHide";
 import { Icon24BrowserForward, Icon24Gallery, Icon16Cancel } from "@vkontakte/icons";
 import { FiPlusCircle } from "react-icons/fi";
 import SlimPhoto from "./slimPhoto";
+import CreateAlbum from "./newAlbum";
 import Imagemodal from "../imagemodal";
 
 function EditAlbum({
@@ -24,19 +25,27 @@ function EditAlbum({
   const { username } = useParams();
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showDeletAlbumModal, setShowDeletAlbumModal] = useState(false);
   const [coverWidth, setCoverWidth] = useState();
   const [albumName, setAlbumName] = useState(name);
   const [showAlbumsModal, setShowAlbumsModal] = useState(false);
   const [showCoverImages, setShowCoverImages] = useState(false);
+  const [showCreateAlbum, setShowCreateAlbum] = useState();
   const [moveImage, setMoveImage] = useState({ imageids: [], albumid: null });
   const [checked, setChecked] = useState([]);
   const coverModal = React.useRef(null);
   const albumModal = React.useRef(null);
   const deleteModalRef = React.useRef(null);
+  const deleteAlbumModalRef = React.useRef(null);
 
   outside(deleteModalRef, () => {
     if (showModal) {
       setShowModal(false);
+    }
+  });
+  outside(deleteAlbumModalRef, () => {
+    if (showDeletAlbumModal) {
+      setShowAlbumsModal(false);
     }
   });
   outside(coverModal, () => {
@@ -127,7 +136,7 @@ function EditAlbum({
             <div className="breadcrump">Manage album</div>
           </div>
           <div className="buttons">
-            <button className="minor-btn-slimer" onClick={() => DeleteAlbum(id)}>
+            <button className="minor-btn-slimer" onClick={() => setShowDeletAlbumModal(true)}>
               Delete Album
             </button>
           </div>
@@ -272,31 +281,46 @@ function EditAlbum({
               Move the photo to an album To a new album
               <Icon16Cancel className="modal-top-icon" onClick={() => CancelAlbumModal()} />
             </div>
-            <div className="albums-body modal-body">
-              {albums
-                .filter((album) => album.id !== id)
-                .map((album) => {
-                  return (
-                    <div
-                      key={album.id}
-                      className={`albums-image ${album.cover === null ? "small-image" : ""}`}
-                      style={{
-                        backgroundImage: `url(${album.cover === null ? Camera : album.cover})`,
-                      }}
-                    >
+            {albums.filter((album) => album.id !== id).length > 0 ? (
+              <div className="albums-body modal-body">
+                {albums
+                  .filter((album) => album.id !== id)
+                  .map((album) => {
+                    return (
                       <div
-                        className="icon-holder"
-                        onClick={() => {
-                          setMoveImage({ ...moveImage, albumid: album.id });
-                          setShowAlbumsModal(false);
+                        key={album.id}
+                        className={`albums-image ${album.cover === null ? "small-image" : ""}`}
+                        style={{
+                          backgroundImage: `url(${album.cover === null ? Camera : album.cover})`,
                         }}
                       >
-                        <FiPlusCircle className="move-icon" />
+                        <div
+                          className="icon-holder"
+                          onClick={() => {
+                            setMoveImage({ ...moveImage, albumid: album.id });
+                            setShowAlbumsModal(false);
+                          }}
+                        >
+                          <FiPlusCircle className="move-icon" />
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-            </div>
+                    );
+                  })}
+              </div>
+            ) : (
+              <div className="empty flex-column">
+                <p>There are no photo albums yet.</p>
+                <button
+                  className="main-btn-slimer"
+                  onClick={() => {
+                    setShowCreateAlbum(true);
+                    setShowAlbumsModal(false);
+                  }}
+                >
+                  To a new album
+                </button>
+              </div>
+            )}
             <div className="footer-side justify-content-end">
               <div className="main-btn-slimer" onClick={() => CancelAlbumModal()}>
                 Close
@@ -326,6 +350,34 @@ function EditAlbum({
             </div>
           </div>
         </div>
+      )}
+      {showDeletAlbumModal && (
+        <div className="modal-box">
+          <div ref={deleteAlbumModalRef} className="modal-holder delete-modal">
+            <div className="modal-top">
+              Warning
+              <Icon16Cancel
+                className="modal-top-icon"
+                onClick={() => setShowDeletAlbumModal(false)}
+              />
+            </div>
+            <div className="modal-body">Are you sure you want to delete album?</div>
+            <div className="modal-footer">
+              <button
+                className="cancel-btn minor-btn-slim"
+                onClick={() => setShowDeletAlbumModal(false)}
+              >
+                Cancel
+              </button>
+              <button className="main-btn-slim" onClick={() => DeleteAlbum(id)}>
+                {loading !== false ? <div className="lds-dual-ring slim"></div> : "Continue"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showCreateAlbum && (
+        <CreateAlbum show={showCreateAlbum} setshow={setShowCreateAlbum} reset={setPhotosLoading} />
       )}
     </div>
   );

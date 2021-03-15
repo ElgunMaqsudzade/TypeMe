@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import outside from "./customHooks/showHide";
 import Emoji from "../components/emoji_picker";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Icon24LikeOutline,
   Icon24Like,
@@ -9,14 +9,15 @@ import {
   Icon20View,
   Icon20SmileOutline,
   Icon24Send,
+  Icon20Dropdown,
 } from "@vkontakte/icons";
 import "../sass/_post.scss";
 import { useGlobalContext } from "./context";
 import Textarea from "./textarea";
 import Directcomments from "./directcomments";
+import CreatePost from "./createpost";
 
 function Post({
-  posts,
   id,
   poster,
   likes,
@@ -26,18 +27,25 @@ function Post({
   views,
   commentscount,
   createtime,
+  setRenderPost,
+  renderPost,
+  posts,
 }) {
   const { username, name, surname, image } = poster;
-  const { instance, user } = useGlobalContext();
+  const { instance, user, GetCreatedTime } = useGlobalContext();
+  const location = useLocation();
   const [createComment, setCreateComment] = useState("");
+  const [editerMode, setEditerMode] = useState(false);
   const [isLiked, setIsliked] = useState(islike);
   const [likescount, setLikesCount] = useState(likes);
   const [showComments, setShowComments] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
   const [commentsCount, setCommentsCount] = useState(commentscount);
   const [mainComments, setMainComments] = useState([]);
-  const [directCommentsLoading, setDirectCommentsLoading] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
+  const [renderReplies, setRenderReplies] = useState(false);
   const emojiRef = useRef(null);
+  const optionsRef = useRef(null);
 
   outside(emojiRef, () => {
     if (showEmoji) {
@@ -45,45 +53,35 @@ function Post({
     }
   });
 
-  const GetCreatedTime = (time) => {
-    // let createdtime = new Date(time);
-    // let currenttime = new Date();
-    // let months = [
-    //   "Jan",
-    //   "Feb",
-    //   "Mar",
-    //   "Apr",
-    //   "May",
-    //   "June",
-    //   "July",
-    //   "Aug",
-    //   "Sept",
-    //   "Oct",
-    //   "Nov",
-    //   "Dec",
-    // ];
-    // if (new Date(time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0)) {
-    //   return `today at ${createdtime.getHours()}:${createdtime.getMinutes()}`;
-    // } else if (new Date(time).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0) - 86400000) {
-    //   return `yesterday at ${createdtime.getHours()}:${createdtime.getMinutes()}`;
-    // }
-    // return `${currenttime.getDate()} ${
-    //   months[currenttime.getMonth()]
-    // } at ${createdtime.getHours()}:${createdtime.getMinutes()}`;
-  };
+  outside(optionsRef, () => {
+    if (showOptions) {
+      setShowOptions(false);
+    }
+  });
 
   useEffect(() => {
-    if (showComments && commentsCount > 0) {
-      setDirectCommentsLoading(true);
+    console.log("1");
+    if (
+      showComments ||
+      commentscount !== commentsCount ||
+      commentscount > 0 ||
+      renderReplies === true
+    ) {
       instance
         .post("/post/getcomments", { postid: id, username: user.username })
         .then(({ data }) => {
           setMainComments(data);
-          setDirectCommentsLoading(false);
+          setRenderReplies(false);
         })
         .catch((res) => console.log(res));
     }
-  }, [showComments, commentsCount]);
+  }, [showComments, commentsCount, commentscount, renderReplies]);
+
+  useEffect(() => {
+    if (commentsCount !== commentscount) {
+      setRenderReplies(true);
+    }
+  }, [commentsCount]);
 
   const DirectCommentHandler = () => {
     instance
@@ -98,34 +96,94 @@ function Post({
       })
       .catch((res) => console.log(res));
   };
-
+  const LikePostHandler = () => {
+    instance
+      .put("/post/likepost", { username: user.username, postid: id })
+      .then(() => {
+        setIsliked(true);
+        setLikesCount(likescount + 1);
+      })
+      .catch((res) => console.log(res));
+  };
+  const UnLikePostHandler = () => {
+    instance
+      .delete("post/unlikepost", { data: { username: user.username, postid: id } })
+      .then(() => {
+        setIsliked(false);
+        setLikesCount(likescount - 1);
+      })
+      .catch((res) => console.log(res));
+  };
+  const PostDeleteHandler = () => {
+    instance
+      .delete("post/deletepost", { data: { postid: id } })
+      .then((res) => {
+        setRenderPost(true);
+      })
+      .catch((res) => console.log(res));
+  };
   return (
     <>
-      <div className="post mCard">
-        <div className="post-topside">
-          <Link to={`/user/${username}`} className="user-avatar">
-            <img src={image} alt="" />
-          </Link>
-          <div className="user-info">
-            <Link to={`/user/${username}`} className="fullname">
-              {name} {surname}
-            </Link>
-            <div className="time">{}</div>
-          </div>
-        </div>
-        <div className="post-content">
-          <div className="description">{description}</div>
-          <div className="images">
-            {images.map((image) => {
-              const { id, photo } = image;
-              return (
-                <div key={id} className="post-image">
-                  <img src={photo} alt="" />
+      <div className={`post ${posts[0].id === id ? "topcard" : ""} mCard`}>
+        {editerMode ? (
+          <CreatePost
+            setRenderPost={setRenderPost}
+            renderPost={renderPost}
+            text={description}
+            images={images}
+            editerMode={editerMode}
+            setEditerMode={setEditerMode}
+            postid={id}
+          />
+        ) : (
+          <>
+            <div className="post-topside">
+              <Link to={`/user/${username}`} className="user-avatar">
+                <img src={image} alt="" />
+              </Link>
+              <div className="user-info">
+                <Link to={`/user/${username}`} className="fullname">
+                  {name} {surname}
+                </Link>
+                <div className="time">{GetCreatedTime(createtime)}</div>
+              </div>
+              {username === user.username && (
+                <div ref={optionsRef} className="dropdown">
+                  <Icon20Dropdown
+                    className="dropdown-icon"
+                    onClick={() => setShowOptions(!showOptions)}
+                  />
+                  {showOptions && (
+                    <div className="options showCard">
+                      <div className="item" onClick={() => setEditerMode(true)}>
+                        Edit post
+                      </div>
+                      <div className="item" onClick={() => PostDeleteHandler()}>
+                        Delete post
+                      </div>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
-        </div>
+              )}
+            </div>
+            <div className="post-content">
+              <div className="description">{description}</div>
+              <div className={`postimages ${images.length === 1 ? "single-row" : ""}`}>
+                {images.map((image) => {
+                  const { id, photo } = image;
+                  return (
+                    <Link
+                      to={`${location.pathname}?image=${id}`}
+                      key={id}
+                      className="post-image image"
+                      style={{ backgroundImage: `url(${photo})` }}
+                    ></Link>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
         <div className="post-popularity">
           <div className="post-numbers">
             <div className="main-box">
@@ -135,8 +193,7 @@ function Post({
                     className="item-icon liked"
                     onClick={() => {
                       if (isLiked) {
-                        setIsliked(false);
-                        setLikesCount(likescount - 1);
+                        UnLikePostHandler();
                       }
                     }}
                   />
@@ -145,8 +202,7 @@ function Post({
                     className="item-icon"
                     onClick={() => {
                       if (!isLiked) {
-                        setIsliked(true);
-                        setLikesCount(likescount + 1);
+                        LikePostHandler();
                       }
                     }}
                   />
@@ -178,7 +234,7 @@ function Post({
         </div>
         {showComments && (
           <div className="post-comments">
-            {directCommentsLoading ? (
+            {renderReplies ? (
               <div className="loading">
                 <div className="lds-dual-ring medium"></div>
               </div>
@@ -191,6 +247,8 @@ function Post({
                       {...comment}
                       commenter={comment.user}
                       postid={id}
+                      setCommentsCount={setCommentsCount}
+                      setRenderReplies={setRenderReplies}
                     />
                   );
                 })}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
-import { useParams, Link, useHistory, useLocation } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useQuery } from "../components/customHooks/useQuery";
 import Imagemodal from "../components/imagemodal";
 import { Icon24PenOutline, Icon20DeleteOutline } from "@vkontakte/icons";

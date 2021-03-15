@@ -2,17 +2,25 @@ import React, { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "./../components/context";
 import useOutsideClick from "../components/customHooks/showHide";
 import Textarea from "../components/textarea";
-import { Link, useParams, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import SelectPhoto from "./selectphoto";
 import Emoji from "../components/emoji_picker";
 import { Icon20CameraOutline, Icon20SmileOutline, Icon16Cancel } from "@vkontakte/icons";
 import Imagemodal from "./imagemodal";
 
-const CreatePost = () => {
+const CreatePost = ({
+  setRenderPost,
+  renderPost,
+  editerMode,
+  text,
+  images,
+  postid,
+  setEditerMode,
+}) => {
   const { user, instance } = useGlobalContext();
-  const { username } = useParams();
   const history = useHistory();
   const location = useLocation();
+  const { username } = useParams();
   const [createText, setCreateText] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const [showSubmit, setShowSubmit] = useState(false);
@@ -25,6 +33,13 @@ const CreatePost = () => {
 
   let refCard = useRef(null);
   const emojiRef = useRef();
+
+  useEffect(() => {
+    if (editerMode) {
+      setCreateText(text);
+      setPostImages(images);
+    }
+  }, [editerMode, text]);
 
   useOutsideClick(refCard, () => {
     if (!createText && postImages.length === 0) {
@@ -50,10 +65,16 @@ const CreatePost = () => {
   }, [postImages]);
 
   useEffect(() => {
+    if (renderPost === false) {
+      setShowSubmit(false);
+    }
+  }, [renderPost]);
+
+  useEffect(() => {
     setAlbumsLoading(true);
-    if (user.username) {
+    if (username) {
       instance
-        .post("albom/getuseralboms", { username: user.username })
+        .post("albom/getuseralboms", { username: username })
         .then(({ data }) => {
           setAlbums(data.filter((album) => album.images.length !== 0));
           let array = [];
@@ -69,7 +90,7 @@ const CreatePost = () => {
         })
         .catch((res) => console.log(res));
     }
-  }, [showUpload, user.username]);
+  }, [showUpload, username]);
 
   const SubmitHandler = () => {
     instance
@@ -83,6 +104,7 @@ const CreatePost = () => {
       .then((res) => {
         setPostImages([]);
         setCreateText("");
+        setRenderPost(true);
       })
       .catch((res) => console.log(res));
   };
@@ -105,9 +127,24 @@ const CreatePost = () => {
     }
   };
 
+  const EditorHandler = () => {
+    instance
+      .put("/post/updatepost", {
+        postid,
+        imageids: Object.keys(postImages).map((e) => {
+          return postImages[e].id;
+        }),
+        description: createText,
+      })
+      .then(() => {
+        setRenderPost(true);
+      })
+      .catch((res) => console.log(res));
+  };
+
   return (
     <>
-      <div className="create mCard" ref={refCard}>
+      <div className={`create ${editerMode ? "" : "mCard"}`} ref={refCard}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -125,7 +162,7 @@ const CreatePost = () => {
               </Link>
             </div>
             <div className="create-body">
-              <div className="create-text-box">
+              <div className={`create-text-box ${editerMode ? "create-text-editor" : ""}`}>
                 <Textarea
                   setShowSubmit={setShowSubmit}
                   showSubmit={showSubmit}
@@ -162,7 +199,7 @@ const CreatePost = () => {
                   return (
                     <div
                       key={id}
-                      className="image"
+                      className="image post-image"
                       style={{ backgroundImage: `url(${photo})` }}
                       onClick={() => history.push(`${location.pathname}?image=${id}`)}
                     >
@@ -186,9 +223,24 @@ const CreatePost = () => {
                   <Icon20CameraOutline className="photo" onClick={() => setShowUpload(true)} />
                 </div>
               </div>
-              <button type="submit" className="main-btn-slim">
-                Post
-              </button>
+              {!editerMode ? (
+                <button type="submit" className="main-btn-slim">
+                  Post
+                </button>
+              ) : (
+                <div className="button-box">
+                  <button
+                    type="button"
+                    className="minor-btn-slim"
+                    onClick={() => setEditerMode(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button type="button" className="main-btn-slim" onClick={() => EditorHandler()}>
+                    Save
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </form>

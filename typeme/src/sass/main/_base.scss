@@ -84,7 +84,7 @@ button {
   outline: none;
 }
 .mCard {
-  background: var(--white);
+  background: white;
   border-radius: 4px;
   box-shadow: 0 1px 0 0 $clr-f-card-grey, 0 0 0 1px $clr-s-card-grey;
   margin-bottom: 15px;
@@ -267,7 +267,9 @@ button {
   top: 30px;
   right: -25px;
   font-size: 13px;
+  z-index: 1;
   .item {
+    cursor: pointer;
     padding: 0 15px;
     color: $clr-dark-blue;
     outline: 0;

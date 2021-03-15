@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon16UserAdd } from "@vkontakte/icons";
 import { Link } from "react-router-dom";
-function FindSingle({ name, image, surname, username, mediumFriend }) {
+function FindSingle({ name, image, surname, username, mediumFriend, user }) {
   return (
     <>
       <Link ref={mediumFriend} to={`/user/${username}`} className="find-single">
@@ -12,7 +12,7 @@ function FindSingle({ name, image, surname, username, mediumFriend }) {
           <div className="name-box">
             {name} {surname}
           </div>
-          <Icon16UserAdd className="add-friend" />
+          {username !== user.username && <Icon16UserAdd className="add-friend" />}
         </div>
       </Link>
     </>

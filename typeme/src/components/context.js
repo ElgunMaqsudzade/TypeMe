@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import axios from "axios";
-import { useQuery } from "./customHooks/useQuery";
+import moment from "moment";
 import reducer from "./reducer";
 const AppContext = React.createContext();
 
@@ -27,7 +27,10 @@ const AppProvider = ({ children }) => {
 
   let instance = axios.create({
     baseURL: "http://elgun20000-001-site1.btempurl.com/api/",
-    headers: { Authorization: `Bearer ${token} ` },
+    headers: {
+      Authorization: `Bearer ${token} `,
+      "Access-Control-Allow-Origin": "*",
+    },
   });
 
   useEffect(() => {
@@ -78,23 +81,26 @@ const AppProvider = ({ children }) => {
     }
     if (oldUsers !== null) {
       let isDub = false;
-      oldUsers.forEach((oldUser) => {
+      let isSameuser = false;
+      let newoldusers = oldUsers.map((oldUser) => {
         if (oldUser.email === data.email) {
+          isSameuser = true;
           if (
-            oldUser.image === data.image &&
-            oldUser.name === data.name &&
-            oldUser.surname === data.surname
+            oldUser.image !== data.image ||
+            oldUser.name !== data.name ||
+            oldUser.surname !== data.surname
           ) {
             isDub = true;
-            return;
-          } else {
-            oldUser.image = data.image;
-            oldUser.name = data.name;
-            oldUser.surname = data.surname;
+            return data;
           }
+          return oldUser;
         }
+        return oldUser;
       });
-      if (!isDub) {
+      if (isDub) {
+        setOldUsers(newoldusers);
+      }
+      if (!isSameuser) {
         setOldUsers([...oldUsers, data]);
       }
     }
@@ -133,6 +139,27 @@ const AppProvider = ({ children }) => {
       });
   };
 
+  const GetCreatedTime = (time) => {
+    let gettime = moment(+moment.utc(time)).fromNow();
+    if (
+      moment(+moment.utc(time))
+        .add(3, "hours")
+        .isBefore(new Date()) &&
+      !moment(+moment.utc(time))
+        .add(2, "days")
+        .isBefore(new Date())
+    ) {
+      gettime = moment(+moment.utc(time)).calendar();
+    } else if (
+      moment(+moment.utc(time))
+        .add(2, "days")
+        .isBefore(new Date())
+    ) {
+      gettime = moment(+moment.utc(time)).format("MMM D [at] h:mm a");
+    }
+    return gettime;
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -158,6 +185,7 @@ const AppProvider = ({ children }) => {
         profileLoading,
         setFriendsLoading,
         friendsLoading,
+        GetCreatedTime,
       }}
     >
       {children}

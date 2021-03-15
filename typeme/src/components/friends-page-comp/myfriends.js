@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "../friends-page-comp/searchInFriends";
 import Friend from "../friends-page-comp/friend";
 
-function Myfriends({ HandleFindUsers }) {
+function Myfriends() {
   const { user, instance } = useGlobalContext();
   const [allfriends, setAllFriends] = useState([]);
   const [myfriends, setMyFriends] = useState([]);
@@ -79,7 +79,6 @@ function Myfriends({ HandleFindUsers }) {
           setSearchKeyword={setSearchKeyword}
           showSearchSettings={showSearchSettings}
           setShowSearchSettings={setShowSearchSettings}
-          HandleFindUsers={HandleFindUsers}
         />
       </div>
 

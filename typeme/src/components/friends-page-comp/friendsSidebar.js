@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "../../sass/_friends-sidebar.scss";
 
 const data = [
@@ -9,7 +9,7 @@ const data = [
 ];
 
 function FriendsSidebar() {
-  let location = useLocation().pathname;
+  const { section } = useParams();
   return (
     <>
       <div className="friends-sidebar">
@@ -19,8 +19,8 @@ function FriendsSidebar() {
             return (
               <Link
                 key={id}
-                className={`sidebar-item ${location === "/friends/" + tab ? "active" : ""}`}
-                to={{ pathname: `/friends/${tab}` }}
+                className={`sidebar-item ${section.includes(tab) ? "active" : ""}`}
+                to={{ pathname: `/friends/${tab !== "find" ? tab : tab + "?keyword="}` }}
               >
                 {content}
               </Link>

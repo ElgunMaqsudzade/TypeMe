@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Myfriends from "../components/friends-page-comp/myfriends";
 import FindFriends from "../components/friends-page-comp/findFriends";
 import RequestedFriends from "../components/friends-page-comp/requestedFriends";
+import { useQuery } from "../components/customHooks/useQuery";
 
 function Friends() {
   let location = useLocation().pathname;
+  const { section } = useParams();
+  const query = useQuery();
   const { user, instance } = useGlobalContext();
   const [findFriends, setFindFriends] = useState({ loading: true, myfriends: [] });
   const [findprops, setFindprops] = useState({ skip: 0, key: "" });
+
+  useEffect(() => {
+    if (query.get("keyword") !== null) {
+      HandleFindUsers({ key: query.get("keyword"), skip: 0 });
+    } else {
+      HandleFindUsers({ key: "", skip: 0 });
+    }
+  }, [section, query.get("keyword")]);
 
   const HandleFindUsers = ({ key, skip }) => {
     setFindprops({ ...findprops, key, skip });
@@ -63,17 +74,16 @@ function Friends() {
   return (
     <>
       <div className="friends">
-        {location === "/friends/all" && <Myfriends HandleFindUsers={HandleFindUsers} />}
-        {location === "/friends/find" && (
+        {section === "all" && <Myfriends />}
+        {section.includes("find") && (
           <FindFriends
             {...findFriends}
-            HandleFindUsers={HandleFindUsers}
             Addmore={Addmore}
             findprops={findprops}
             setFindprops={setFindprops}
           />
         )}
-        {location === "/friends/requested" && <RequestedFriends />}
+        {section === "requested" && <RequestedFriends />}
       </div>
     </>
   );

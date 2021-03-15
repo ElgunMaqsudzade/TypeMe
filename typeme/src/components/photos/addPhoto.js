@@ -47,7 +47,12 @@ function AddPhoto({
             fdata.append("albumid", Number(query.get("album")));
           }
           instance
-            .put("/albom/saveimage", fdata)
+            .put("/albom/saveimage", fdata, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            })
+
             .then(({ data }) => {
               setPreview((prev) => {
                 return [...prev, { id: data.imageid, photo: res }];
@@ -121,12 +126,6 @@ function AddPhoto({
                 })
               : "You didn't add any photos"}
           </div>
-          {query.get("album") === "" && (
-            <div className="footer-side">
-              <button className="main-btn-slim">Post to my wall</button>
-              <button className="minor-btn-slim">Add to album</button>
-            </div>
-          )}
         </div>
       </div>
       <Imagemodal images={preview} />

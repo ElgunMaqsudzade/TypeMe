@@ -25,6 +25,10 @@
         width: 100%;
         height: 100%;
       }
+      .create-text-editor {
+        border: 1px solid $clr-border-bottom;
+        padding: 5px 10px;
+      }
       .text-smile {
         cursor: pointer;
         position: absolute;
@@ -112,6 +116,9 @@
     }
     .image {
       transition: all 0.2s;
+    }
+    .post-image {
+      height: 150px;
     }
   }
   .postimages.single-row {

@@ -13,7 +13,9 @@ const Profile = () => {
   const [statusMessage, setstatusMessage] = useState("");
   const [info, setInfo] = useState([]);
   const [statusInput, setStatusInput] = useState(false);
+  const [renderPost, setRenderPost] = useState(true);
   const [profile, setProfile] = useState({});
+  const [images, setImages] = useState([]);
   const [profilePosts, setProfilePosts] = useState([]);
   const [showinfo, setShowinfo] = useState(false);
   const { name, surname } = profile;
@@ -48,17 +50,51 @@ const Profile = () => {
       })
       .catch((res) => console.log(res));
   }, [username]);
+
   useEffect(() => {
-    if (user.username) {
+    if (!renderPost) {
+      setRenderPost(true);
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (username) {
+      instance
+        .post("albom/getuseralboms", { username: username })
+        .then(({ data }) => {
+          let array = [];
+          data
+            .filter((album) => album.images.length !== 0)
+            .map((album) => {
+              album.images.map((image) => {
+                return array.push(image);
+              });
+            });
+          setImages(array);
+        })
+        .catch((res) => console.log(res));
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (user.username && renderPost) {
       instance
         .post("post/getposts", {
           username: user.username,
           postusername: username,
         })
-        .then(({ data }) => setProfilePosts(data))
-        .catch((res) => console.log(res));
+        .then(({ data }) => {
+          setProfilePosts(data);
+          setRenderPost(false);
+        })
+        .catch((error) => {
+          if (error.response.status) {
+            setProfilePosts(null);
+            setRenderPost(false);
+          }
+        });
     }
-  }, [username, user.username]);
+  }, [username, user.username, renderPost]);
 
   const HandleSave = (text) => {
     setstatusMessage(text);
@@ -138,14 +174,60 @@ const Profile = () => {
                 </div>
               )}
             </div>
-            <div className="page-counts"></div>
           </div>
           <div className="profile-content">
-            <CreatePost />
+            {images.length > 0 && (
+              <div className="page-photos mCard">
+                <Link to={`/photos/${username}`} className="page-photos-top">
+                  Photos <span>{images.length}</span>
+                </Link>
+                <div className="page-photos-list">
+                  {images.slice(-3).map((image) => {
+                    return (
+                      <Link
+                        to={`/user/${username}?image=${image.id}`}
+                        key={image.id}
+                        className="image"
+                        style={{ backgroundImage: `url(${image.photo})` }}
+                      ></Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {user.username === username && (
+              <CreatePost setRenderPost={setRenderPost} renderPost={renderPost} />
+            )}
             <div className="user-posts">
-              {profilePosts.map((post) => {
-                return <Post key={post.id} posts={profilePosts} {...post} poster={post.user} />;
-              })}
+              <div className="user-posts-topside">
+                <div className="item">All posts</div>
+              </div>
+              {!renderPost ? (
+                profilePosts === null ? (
+                  <div className="empty bg-white">
+                    You are not friends with the owner of account
+                  </div>
+                ) : profilePosts.length === 0 ? (
+                  <div className="empty bg-white">There are no posts here yet</div>
+                ) : (
+                  profilePosts.map((post) => {
+                    return (
+                      <Post
+                        key={post.id}
+                        posts={profilePosts}
+                        {...post}
+                        poster={post.user}
+                        setRenderPost={setRenderPost}
+                        renderPost={renderPost}
+                      />
+                    );
+                  })
+                )
+              ) : (
+                <div className="loading">
+                  <div className="lds-dual-ring"></div>
+                </div>
+              )}
             </div>
           </div>
         </div>

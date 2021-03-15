@@ -1,10 +1,10 @@
 .find-friends-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 8px;
+  padding: 0 15px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-gap: 10px;
   .find-single {
     z-index: 0;
-    padding: 20px 7px;
     padding-bottom: 0;
     .image-holder {
       position: relative;

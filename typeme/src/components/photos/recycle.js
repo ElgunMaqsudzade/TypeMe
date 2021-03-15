@@ -13,6 +13,8 @@ import {
   Icon28AddSquareOutline,
 } from "@vkontakte/icons";
 import "../../sass/_recycle.scss";
+import Camera from "../../images/camera_big.png";
+import CreateAlbum from "./newAlbum";
 import Imagemodal from "../imagemodal";
 
 function Recycle({ setPhotosLoading, albums, ExitImage }) {
@@ -26,6 +28,7 @@ function Recycle({ setPhotosLoading, albums, ExitImage }) {
   const [checked, setChecked] = useState([]);
   const [images, setImages] = useState([]);
   const [recycleLoading, setRecycleLoading] = useState(false);
+  const [showCreateAlbum, setShowCreateAlbum] = useState();
   const [singleId, setSingleId] = useState();
   const [showAlbumsModal, setShowAlbumsModal] = useState(false);
   const [moveImage, setMoveImage] = useState({ imageids: [], albumid: null });
@@ -328,29 +331,45 @@ function Recycle({ setPhotosLoading, albums, ExitImage }) {
                   }}
                 />
               </div>
-              <div className="albums-body modal-body">
-                {albums.map((album) => {
-                  return (
-                    <div
-                      key={album.id}
-                      className="albums-image"
-                      style={{
-                        backgroundImage: `url(${album.cover})`,
-                      }}
-                    >
+              {albums.length > 0 ? (
+                <div className="albums-body modal-body">
+                  {albums.map((album) => {
+                    return (
                       <div
-                        className="icon-holder"
-                        onClick={() => {
-                          setMoveImage({ ...moveImage, albumid: album.id });
-                          setShowAlbumsModal(false);
+                        key={album.id}
+                        className={`albums-image ${album.cover === null ? "small-image" : ""}`}
+                        style={{
+                          backgroundImage: `url(${album.cover === null ? Camera : album.cover})`,
                         }}
                       >
-                        <FiPlusCircle className="move-icon" />
+                        <div
+                          className="icon-holder"
+                          onClick={() => {
+                            setMoveImage({ ...moveImage, albumid: album.id });
+                            setShowAlbumsModal(false);
+                          }}
+                        >
+                          <FiPlusCircle className="move-icon" />
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="empty flex-column">
+                  <p>There are no photo albums yet.</p>
+                  <button
+                    className="main-btn-slimer"
+                    onClick={() => {
+                      setShowCreateAlbum(true);
+                      setShowAlbumsModal(false);
+                    }}
+                  >
+                    To a new album
+                  </button>
+                </div>
+              )}
+
               <div className="footer-side justify-content-end">
                 <div
                   className="main-btn-slimer"
@@ -398,6 +417,13 @@ function Recycle({ setPhotosLoading, albums, ExitImage }) {
               </div>
             </div>
           </div>
+        )}
+        {showCreateAlbum && (
+          <CreateAlbum
+            show={showCreateAlbum}
+            setshow={setShowCreateAlbum}
+            reset={setPhotosLoading}
+          />
         )}
       </div>
     </>

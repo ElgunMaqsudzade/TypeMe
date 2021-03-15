@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useGlobalContext } from "./context";
 import useOutsideClick from "../components/customHooks/showHide";
 import logo from "../images/logo.png";
@@ -11,8 +11,39 @@ import {
 } from "@vkontakte/icons";
 const Navbar = () => {
   const history = useHistory();
-  const { user, HandleOldUsers } = useGlobalContext();
+  const { user, HandleOldUsers, instance } = useGlobalContext();
   const [showSettings, setShowSettings] = useState(null);
+  const [findUsers, setFindUsers] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [showUsers, setShowUsers] = useState(false);
+
+  const settings = useRef(null);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    if (searchKeyword) {
+      instance
+        .post("authenticate/find", {
+          key: searchKeyword,
+          skip: 0,
+        })
+        .then(({ data }) => {
+          setFindUsers(data.users);
+        })
+        .catch((res) => {
+          console.log(res);
+        });
+      if (!showUsers) {
+        setShowUsers(true);
+      }
+    }
+  }, [searchKeyword]);
+
+  useOutsideClick(searchInputRef, () => {
+    if (showUsers) {
+      setShowUsers(false);
+    }
+  });
 
   const LogoutHandler = () => {
     const { email, image, name, surname } = user;
@@ -26,7 +57,6 @@ const Navbar = () => {
     history.push("/");
   };
 
-  const settings = useRef(null);
   useOutsideClick(settings, () => {
     if (showSettings) {
       setShowSettings(false);
@@ -45,7 +75,39 @@ const Navbar = () => {
             </Link>
             <div className="search-box">
               <Icon16SearchOutline className="search-icon" />
-              <input type="text" className="search-input" placeholder="Search" />
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  history.push(`/friends/find?keyword=${searchInputRef.current.value}`);
+                }}
+              >
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  className="search-input"
+                  placeholder="Search"
+                  onChange={(e) => setSearchKeyword(e.target.value)}
+                  onFocus={() => setShowUsers(true)}
+                />
+              </form>
+              {showUsers && (
+                <div className="users">
+                  {findUsers.length > 0 &&
+                    findUsers.slice(0, 8).map((per) => {
+                      const { username, name, surname, image } = per;
+                      return (
+                        <Link to={`/user/${username}`} key={username} className="user">
+                          <div className="img-holder">
+                            <img src={image} alt="" />
+                          </div>
+                          <div className="name-box">
+                            {name} {surname}
+                          </div>
+                        </Link>
+                      );
+                    })}
+                </div>
+              )}
             </div>
           </div>
           <div className="col-8 nav-minor">

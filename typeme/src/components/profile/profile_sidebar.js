@@ -97,6 +97,7 @@ function Profile_sidebar() {
         .catch((res) => {
           console.log(res);
         });
+
       instance
         .post("friend/getallfriends", {
           username: user.username,
