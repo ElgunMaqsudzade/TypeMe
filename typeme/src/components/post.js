@@ -60,7 +60,6 @@ function Post({
   });
 
   useEffect(() => {
-    console.log("1");
     if (
       showComments ||
       commentscount !== commentsCount ||

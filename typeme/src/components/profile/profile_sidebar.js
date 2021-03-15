@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, createRef } from "react";
 import { useGlobalContext } from "../context";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import ReactCrop from "react-image-crop";
 import Resizer from "react-image-file-resizer";
 import DeletePhoto from "./DeletePhoto";
@@ -26,6 +26,7 @@ function Profile_sidebar() {
     setFriendsLoading,
   } = useGlobalContext();
   const { username } = useParams();
+  const history = useHistory();
   const [deleteModal, setDeleteModal] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
   const [isReqFriend, setIsReqFriend] = useState(null);
@@ -85,7 +86,7 @@ function Profile_sidebar() {
   }, [username, userfriends, userReqfriends]);
 
   useEffect(() => {
-    if (user.username && friendsLoading) {
+    if (user.username && friendsLoading && username) {
       instance
         .post("friend/getallfriends", {
           username: user.username,
@@ -114,7 +115,7 @@ function Profile_sidebar() {
         return { ...prev, showFriendSettings: false };
       });
     }
-  }, [user.username, friendsLoading]);
+  }, [user.username, friendsLoading, username]);
 
   useEffect(() => {
     if (profileImage) {
@@ -248,7 +249,12 @@ function Profile_sidebar() {
           <div className="profile-sidebar-settings">
             {user.username === username ? (
               <>
-                <div className="edit profile-sidebar-minor-item">Edit</div>
+                <div
+                  className="edit profile-sidebar-minor-item"
+                  onClick={() => history.push(`/edit`)}
+                >
+                  Edit
+                </div>
               </>
             ) : (
               <>

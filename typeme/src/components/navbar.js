@@ -142,7 +142,9 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <hr className="divider" />
-                  <li className="setting-items">Settings</li>
+                  <li className="setting-items" onClick={() => history.push(`/edit`)}>
+                    Settings
+                  </li>
                   <hr className="divider" />
                   <li className="setting-items" onClick={() => LogoutHandler()}>
                     Log out

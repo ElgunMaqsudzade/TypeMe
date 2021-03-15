@@ -1,0 +1,104 @@
+@import "./main/variables";
+.edit-section {
+  .info {
+    margin: 20px 0px;
+    .full-item {
+      padding-bottom: 15px;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      padding-bottom: 5px;
+      label {
+        margin: 0;
+      }
+      .item-key {
+        width: 160px;
+        text-align: right;
+        margin-right: 10px;
+      }
+      .info-inp {
+        position: relative;
+        width: 280px;
+        padding: 5px 9px 7px;
+        height: 30px;
+        border-radius: 3px;
+        border: 1px solid $clr-border-bottom;
+        display: flex;
+        justify-content: space-between;
+      }
+      .gender-radio-box {
+        display: flex;
+        align-items: center;
+        input {
+          margin-right: 5px;
+        }
+        label {
+          margin-right: 5px;
+        }
+      }
+    }
+    .list {
+      height: 155px;
+      overflow-y: scroll;
+      position: absolute;
+      top: 28px;
+      left: 0;
+      width: 100%;
+      border: 1px solid $clr-border-bottom;
+      background-color: white;
+      z-index: 100;
+      font-size: 12px;
+      text-transform: capitalize;
+      .list-item {
+        cursor: pointer;
+        padding: 6px 0 8px 9px;
+        border-bottom: 1px solid $clr-border-bottom;
+        &:hover {
+          background-color: $clr-hover-blue;
+        }
+      }
+    }
+    .birthday-box {
+      .react-date-picker__wrapper {
+        width: 280px;
+        padding: 0 7px;
+        border-radius: 3px;
+        border: 1px solid $clr-f-card-grey;
+      }
+      .react-date-picker__button {
+        &:hover {
+          background-color: $clr-hover-dgrey;
+        }
+      }
+      .icon {
+        width: 18px !important;
+        height: 18px !important;
+        svg {
+          width: 18px !important;
+          height: 18px !important;
+        }
+        color: $clr-main-blue;
+      }
+      .calendar {
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid $clr-main-blue;
+        .react-calendar__tile--now {
+          border: 1px solid rgba(81, 129, 184, 0.4);
+          background-color: transparent;
+        }
+        .react-calendar__tile--active {
+          background-color: $clr-main-blue;
+        }
+      }
+    }
+    .dropdown-icon {
+      cursor: pointer;
+    }
+    .footer {
+      border-top: 1px solid $clr-border-bottom;
+      padding: 20px;
+    }
+  }
+}

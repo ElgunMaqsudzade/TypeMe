@@ -2,14 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "./context";
 import {
-  Icon20Users3Outline,
   Icon28Profile,
   Icon20NewsfeedOutline,
   Icon20MessageOutline,
   Icon20UsersOutline,
   Icon20PictureOutline,
-  Icon20MusicOutline,
-  Icon20VideoOutline,
 } from "@vkontakte/icons";
 
 const LSidebar = () => {
