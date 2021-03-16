@@ -28,6 +28,7 @@
     "react-icons": "^4.1.0",
     "react-image-crop": "^8.6.6",
     "react-image-file-resizer": "^0.4.2",
+    "react-infinite-scroll-component": "^6.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4",

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import CreatePost from "../components/createpost";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useGlobalContext } from "../components/context";
 import Post from "../components/post";
 import { useQuery } from "../components/customHooks/useQuery";
+
 const News = () => {
   const { instance, user } = useGlobalContext();
   const query = useQuery();
@@ -59,10 +60,15 @@ const News = () => {
   }, [location]);
 
   useEffect(() => {
+    FetchData();
+  }, [user.username, renderNewsPosts, location]);
+
+  const FetchData = (skip) => {
     if (user.username && renderNewsPosts && query.get("filter") === null) {
       instance
         .post("post/getnews", {
           username: user.username,
+          skip,
         })
         .then(({ data }) => {
           setNewsPosts(data);
@@ -75,7 +81,7 @@ const News = () => {
           }
         });
     }
-  }, [user.username, renderNewsPosts, location]);
+  };
 
   return (
     <section className="news">

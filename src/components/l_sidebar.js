@@ -19,7 +19,7 @@ const LSidebar = () => {
       link: `/user/${user.username}`,
     },
     { id: 2, icon: <Icon20NewsfeedOutline />, info: "News", link: "/feed" },
-    { id: 3, icon: <Icon20MessageOutline />, info: "Messenger", link: "/messenger" },
+    // { id: 3, icon: <Icon20MessageOutline />, info: "Messenger", link: "/messenger" },
     { id: 4, icon: <Icon20UsersOutline />, info: "Friends", link: "/friends/all" },
     {
       id: 6,
