@@ -1,104 +1,167 @@
 @import "./main/variables";
 .edit-section {
-  .info {
-    margin: 20px 0px;
-    .full-item {
-      padding-bottom: 15px;
+  .topside {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .login-controls {
+    padding: 20px 20px;
+    .login-topside {
+      font-weight: 500;
+      padding: 6px 0;
+      border-bottom: 1px solid $clr-border-bottom;
     }
-    .item {
-      display: flex;
-      align-items: center;
-      padding-bottom: 5px;
-      label {
-        margin: 0;
+    .login-content {
+      padding: 10px 0;
+      .reset-password-info {
+        display: flex;
+        align-items: flex-start;
+        .text-box {
+          div {
+            color: $clr-grey;
+          }
+        }
       }
-      .item-key {
+      .forgot {
         width: 160px;
         text-align: right;
-        margin-right: 10px;
-      }
-      .info-inp {
-        position: relative;
-        width: 280px;
-        padding: 5px 9px 7px;
-        height: 30px;
-        border-radius: 3px;
-        border: 1px solid $clr-border-bottom;
-        display: flex;
-        justify-content: space-between;
-      }
-      .gender-radio-box {
-        display: flex;
-        align-items: center;
-        input {
-          margin-right: 5px;
-        }
-        label {
-          margin-right: 5px;
-        }
-      }
-    }
-    .list {
-      height: 155px;
-      overflow-y: scroll;
-      position: absolute;
-      top: 28px;
-      left: 0;
-      width: 100%;
-      border: 1px solid $clr-border-bottom;
-      background-color: white;
-      z-index: 100;
-      font-size: 12px;
-      text-transform: capitalize;
-      .list-item {
-        cursor: pointer;
-        padding: 6px 0 8px 9px;
-        border-bottom: 1px solid $clr-border-bottom;
-        &:hover {
-          background-color: $clr-hover-blue;
-        }
-      }
-    }
-    .birthday-box {
-      .react-date-picker__wrapper {
-        width: 280px;
-        padding: 0 7px;
-        border-radius: 3px;
-        border: 1px solid $clr-f-card-grey;
-      }
-      .react-date-picker__button {
-        &:hover {
-          background-color: $clr-hover-dgrey;
-        }
-      }
-      .icon {
-        width: 18px !important;
-        height: 18px !important;
-        svg {
-          width: 18px !important;
-          height: 18px !important;
-        }
         color: $clr-main-blue;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline !important;
+        }
       }
-      .calendar {
-        border-radius: 6px;
-        overflow: hidden;
-        border: 1px solid $clr-main-blue;
-        .react-calendar__tile--now {
-          border: 1px solid rgba(81, 129, 184, 0.4);
-          background-color: transparent;
-        }
-        .react-calendar__tile--active {
-          background-color: $clr-main-blue;
-        }
+      .input-feedback {
+        color: red;
+        margin-left: 178px;
       }
     }
-    .dropdown-icon {
+  }
+  .settings-info {
+    padding: 20px 0px;
+  }
+  .full-item {
+    padding-bottom: 15px;
+  }
+  .item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+    label {
+      margin: 0;
+    }
+    .item-key {
+      width: 160px;
+      text-align: right;
+      margin-right: 10px;
+    }
+    .info-inp {
+      position: relative;
+      width: 280px;
+      padding: 5px 9px 7px;
+      height: 30px;
+      border-radius: 3px;
+      border: 1px solid $clr-border-bottom;
+      display: flex;
+      justify-content: space-between;
+    }
+    .gender-radio-box {
+      display: flex;
+      align-items: center;
+      input {
+        margin-right: 5px;
+      }
+      label {
+        margin-right: 5px;
+      }
+    }
+  }
+  .list {
+    height: 155px;
+    overflow-y: scroll;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    width: 100%;
+    border: 1px solid $clr-border-bottom;
+    background-color: white;
+    z-index: 100;
+    font-size: 12px;
+    text-transform: capitalize;
+    .list-item {
       cursor: pointer;
+      padding: 6px 0 8px 9px;
+      border-bottom: 1px solid $clr-border-bottom;
+      &:hover {
+        background-color: $clr-hover-blue;
+      }
     }
-    .footer {
-      border-top: 1px solid $clr-border-bottom;
-      padding: 20px;
+  }
+}
+.dropdown-icon {
+  color: $clr-grey;
+  opacity: 0.6;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.edit-sidebar {
+  padding: 6px 0;
+  .divider {
+    color: $clr-border-bottom;
+    margin: 5px 18px;
+  }
+  .user-profile {
+    padding: 8px 18px 8px;
+    align-items: center;
+    height: auto;
+    display: flex;
+    .to-profile {
+      width: 100%;
+      display: flex;
+    }
+    .user-info {
+      max-width: 165px;
+      .user-name {
+        margin-bottom: 2px;
+        font-size: 13px;
+        line-height: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .user-descr {
+        font-size: 12px;
+        line-height: 14px;
+        color: $clr-grey;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+    .thumbnail {
+      overflow: hidden;
+      margin-right: 9px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+    }
+  }
+  .sections {
+    .item {
+      cursor: pointer;
+      padding-left: 18px;
+      border-left: 1px solid transparent;
+      height: 32px;
+      line-height: 31px;
+      display: block;
+      &:hover {
+        background-color: $clr-hover-blue;
+      }
+    }
+    .item.active {
+      font-weight: 500;
+      border-left: 1px solid $clr-main-blue;
+      background-color: $clr-hover-blue;
     }
   }
 }

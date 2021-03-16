@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useGlobalContext } from "../components/context";
 import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { RiArrowLeftSFill } from "react-icons/ri";
+import "../sass/_resetpassword.scss";
 
 const ResetPassword = () => {
-  const { resetInfo, setResetInfo, url } = useGlobalContext();
+  const { resetInfo, setResetInfo, instance } = useGlobalContext();
   const [responseError, setResponseError] = useState({
     error: null,
     status: null,
@@ -65,8 +65,8 @@ const ResetPassword = () => {
           onSubmit={async (values) => {
             setResponseError({ ...responseError, loading: true });
             await new Promise((resolve) => setTimeout(resolve, 500));
-            axios
-              .post(`${url}/api/authenticate/resetpassword`, {
+            instance
+              .post(`/authenticate/resetpassword`, {
                 email: resetInfo.email,
                 password: values.password,
                 token: token,
@@ -81,7 +81,6 @@ const ResetPassword = () => {
                 });
               })
               .catch(({ response }) => {
-                console.log(response);
                 setResponseError({
                   ...responseError,
                   status: response.status,
