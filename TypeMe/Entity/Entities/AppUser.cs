@@ -29,5 +29,7 @@ namespace Entity.Entities
         public DateTime CreateTime { get; set; }
         public virtual UserDetail UserDetail { get; set; }
         public virtual ICollection<Image> Images { get; set; }
+
+        
     }
 }

@@ -36,10 +36,7 @@ namespace TypeMeApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            });
+            services.AddCors();
             services.AddScoped<IFriendService, FriendManager>();
             services.AddScoped<IFriendDal, EFFriendDal>();
             services.AddScoped<IStatusService, StatusManager>();
@@ -52,6 +49,18 @@ namespace TypeMeApi
             services.AddScoped<IImageDal, EFImageDal>();
             services.AddScoped<IAlbomService, AlbomManager>();
             services.AddScoped<IAlbomDal, EFAlbomDal>();
+            services.AddScoped<IRecycleBinService, RecycleBinManager>();
+            services.AddScoped<IRecycleBinDal, EFRecycleBinDal>();
+            services.AddScoped<IPostService, PostManager>();
+            services.AddScoped<IPostDal, EFPostDal>();
+            services.AddScoped<IPostImageService, PostImageManager>();
+            services.AddScoped<IPostImageDal, EFPostImageDal>();
+            services.AddScoped<ICommentService, CommentManager>();
+            services.AddScoped<ICommentDal, EFCommentDal>();
+            services.AddScoped<IPostLikeService, PostLikeManager>();
+            services.AddScoped<IPostIsLikeDal, EFPostIsLikeDal>();
+            services.AddScoped<ICommentLikeService, CommentLikeManager>();
+            services.AddScoped<ICommentIsLikeDal, EFCommentIsLikeDal>();
             services.AddDbContext<MyIdentityDbContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Default"]));
             services.AddControllers();
             services.AddIdentity<AppUser, IdentityRole>(identityOptions =>
@@ -66,6 +75,7 @@ namespace TypeMeApi
                 identityOptions.User.RequireUniqueEmail = true;
                 identityOptions.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<MyIdentityDbContext>().AddDefaultTokenProviders();
+           
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -83,6 +93,7 @@ namespace TypeMeApi
                 };
 
             });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,7 +108,11 @@ namespace TypeMeApi
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors(option=>option.WithOrigins("http://localhost:3000/").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) 
+                .AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();

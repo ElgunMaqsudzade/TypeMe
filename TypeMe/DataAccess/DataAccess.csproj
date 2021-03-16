@@ -17,6 +17,20 @@
     <Compile Remove="Migrations\20210307133849_CreateTables.Designer.cs" />
     <Compile Remove="Migrations\20210307202209_CreateTables.cs" />
     <Compile Remove="Migrations\20210307202209_CreateTables.Designer.cs" />
+    <Compile Remove="Migrations\20210307215527_CreateTables.cs" />
+    <Compile Remove="Migrations\20210307215527_CreateTables.Designer.cs" />
+    <Compile Remove="Migrations\20210313134049_CreateCommentImageTable.cs" />
+    <Compile Remove="Migrations\20210313134049_CreateCommentImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210313140521_CreateCommentImageTable.cs" />
+    <Compile Remove="Migrations\20210313140521_CreateCommentImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210313141131_CreateCommentImageTable.cs" />
+    <Compile Remove="Migrations\20210313141131_CreateCommentImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210313143241_CreateCommentImageTable.cs" />
+    <Compile Remove="Migrations\20210313143241_CreateCommentImageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210314125050_CreatePostAndCommentTables.cs" />
+    <Compile Remove="Migrations\20210314125050_CreatePostAndCommentTables.Designer.cs" />
+    <Compile Remove="Migrations\20210314141514_CreatePostAndCommentTables.cs" />
+    <Compile Remove="Migrations\20210314141514_CreatePostAndCommentTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

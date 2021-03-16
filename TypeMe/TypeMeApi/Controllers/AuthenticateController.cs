@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entity.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,26 +25,30 @@ using TypeMeApi.ToDoItems.Authenticate;
 
 namespace TypeMeApi.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
     public class AuthenticateController : ControllerBase
     {
-
+        #region Properties                                   >>>  Properties  <<<
         private readonly UserManager<AppUser> _userManager;
         public IConfiguration Configuration { get; }
+        #endregion
 
+        #region Authenticate Constructor                     >>>     CTOR     <<<
         public AuthenticateController(UserManager<AppUser> userManager, IConfiguration configuration)
         {
-
             _userManager = userManager;
             Configuration = configuration;
         }
-        // GET: api/<AuthenticateController>
+        #endregion
+
+        #region Get users in search                          >>>      Get     <<<
         [HttpGet]
         public ActionResult GetUsers()
         {
-            List<AppUser> allUsers = _userManager.Users.Where(u=>u.EmailConfirmed==true).Take(20).ToList();
+            List<AppUser> allUsers = _userManager.Users.Where(u => u.EmailConfirmed == true).Take(20).ToList();
             List<UserToDo> users = new List<UserToDo>();
             foreach (AppUser user in allUsers)
             {
@@ -50,39 +57,43 @@ namespace TypeMeApi.Controllers
                     Email = user.Email,
                     Name = user.Name,
                     Surname = user.Surname,
-                    Image =  user.Image,
+                    Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + user.Image,
                     Username = user.UserName,
                     Gender = user.Gender,
                 };
                 users.Add(userToDo);
             }
-            return Ok(new { users} );
-          
+            return Ok(new { users });
+
         }
+        #endregion
+
+        #region  Find users for search                        >>>     Find     <<<
         [HttpPost]
         [Route("find")]
         public ActionResult Find([FromBody] GetUser getUser)
         {
-                List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).Skip(getUser.Skip).Take(20).ToList();
-                List<UserToDo> users = new List<UserToDo>();
-                foreach (AppUser user in allUsers)
+            List<AppUser> allUsers = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).Skip(getUser.Skip).Take(20).ToList();
+            List<UserToDo> users = new List<UserToDo>();
+            foreach (AppUser user in allUsers)
+            {
+                UserToDo userToDo = new UserToDo
                 {
-                    UserToDo userToDo = new UserToDo
-                    {
-                        Email = user.Email,
-                        Name = user.Name,
-                        Surname = user.Surname,
-                        Image =  user.Image,
-                        Username = user.UserName,
-                        Gender = user.Gender,
-                    };
-                    users.Add(userToDo);
-                }
-                return Ok(new { users , usersCount = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).ToList().Count() });
-            
-        }
+                    Email = user.Email,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + user.Image,
+                    Username = user.UserName,
+                    Gender = user.Gender,
+                };
+                users.Add(userToDo);
+            }
+            return Ok(new { users, usersCount = _userManager.Users.Where(u => u.Name.Contains(getUser.Key) || u.Surname.Contains(getUser.Key)).ToList().Count() });
 
-            // POST api/<AuthenticateController>
+        }
+        #endregion
+
+        #region Register User                                >>>   Register   <<<
         [HttpPost]
         [Route("register")]
         public async Task<ActionResult> Register([FromBody] Register register)
@@ -102,15 +113,13 @@ namespace TypeMeApi.Controllers
                 }
 
             }
-
             var birthday = DateTime.ParseExact(register.Birthday, "d-M-yyyy", null);
             string loginId = Guid.NewGuid().ToString("N");
             //UserDetail userDetail = new UserDetail();
-
             AppUser newUser = new AppUser()
             {
                 Email = register.Email,
-                Image= "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/default.png",
+                Image = "default.png",
                 Name = register.Name,
                 UserName = loginId,
                 Surname = register.Surname,
@@ -122,7 +131,7 @@ namespace TypeMeApi.Controllers
             //userDetail.AppUserId = newUser.Id;
             //await _detailService.Add(userDetail);
             IdentityResult identityResult = await _userManager.CreateAsync(newUser, register.Password);
-            
+
             if (!identityResult.Succeeded)
             {
                 return StatusCode(StatusCodes.Status403Forbidden,
@@ -138,8 +147,8 @@ namespace TypeMeApi.Controllers
                     stringChars[i] = chars[random.Next(chars.Length)];
                 }
                 var finalString = new String(stringChars);
+                HttpContext.Session.SetString("finalString", finalString);
 
-                
                 var mailto = newUser.Email;
                 var messageBody = $"<div><h3>Hello {newUser.Name}</h3>" +
                     $"</br> <p>We received a request to confirm your Typeme account.</p>"
@@ -161,7 +170,9 @@ namespace TypeMeApi.Controllers
             }
 
         }
+        #endregion
 
+        #region Login User                                   >>>    Login     <<<
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult> Login([FromBody] Login login)
@@ -193,12 +204,12 @@ namespace TypeMeApi.Controllers
                     claims: authClaim,
                     signingCredentials: new SigningCredentials(signInKey, SecurityAlgorithms.HmacSha256)
                     );
-                
+                string image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + user.Image;
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expirationDate = token.ValidTo,
-                    user = new { user.Name, user.Surname,  user.Image, user.Gender, user.Birthday, user.Email,username= user.UserName }
+                    user = new { user.Name, user.Surname, image, user.Gender, user.Birthday, user.Email, username = user.UserName }
 
                 });
             }
@@ -208,13 +219,18 @@ namespace TypeMeApi.Controllers
             }
 
         }
+        #endregion
+
+        #region Verify User Email                            >>>    Verify    <<< 
         [HttpPost]
         [Route("verifyemail")]
         public async Task<ActionResult> VerifyEmail([FromBody] Verify EmailToken)
         {
-            var user = await _userManager.FindByEmailAsync(EmailToken.Email);
+            //var finalString = HttpContext.Session.GetString("finalString");
+            AppUser user = await _userManager.FindByEmailAsync(EmailToken.Email);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
-
+            //if (finalString == EmailToken.Token)
+            //{
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
                 var result = await _userManager.ConfirmEmailAsync(user, EmailToken.Token);
@@ -232,23 +248,28 @@ namespace TypeMeApi.Controllers
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is something wrong. Account wasn't verified." });
             }
+            //}
+            //else
+            //{
+            //    return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "Number is wrong. Account wasn't verified." });
+            //}
         }
-        // PUT api/<AuthenticateController>/5
-        // DELETE api/<AuthenticateController>/5
+        #endregion
+
+        #region Delete User                                  >>>    Delete    <<<
         [HttpDelete("{delete}")]
         public async Task Delete([FromBody] DeleteUser delete)
         {
-
             AppUser user = await _userManager.FindByEmailAsync(delete.Email);
-            if (user.EmailConfirmed == false)
-            {
-                await _userManager.DeleteAsync(user);
-                await _userManager.UpdateAsync(user);
-            }
+            await _userManager.DeleteAsync(user);
+
         }
+        #endregion
+
+        #region Send Email for Reset Password                >>>  Email-Pass  <<<
         [HttpPost]
         [Route("foremailrp")]
-        public async Task<IActionResult> ForEmailRP([FromBody] EmailResetPassword emailResetPassword )
+        public async Task<IActionResult> ForEmailRP([FromBody] EmailResetPassword emailResetPassword)
         {
             AppUser user = await _userManager.FindByEmailAsync(emailResetPassword.Email);
             if (user == null) return StatusCode(StatusCodes.Status403Forbidden, new Response { Status = "Error", Error = "There is no account with this email." });
@@ -267,14 +288,16 @@ namespace TypeMeApi.Controllers
             $"</br></br><span style='padding: 8px 16px 8px 16px;background-color: #dce1e6;text-align: center;border-radius: 7px;'>{resetToken} </span></div>";
             var messageSubject = "Account Confrim";
             //***********     Send Message to Email     ***********
-             await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
+            await Helper.SendMessageAsync(messageSubject, messageBody, mailto);
             return Ok(new
             {
                 confirmationstring = resetToken,
-                resettoken= await _userManager.GeneratePasswordResetTokenAsync(user),
+                resettoken = await _userManager.GeneratePasswordResetTokenAsync(user),
             });
         }
+        #endregion
 
+        #region Change password                              >>>   Change-P   <<<
         [HttpPost]
         [Route("resetpassword")]
         public async Task<ActionResult> ResetPassword([FromBody] ResetPassword resetPassword)
@@ -290,5 +313,7 @@ namespace TypeMeApi.Controllers
 
             return Ok();
         }
+        #endregion
+
     }
 }

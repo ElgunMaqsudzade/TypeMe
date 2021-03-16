@@ -29,6 +29,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Cover")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -134,6 +137,56 @@ namespace DataAccess.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Entity.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ReplyTo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Entity.Entities.CommentIsLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommentIsLikes");
+                });
+
             modelBuilder.Entity("Entity.Entities.Friend", b =>
                 {
                     b.Property<int>("Id")
@@ -164,7 +217,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AlbomId")
+                    b.Property<int?>("AlbomId")
                         .HasColumnType("int");
 
                     b.Property<string>("AppUserId")
@@ -180,6 +233,88 @@ namespace DataAccess.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Entity.Entities.PostImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostImages");
+                });
+
+            modelBuilder.Entity("Entity.Entities.PostIsLike", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PostIsLikes");
+                });
+
+            modelBuilder.Entity("Entity.Entities.RecycleBin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RecycleBins");
                 });
 
             modelBuilder.Entity("Entity.Entities.Status", b =>
@@ -210,7 +345,7 @@ namespace DataAccess.Migrations
                     b.Property<string>("StatusMessage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserLanguageId")
+                    b.Property<int?>("UserLanguageId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -377,6 +512,13 @@ namespace DataAccess.Migrations
                         .HasForeignKey("AppUserId");
                 });
 
+            modelBuilder.Entity("Entity.Entities.Comment", b =>
+                {
+                    b.HasOne("Entity.Entities.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId");
+                });
+
             modelBuilder.Entity("Entity.Entities.Friend", b =>
                 {
                     b.HasOne("Entity.Entities.Status", "Status")
@@ -390,13 +532,26 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Entity.Entities.Albom", "Albom")
                         .WithMany("Images")
-                        .HasForeignKey("AlbomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AlbomId");
 
                     b.HasOne("Entity.Entities.AppUser", "AppUser")
                         .WithMany("Images")
                         .HasForeignKey("AppUserId");
+                });
+
+            modelBuilder.Entity("Entity.Entities.PostImage", b =>
+                {
+                    b.HasOne("Entity.Entities.Image", "Image")
+                        .WithMany("PostImages")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entity.Entities.Post", "Post")
+                        .WithMany("PostImages")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entity.Entities.UserDetail", b =>
@@ -407,9 +562,7 @@ namespace DataAccess.Migrations
 
                     b.HasOne("Entity.Entities.UserLanguage", "UserLanguage")
                         .WithMany("UserDetails")
-                        .HasForeignKey("UserLanguageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserLanguageId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

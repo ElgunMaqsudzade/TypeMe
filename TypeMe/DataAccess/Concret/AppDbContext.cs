@@ -21,6 +21,12 @@ namespace DataAccess.Abstract.Concret
         public DbSet<UserLanguage> UserLanguages { get; set; }
         public DbSet<Albom> Alboms { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<RecycleBin> RecycleBins { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostImage> PostImages { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<PostIsLike> PostIsLikes { get; set; }
+        public DbSet<CommentIsLike> CommentIsLikes { get; set; }
 
     }
 }

@@ -9,6 +9,6 @@ namespace TypeMeApi.ToDoItems.Profile
     {
         public string Username { get; set; }
         public string Statusmessage { get; set; }
-        public int Language { get; set; }
+        public int? Language { get; set; }
     }
 }

@@ -24,13 +24,46 @@ namespace Business.Concret
         {
             return await _friendDal.GetAllAsync(s => (s.FromUserName == whoseId || s.ToUserName == whoseId) && s.StatusId == statusId);
         }
+        public async Task<List<string>> GetAllFriendsUsername(string username, int statusId)
+        {
+            List<string> usernames = new List<string>();
+            foreach (Friend friend in await _friendDal.GetAllAsync(s => (s.FromUserName == username || s.ToUserName == username) && s.StatusId == statusId))
+            {
+                if (friend.FromUserName == username)
+                {
+
+                    usernames.Add(friend.ToUserName);
+                }
+                else if(friend.ToUserName == username)
+                {
+                    usernames.Add(friend.FromUserName);
+                }
+            }
+            usernames.Add(username);
+            return usernames;
+        }
+        
+
         public async Task<Friend> Get(string whoseId, string whichId)
         {
             return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId);
         }
         public async Task<Friend> GetProfile(string whoseId, string whichId, int statusId)
         {
+            
             return await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId && s.StatusId == 1);
+        }
+        public async Task<bool> IsFriend(string whoseId, string whichId, int statusId)
+        {
+            if ((await _friendDal.GetAsync(s => s.FromUserName == whoseId && s.ToUserName == whichId && s.StatusId == 1)) != null)
+            {
+                return true;
+            }
+            else if ((await _friendDal.GetAsync(s => s.ToUserName == whoseId && s.FromUserName == whichId && s.StatusId == 1)) != null)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<Friend> GetFriendWithId(string whoseId, string whichId)
@@ -56,10 +89,6 @@ namespace Business.Concret
             friend.StatusId = statusId;
             await _friendDal.UpdateAsync(friend);
         }
-
-
-
-
         public async Task Delete(Friend friend)
         {
             await _friendDal.DeleteAsync(friend);

@@ -15,18 +15,26 @@ namespace Business.Concret
         {
             _albomDal = albomDal;
         }
-        public async Task<List<Albom>> GetAlboms(string ImageId)
+        public async Task<List<Albom>> GetAlboms(string AppuserId)
         {
-            return await  _albomDal.GetAllAsync();
+            return await  _albomDal.GetAllAsync(s=>s.AppUserId==AppuserId);
         }
        
         public async Task<Albom> GetWithIdAsync(int id)
         {
             return await _albomDal.GetAsync(s => s.Id == id);
         }
+        public async Task<Albom> GetWithIdUserAsync(string AppUserId, int id)
+        {
+            return await _albomDal.GetAsync(s => s.Id == id && s.AppUserId == AppUserId);
+        }
         public async Task<Albom> GetWithINameAsync(string name, string id)
         {
             return await _albomDal.GetAsync(s => s.Name == name &&s.AppUserId==id);
+        }
+        public async Task<Albom> GetWithCoverAsync(string cover)
+        {
+            return await _albomDal.GetAsync(a => a.Cover == cover);
         }
         public async Task Add(Albom albom)
         {
@@ -41,5 +49,7 @@ namespace Business.Concret
         {
             await _albomDal.UpdateAsync(albom);
         }
+
+      
     }
 }

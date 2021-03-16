@@ -11,166 +11,166 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="appsettings.Development.json">
-      <publishTime>03/07/2021 08:27:08</publishTime>
+      <publishTime>03/07/2021 20:27:08</publishTime>
     </File>
     <File Include="appsettings.json">
-      <publishTime>03/07/2021 05:36:34</publishTime>
+      <publishTime>03/07/2021 17:36:34</publishTime>
     </File>
     <File Include="Business.dll">
-      <publishTime>03/07/2021 12:33:23</publishTime>
+      <publishTime>03/15/2021 23:18:55</publishTime>
     </File>
     <File Include="Business.pdb">
-      <publishTime>03/07/2021 12:33:23</publishTime>
+      <publishTime>03/15/2021 23:18:55</publishTime>
     </File>
     <File Include="Core.dll">
-      <publishTime>03/04/2021 05:07:28</publishTime>
+      <publishTime>03/15/2021 23:18:51</publishTime>
     </File>
     <File Include="Core.pdb">
-      <publishTime>03/04/2021 05:07:28</publishTime>
+      <publishTime>03/15/2021 23:18:51</publishTime>
     </File>
     <File Include="DataAccess.dll">
-      <publishTime>03/07/2021 12:33:21</publishTime>
+      <publishTime>03/15/2021 23:18:54</publishTime>
     </File>
     <File Include="DataAccess.pdb">
-      <publishTime>03/07/2021 12:33:21</publishTime>
+      <publishTime>03/15/2021 23:18:54</publishTime>
     </File>
     <File Include="Entity.dll">
-      <publishTime>03/05/2021 15:28:31</publishTime>
+      <publishTime>03/15/2021 23:18:53</publishTime>
     </File>
     <File Include="Entity.pdb">
-      <publishTime>03/05/2021 15:28:31</publishTime>
+      <publishTime>03/15/2021 23:18:53</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Authentication.JwtBearer.dll">
-      <publishTime>11/20/2020 06:25:42</publishTime>
+      <publishTime>11/20/2020 18:25:42</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Cryptography.Internal.dll">
-      <publishTime>11/20/2020 06:23:16</publishTime>
+      <publishTime>11/20/2020 18:23:16</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Cryptography.KeyDerivation.dll">
-      <publishTime>11/20/2020 06:26:00</publishTime>
+      <publishTime>11/20/2020 18:26:00</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Http.Features.dll">
-      <publishTime>11/20/2020 06:23:18</publishTime>
+      <publishTime>11/20/2020 18:23:18</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll">
-      <publishTime>11/20/2020 06:32:02</publishTime>
+      <publishTime>11/20/2020 18:32:02</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.JsonPatch.dll">
-      <publishTime>11/20/2020 06:24:10</publishTime>
+      <publishTime>11/20/2020 18:24:10</publishTime>
     </File>
     <File Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll">
-      <publishTime>11/20/2020 06:32:06</publishTime>
+      <publishTime>11/20/2020 18:32:06</publishTime>
     </File>
     <File Include="Microsoft.Bcl.AsyncInterfaces.dll">
-      <publishTime>04/14/2020 22:39:12</publishTime>
+      <publishTime>04/15/2020 09:39:12</publishTime>
     </File>
     <File Include="Microsoft.Bcl.HashCode.dll">
-      <publishTime>11/16/2020 21:15:52</publishTime>
+      <publishTime>11/17/2020 09:15:52</publishTime>
     </File>
     <File Include="Microsoft.Data.SqlClient.dll">
-      <publishTime>05/15/2020 23:07:32</publishTime>
+      <publishTime>05/16/2020 10:07:32</publishTime>
     </File>
     <File Include="Microsoft.EntityFrameworkCore.Abstractions.dll">
-      <publishTime>11/17/2020 22:57:46</publishTime>
+      <publishTime>11/18/2020 10:57:46</publishTime>
     </File>
     <File Include="Microsoft.EntityFrameworkCore.dll">
-      <publishTime>11/17/2020 22:57:54</publishTime>
+      <publishTime>11/18/2020 10:57:54</publishTime>
     </File>
     <File Include="Microsoft.EntityFrameworkCore.Relational.dll">
-      <publishTime>11/17/2020 22:58:02</publishTime>
+      <publishTime>11/18/2020 10:58:02</publishTime>
     </File>
     <File Include="Microsoft.EntityFrameworkCore.SqlServer.dll">
-      <publishTime>11/17/2020 22:58:04</publishTime>
+      <publishTime>11/18/2020 10:58:04</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Caching.Abstractions.dll">
-      <publishTime>11/17/2020 21:28:34</publishTime>
+      <publishTime>11/18/2020 09:28:34</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Caching.Memory.dll">
-      <publishTime>11/17/2020 21:28:58</publishTime>
+      <publishTime>11/18/2020 09:28:58</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.Abstractions.dll">
-      <publishTime>11/17/2020 21:28:42</publishTime>
+      <publishTime>11/18/2020 09:28:42</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.Binder.dll">
-      <publishTime>11/17/2020 21:28:52</publishTime>
+      <publishTime>11/18/2020 09:28:52</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Configuration.dll">
-      <publishTime>11/17/2020 21:28:42</publishTime>
+      <publishTime>11/18/2020 09:28:42</publishTime>
     </File>
     <File Include="Microsoft.Extensions.DependencyInjection.Abstractions.dll">
-      <publishTime>11/17/2020 21:28:54</publishTime>
+      <publishTime>11/18/2020 09:28:54</publishTime>
     </File>
     <File Include="Microsoft.Extensions.DependencyInjection.dll">
-      <publishTime>11/17/2020 21:28:44</publishTime>
+      <publishTime>11/18/2020 09:28:44</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Identity.Core.dll">
-      <publishTime>11/20/2020 06:27:38</publishTime>
+      <publishTime>11/20/2020 18:27:38</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Identity.Stores.dll">
-      <publishTime>11/20/2020 06:31:58</publishTime>
+      <publishTime>11/20/2020 18:31:58</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.Abstractions.dll">
-      <publishTime>11/17/2020 21:29:16</publishTime>
+      <publishTime>11/18/2020 09:29:16</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Logging.dll">
-      <publishTime>11/17/2020 21:29:52</publishTime>
+      <publishTime>11/18/2020 09:29:52</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Options.dll">
-      <publishTime>11/17/2020 21:28:44</publishTime>
+      <publishTime>11/18/2020 09:28:44</publishTime>
     </File>
     <File Include="Microsoft.Extensions.Primitives.dll">
-      <publishTime>11/17/2020 21:29:06</publishTime>
+      <publishTime>11/18/2020 09:29:06</publishTime>
     </File>
     <File Include="Microsoft.Identity.Client.dll">
-      <publishTime>04/29/2019 22:04:14</publishTime>
+      <publishTime>04/30/2019 09:04:14</publishTime>
     </File>
     <File Include="Microsoft.IdentityModel.JsonWebTokens.dll">
-      <publishTime>06/24/2019 19:50:38</publishTime>
+      <publishTime>06/25/2019 06:50:38</publishTime>
     </File>
     <File Include="Microsoft.IdentityModel.Logging.dll">
-      <publishTime>06/24/2019 19:53:26</publishTime>
+      <publishTime>06/25/2019 06:53:26</publishTime>
     </File>
     <File Include="Microsoft.IdentityModel.Protocols.dll">
-      <publishTime>06/24/2019 19:54:24</publishTime>
+      <publishTime>06/25/2019 06:54:24</publishTime>
     </File>
     <File Include="Microsoft.IdentityModel.Protocols.OpenIdConnect.dll">
-      <publishTime>06/24/2019 19:59:32</publishTime>
+      <publishTime>06/25/2019 06:59:32</publishTime>
     </File>
     <File Include="Microsoft.IdentityModel.Tokens.dll">
-      <publishTime>06/24/2019 19:56:06</publishTime>
+      <publishTime>06/25/2019 06:56:06</publishTime>
     </File>
     <File Include="Microsoft.Win32.SystemEvents.dll">
       <publishTime>10/19/2020 18:40:26</publishTime>
     </File>
     <File Include="Newtonsoft.Json.Bson.dll">
-      <publishTime>11/27/2018 23:10:18</publishTime>
+      <publishTime>11/28/2018 11:10:18</publishTime>
     </File>
     <File Include="Newtonsoft.Json.dll">
-      <publishTime>04/22/2019 01:06:16</publishTime>
+      <publishTime>04/22/2019 12:06:16</publishTime>
     </File>
     <File Include="runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll">
-      <publishTime>05/15/2018 13:29:40</publishTime>
+      <publishTime>05/16/2018 00:29:40</publishTime>
     </File>
     <File Include="runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll">
-      <publishTime>05/15/2020 23:07:24</publishTime>
+      <publishTime>05/16/2020 10:07:24</publishTime>
     </File>
     <File Include="runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll">
       <publishTime>01/23/2021 03:40:24</publishTime>
     </File>
     <File Include="runtimes/win-arm64/native/sni.dll">
-      <publishTime>01/15/2021 04:43:36</publishTime>
+      <publishTime>01/15/2021 16:43:36</publishTime>
     </File>
     <File Include="runtimes/win-x64/native/sni.dll">
-      <publishTime>01/15/2021 04:43:36</publishTime>
+      <publishTime>01/15/2021 16:43:36</publishTime>
     </File>
     <File Include="runtimes/win-x86/native/sni.dll">
-      <publishTime>01/15/2021 04:43:38</publishTime>
+      <publishTime>01/15/2021 16:43:38</publishTime>
     </File>
     <File Include="runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll">
-      <publishTime>05/15/2018 13:29:40</publishTime>
+      <publishTime>05/16/2018 00:29:40</publishTime>
     </File>
     <File Include="runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll">
-      <publishTime>05/15/2020 23:07:26</publishTime>
+      <publishTime>05/16/2020 10:07:26</publishTime>
     </File>
     <File Include="runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll">
       <publishTime>10/19/2020 18:52:12</publishTime>
@@ -179,55 +179,73 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/23/2021 03:41:26</publishTime>
     </File>
     <File Include="runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll">
-      <publishTime>05/15/2018 13:29:44</publishTime>
+      <publishTime>05/16/2018 00:29:44</publishTime>
     </File>
     <File Include="System.Collections.Immutable.dll">
-      <publishTime>04/14/2020 22:38:40</publishTime>
+      <publishTime>04/15/2020 09:38:40</publishTime>
     </File>
     <File Include="System.ComponentModel.Annotations.dll">
-      <publishTime>10/19/2020 18:37:54</publishTime>
+      <publishTime>10/20/2020 05:37:54</publishTime>
     </File>
     <File Include="System.Configuration.ConfigurationManager.dll">
-      <publishTime>05/15/2018 13:29:38</publishTime>
+      <publishTime>05/16/2018 00:29:38</publishTime>
     </File>
     <File Include="System.Diagnostics.DiagnosticSource.dll">
-      <publishTime>04/14/2020 22:48:06</publishTime>
+      <publishTime>04/15/2020 09:48:06</publishTime>
     </File>
     <File Include="System.Drawing.Common.dll">
       <publishTime>01/23/2021 03:40:38</publishTime>
     </File>
     <File Include="System.IdentityModel.Tokens.Jwt.dll">
-      <publishTime>06/24/2019 19:49:50</publishTime>
+      <publishTime>06/25/2019 06:49:50</publishTime>
     </File>
     <File Include="System.IO.Pipelines.dll">
-      <publishTime>11/16/2020 21:23:16</publishTime>
+      <publishTime>11/17/2020 09:23:16</publishTime>
     </File>
     <File Include="System.Runtime.Caching.dll">
-      <publishTime>05/15/2018 13:29:40</publishTime>
+      <publishTime>05/16/2018 00:29:40</publishTime>
     </File>
     <File Include="System.Security.Cryptography.ProtectedData.dll">
-      <publishTime>05/15/2018 13:29:44</publishTime>
+      <publishTime>05/16/2018 00:29:44</publishTime>
     </File>
     <File Include="TypeMeApi.deps.json">
-      <publishTime>03/07/2021 13:29:22</publishTime>
+      <publishTime>03/16/2021 05:00:47</publishTime>
     </File>
     <File Include="TypeMeApi.dll">
-      <publishTime>03/07/2021 13:28:57</publishTime>
+      <publishTime>03/16/2021 05:00:36</publishTime>
     </File>
     <File Include="TypeMeApi.exe">
-      <publishTime>03/07/2021 13:28:58</publishTime>
+      <publishTime>03/16/2021 05:00:36</publishTime>
     </File>
     <File Include="TypeMeApi.pdb">
-      <publishTime>03/07/2021 13:28:57</publishTime>
+      <publishTime>03/16/2021 05:00:36</publishTime>
     </File>
     <File Include="TypeMeApi.runtimeconfig.json">
-      <publishTime>03/07/2021 13:02:54</publishTime>
+      <publishTime>03/08/2021 15:52:17</publishTime>
     </File>
     <File Include="web.config">
-      <publishTime>03/07/2021 13:29:23</publishTime>
+      <publishTime>03/16/2021 05:00:47</publishTime>
     </File>
     <File Include="wwwroot/images/cutedProfile/default.png">
-      <publishTime>03/07/2021 05:24:41</publishTime>
+      <publishTime>03/07/2021 17:24:41</publishTime>
+    </File>
+    <File Include="wwwroot/images/cutedProfile/jrc.png">
+      <publishTime>02/09/2021 21:08:16</publishTime>
+    </File>
+    <File Include="wwwroot/images/cutedProfile/Kamran_Jabiyev.jpg">
+      <publishTime>02/09/2021 21:08:16</publishTime>
+    </File>
+    <File Include="wwwroot/images/cutedProfile/neriman.jfif">
+      <publishTime>03/16/2021 01:21:01</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/05fafc5b-8193-44fc-abaf-54e4bf1b39a3ShohretM.jpg">
+      <publishTime>03/10/2021 01:02:41</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/0ccefe1d-3738-499b-95bc-cbc768a5c95cShohretM.jpg">
+      <publishTime>03/11/2021 07:32:24</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/1e0e6b8b-9bce-446d-8cd3-5d3eb585c632ShohretM.jpg">
+      <publishTime>03/11/2021 03:10:53</publishTime>
     </File>
     <File Include="wwwroot/images/profile/2bba445e-47a1-4ff2-b1c4-7e2a7ff85f99book-11-3.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
@@ -235,26 +253,107 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="wwwroot/images/profile/3b5709d7-baa8-4151-864c-b3a94e1cb898default.png">
       <publishTime>03/07/2021 05:24:41</publishTime>
     </File>
+    <File Include="wwwroot/images/profile/3ecc9261-0907-49c3-b61a-61a495843b9fShohretM.jpg">
+      <publishTime>03/11/2021 03:11:02</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/4b93e468-6348-4b24-b8e2-66f7c97691bdShohretM.jpg">
+      <publishTime>03/11/2021 07:32:15</publishTime>
+    </File>
     <File Include="wwwroot/images/profile/56f18655-64b5-4ebd-8b7c-cc3751467ccebook-2-1.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
     </File>
     <File Include="wwwroot/images/profile/6595991e-2212-43bb-90e9-d7ce520058cbbook-11-3.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
     </File>
+    <File Include="wwwroot/images/profile/694f9314-cc5c-430a-99bd-8257d72a3a3dShohretM.jpg">
+      <publishTime>03/10/2021 10:35:20</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/69b0d5cf-32e8-4a95-88f7-5d2609897bd5ShohretM.jpg">
+      <publishTime>03/11/2021 03:10:58</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/70a69374-0b99-47b9-99d7-109aa93c3ae0ShohretM.jpg">
+      <publishTime>03/10/2021 15:45:10</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/810af622-00f6-4696-aa9e-3e258e478167ShohretM.jpg">
+      <publishTime>03/10/2021 01:17:10</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/82c540ba-58bb-410e-9b1a-ddc0e2993da5ShohretM.jpg">
+      <publishTime>03/10/2021 15:45:19</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/86a48289-cfce-43de-96c6-315fc0d3f188ShohretM.jpg">
+      <publishTime>03/10/2021 00:58:25</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/90cce78c-04fd-4586-b158-00d161a99b34OrxanBije.jpg">
+      <publishTime>03/09/2021 03:19:49</publishTime>
+    </File>
     <File Include="wwwroot/images/profile/93780524-bb7c-4de9-b6df-54f5e466ed7ebook-2-1.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/9a40bdd7-f568-4112-8a31-0781fd03ac22ShohretM.jpg">
+      <publishTime>03/14/2021 21:33:05</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/9bac0bc6-e573-4e7b-baf4-9657b9b36605ShohretM.jpg">
+      <publishTime>03/10/2021 01:02:29</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/a044a333-7087-4535-8d90-75c52f5fece6ShohretM.jpg">
+      <publishTime>03/11/2021 07:32:05</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/a05a9b69-3465-45be-8d32-f8998c7f52bbShohretM.jpg">
+      <publishTime>03/11/2021 07:32:19</publishTime>
     </File>
     <File Include="wwwroot/images/profile/asdsa.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
     </File>
+    <File Include="wwwroot/images/profile/b7c793ba-e9a1-431f-8e8f-5935571e2b3fShohretM.jpg">
+      <publishTime>03/09/2021 04:49:50</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/b7de592b-01fa-4801-918d-694278298248ShohretM.jpg">
+      <publishTime>03/09/2021 03:41:56</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/b7f86ca0-61f7-4745-b76d-6fe6e9ef94feShohretM.jpg">
+      <publishTime>03/11/2021 03:10:37</publishTime>
+    </File>
     <File Include="wwwroot/images/profile/c0455fd5-5801-4d09-b605-44e9f79d9e39book-2-1.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/c9e55f63-d9c3-4cc0-978f-969775f6f97dKamran_Jabiyev.jpg">
+      <publishTime>03/09/2021 03:19:38</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/caed632c-cf9c-4c34-a7e9-80eb095b0ec4ShohretM.jpg">
+      <publishTime>03/10/2021 10:34:26</publishTime>
     </File>
     <File Include="wwwroot/images/profile/cc5e7bea-4f04-454b-87da-12ad13218133book-2-1.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
     </File>
+    <File Include="wwwroot/images/profile/d04c60b3-7c43-45a6-9de9-bf64819d6cf2ShohretM.jpg">
+      <publishTime>03/10/2021 01:02:14</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/d4e671eb-2b35-4367-8ccc-776fc8c565aaShohretM.jpg">
+      <publishTime>03/10/2021 00:58:36</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/dc3a6afc-4c0b-4d4e-a9f7-97fa6be836b1ShohretM.jpg">
+      <publishTime>03/10/2021 01:12:54</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/default.png">
+      <publishTime>03/07/2021 17:24:41</publishTime>
+    </File>
     <File Include="wwwroot/images/profile/e70f51e6-6da6-4100-8dbe-20e8b86ef170book-2-1.jpg">
       <publishTime>03/07/2021 05:24:41</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/f38a21c8-87fb-4248-bad5-abbb7e379aa2ShohretM.jpg">
+      <publishTime>03/10/2021 01:12:18</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/f90cf1d8-3856-4c7c-98be-257eb40620f2ShohretM.jpg">
+      <publishTime>03/09/2021 03:42:57</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/fb7d2838-e346-441b-b6a1-22280b223fb4ShohretM.jpg">
+      <publishTime>03/11/2021 07:32:10</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/fbeedc0f-2334-42e0-8eed-b12004bf0715jrc.png">
+      <publishTime>03/09/2021 03:19:24</publishTime>
+    </File>
+    <File Include="wwwroot/images/profile/kn.jfif">
+      <publishTime>03/11/2021 20:15:39</publishTime>
     </File>
   </ItemGroup>
 </Project>

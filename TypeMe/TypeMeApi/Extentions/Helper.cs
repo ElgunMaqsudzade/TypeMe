@@ -16,10 +16,10 @@ namespace TypeMeApi.Extentions
             client.Port = 587;
             client.UseDefaultCredentials = false;
             client.EnableSsl = true;
-            client.Credentials = new NetworkCredential("knjc621@gmail.com", "lene1234");
+            client.Credentials = new NetworkCredential("backend14400@gmail.com", "Lene1234");
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             
-            MailMessage message = new MailMessage("knjc621@gmail.com", mailTo);
+            MailMessage message = new MailMessage("backend14400@gmail.com", mailTo);
             message.Subject = messageSubject;
 
             message.Body = messageBody;

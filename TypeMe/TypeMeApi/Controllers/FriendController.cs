@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Entity.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,21 +16,27 @@ using TypeMeApi.ToDoItems.Friend;
 
 namespace TypeMeApi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
     public class FriendController : ControllerBase
     {
+
+        #region Database Services                                          >>>    Services   <<<
         private readonly UserManager<AppUser> _userManager;
         private readonly IFriendService _friendService;
-        public FriendController(IFriendService friendService,  UserManager<AppUser> userManager)
+        #endregion
+
+        #region Friend Constructor                                         >>>      Ctor     <<<
+        public FriendController(IFriendService friendService, UserManager<AppUser> userManager)
         {
             _friendService = friendService;
             _userManager = userManager;
         }
+        #endregion
 
-        // GET api/<FriendController>/5
-
+        #region Get  requisted for friends and accepted friends of user    >>>   GetFriends  <<<
         [HttpPost]
         [Route("getallfriends")]
         public async Task<ActionResult> GetAllFriends([FromBody] GetFriend getFriends)
@@ -40,7 +47,7 @@ namespace TypeMeApi.Controllers
             else
             {
                 List<FriendToDo> FriendsList = new List<FriendToDo>();
-                foreach (Friend friendRel in await _friendService.GetAllFriends(user.UserName,getFriends.Status))
+                foreach (Friend friendRel in await _friendService.GetAllFriends(user.UserName, getFriends.Status))
                 {
                     if (friendRel.FromUserName != user.UserName)
                     {
@@ -50,11 +57,11 @@ namespace TypeMeApi.Controllers
                             Email = friendUser.Email,
                             Name = friendUser.Name,
                             Surname = friendUser.Surname,
-                            Image = friendUser.Image,
+                            Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + friendUser.Image,
                             Username = friendUser.UserName,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
-                            Isfromuser =false,
+                            Isfromuser = false,
                         };
                         FriendsList.Add(friend);
 
@@ -67,7 +74,7 @@ namespace TypeMeApi.Controllers
                             Email = friendUser.Email,
                             Name = friendUser.Name,
                             Surname = friendUser.Surname,
-                            Image = friendUser.Image,
+                            Image = "http://elgun20000-001-site1.btempurl.com/images/cutedProfile/" + friendUser.Image,
                             Username = friendUser.UserName,
                             Gender = friendUser.Gender,
                             Birthday = friendUser.Birthday,
@@ -91,8 +98,10 @@ namespace TypeMeApi.Controllers
                 });
             }
         }
+        #endregion
 
-        [HttpPost]
+        #region Add Friend                                                 >>>   AddFriend   <<<
+        [HttpPut]
         [Route("addfriend")]
         public async Task AddFriend([FromBody] AddFriend addFriend)
         {
@@ -112,7 +121,9 @@ namespace TypeMeApi.Controllers
             }
         }
 
-        // DELETE api/<FriendController>/5
+        #endregion
+
+        #region Remove Friend                                              >>>   DelFriend   <<<
         [HttpDelete("{deletefriend}")]
         public async Task Delete([FromBody] DeleteFriend deleteFriend)
         {
@@ -142,5 +153,7 @@ namespace TypeMeApi.Controllers
                 await _friendService.Delete(toFriend);
             }
         }
+        #endregion
+
     }
 }
