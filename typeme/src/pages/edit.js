@@ -14,6 +14,7 @@ import ResetPassword from "../components/resetPassword";
 function Edit() {
   const { ResetPasswordHandler, resetInfo, instance, user } = useGlobalContext();
   const query = useQuery();
+  const [userError, setUserError] = useState(false);
   const [userEdit, setUserEdit] = useState(JSON.parse(localStorage.getItem("login")).user);
   const [loading, setLoading] = useState(false);
   const [showLanguages, setShowLanguages] = useState(false);
@@ -43,6 +44,14 @@ function Edit() {
         .catch((res) => console.log(res));
     }
   }, [user, loading, instance]);
+
+  useEffect(() => {
+    if (userError) {
+      setTimeout(() => {
+        setUserError(false);
+      }, 2000);
+    }
+  }, [userError]);
 
   const DetailEditHandler = () => {
     instance
@@ -84,46 +93,64 @@ function Edit() {
                       className="minor-btn-slimer"
                       onClick={() => setShowSettings(!showSettings)}
                     >
-                      Edit
+                      {showSettings ? "Close" : "Edit"}
                     </button>
                   </div>
                   {showSettings && (
                     <Formik
-                      initialValues={{ currentpassword: "", password: "", checkpassword: "" }}
+                      initialValues={{ oldpassword: "", newpassword: "", checkpassword: "" }}
                       validationSchema={Yup.object({
-                        currentpassword: Yup.string().required("Please enter current password."),
-                        password: Yup.string()
+                        oldpassword: Yup.string().required("Please enter current password."),
+                        newpassword: Yup.string()
                           .matches(
                             /^.*(?=.{6})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
                             "Characters must be '6-15' and contain digit, uppercase"
                           )
                           .required("Please enter new password."),
                         checkpassword: Yup.string()
-                          .oneOf([Yup.ref("password"), null], "Passwords doesn't matches")
+                          .oneOf([Yup.ref("newpassword"), null], "Passwords doesn't matches")
                           .required("Please re-enter your password."),
                       })}
-                      onSubmit={async (values) => {
+                      onSubmit={async (values, { setSubmitting, resetForm }) => {
                         await new Promise((resolve) => setTimeout(resolve, 500));
+                        instance
+                          .post("/settings/changepassword", {
+                            username: user.username,
+                            oldpassword: values.oldpassword,
+                            newpassword: values.newpassword,
+                          })
+                          .then((res) => console.log(res))
+                          .catch((error) => {
+                            setUserError(true);
+                          });
+                        setSubmitting(false);
+                        resetForm();
                       }}
                     >
                       {(props) => {
-                        const { touched, errors } = props;
+                        const { touched, errors, values } = props;
                         return (
                           <>
                             <hr className="divider" />
+                            {userError && (
+                              <>
+                                <div className="input-feedback">Your old password was wrong</div>
+                                <hr className="divider" />
+                              </>
+                            )}
                             <Form>
                               <div className="full-item">
                                 <div className="item">
                                   <div className="item-key">Current:</div>
                                   <Field
                                     type="password"
-                                    name="currentpassword"
+                                    name="oldpassword"
                                     className="info-inp"
                                     placeholder="Enter your current password"
                                   />
                                 </div>
-                                {errors.password && touched.password && (
-                                  <div className="input-feedback">{errors.currentpassword}</div>
+                                {errors.oldpassword && touched.oldpassword && (
+                                  <div className="input-feedback">{errors.oldpassword}</div>
                                 )}
                               </div>
                               <div className="full-item">
@@ -131,13 +158,13 @@ function Edit() {
                                   <div className="item-key">New:</div>
                                   <Field
                                     type="password"
-                                    name="password"
+                                    name="newpassword"
                                     className="info-inp"
                                     placeholder="Enter new password"
                                   />
                                 </div>
-                                {errors.password && touched.password && (
-                                  <div className="input-feedback">{errors.password}</div>
+                                {errors.newpassword && touched.newpassword && (
+                                  <div className="input-feedback">{errors.newpassword}</div>
                                 )}
                               </div>
                               <div className="full-item">

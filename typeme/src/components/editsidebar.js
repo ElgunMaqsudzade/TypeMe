@@ -1,9 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useGlobalContext } from "./context";
+
+const data = [
+  { id: 1, title: "Basic info", link: "/edit" },
+  { id: 2, title: "Login and security", link: "/edit?page=login" },
+];
 
 function Editsidebar() {
   const { user } = useGlobalContext();
+  const location = useLocation();
   return (
     <div className="edit-sidebar mCard">
       <div className="user-profile">
@@ -21,12 +27,18 @@ function Editsidebar() {
       </div>
       <hr className="divider" />
       <div className="sections">
-        <Link to={`/edit`} className="item">
-          Basic info
-        </Link>
-        <Link to={`/edit?page=login`} className="item">
-          Login and security
-        </Link>
+        {data.map((tab) => {
+          const { link, id, title } = tab;
+          return (
+            <Link
+              key={id}
+              to={`${link}`}
+              className={`item ${link === location.pathname + location.search ? "active" : ""}`}
+            >
+              {title}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

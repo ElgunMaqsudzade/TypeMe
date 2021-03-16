@@ -1,17 +1,65 @@
 import React, { useState, useEffect } from "react";
 import CreatePost from "../components/createpost";
-import { Link } from "react-router-dom";
-import { data } from "../data/newsdata";
+import { Link, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../components/context";
 import Post from "../components/post";
+import { useQuery } from "../components/customHooks/useQuery";
 const News = () => {
   const { instance, user } = useGlobalContext();
+  const query = useQuery();
+  const location = useLocation();
   const [createdPost, setCreatedPost] = useState(false);
   const [renderNewsPosts, setRenderNewsPosts] = useState(true);
   const [newsPosts, setNewsPosts] = useState([]);
 
   useEffect(() => {
-    if (user.username && renderNewsPosts) {
+    if (user.username && query.get("filter") === "liked") {
+      setRenderNewsPosts(true);
+      instance
+        .post("post/getlikedposts", {
+          username: user.username,
+        })
+        .then(({ data }) => {
+          setNewsPosts(data);
+          setRenderNewsPosts(false);
+        })
+        .catch((error) => {
+          if (error) {
+            setNewsPosts(null);
+            setRenderNewsPosts(false);
+          }
+        });
+    }
+  }, [user.username, location]);
+
+  useEffect(() => {
+    if (user.username && query.get("filter") === "commented") {
+      setRenderNewsPosts(true);
+      instance
+        .post("post/getcommentedposts", {
+          username: user.username,
+        })
+        .then(({ data }) => {
+          setNewsPosts(data);
+          setRenderNewsPosts(false);
+        })
+        .catch((error) => {
+          if (error) {
+            setNewsPosts(null);
+            setRenderNewsPosts(false);
+          }
+        });
+    }
+  }, [user.username, location]);
+
+  useEffect(() => {
+    if (query.get("filter") === null) {
+      setRenderNewsPosts(true);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (user.username && renderNewsPosts && query.get("filter") === null) {
       instance
         .post("post/getnews", {
           username: user.username,
@@ -21,13 +69,13 @@ const News = () => {
           setRenderNewsPosts(false);
         })
         .catch((error) => {
-          if (error.response.status) {
+          if (error) {
             setNewsPosts(null);
             setRenderNewsPosts(false);
           }
         });
     }
-  }, [user.username, renderNewsPosts]);
+  }, [user.username, renderNewsPosts, location]);
 
   return (
     <section className="news">
