@@ -122,7 +122,7 @@ const Profile = () => {
                   <div className="user-name">
                     {name} {surname}
                   </div>
-                  <div className="online-status">{"online"}</div>
+                  {/* <div className="online-status">{"online"}</div> */}
                 </div>
                 {user.username === username ? (
                   <button className="user-current-status" onClick={() => setStatusInput(true)}>

@@ -69,13 +69,15 @@ function Recycle({ setPhotosLoading, albums, ExitImage }) {
 
   useEffect(() => {
     setRecycleLoading(true);
-    instance
-      .post("/albom/getdeletedimages", { username: user.username })
-      .then(({ data }) => {
-        setRecycleLoading(false);
-        setImages(data.images);
-      })
-      .catch((res) => console.log(res));
+    if (user.username) {
+      instance
+        .post("/albom/getdeletedimages", { username: user.username })
+        .then(({ data }) => {
+          setRecycleLoading(false);
+          setImages(data.images);
+        })
+        .catch((res) => console.log(res));
+    }
   }, [user]);
 
   outside(albumModal, () => {
