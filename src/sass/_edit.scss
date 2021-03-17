@@ -35,6 +35,10 @@
         color: red;
         margin-left: 178px;
       }
+      .input-correct {
+        color: lime;
+        margin-left: 178px;
+      }
     }
   }
   .settings-info {
@@ -146,6 +150,7 @@
       border-radius: 50%;
     }
   }
+
   .sections {
     .item {
       cursor: pointer;

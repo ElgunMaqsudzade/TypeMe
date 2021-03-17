@@ -19,6 +19,7 @@ function Edit() {
     new Date(JSON.parse(localStorage.getItem("login")).user.birthday)
   );
   const [userEdit, setUserEdit] = useState(JSON.parse(localStorage.getItem("login")).user);
+  const [changed, setChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showLanguages, setShowLanguages] = useState(false);
   const [languages, setLanguages] = useState([]);
@@ -55,6 +56,14 @@ function Edit() {
       }, 2000);
     }
   }, [userError]);
+
+  useEffect(() => {
+    if (changed) {
+      setTimeout(() => {
+        setChanged(false);
+      }, 2000);
+    }
+  }, [changed]);
 
   const DetailEditHandler = () => {
     instance
@@ -138,7 +147,7 @@ function Edit() {
                             oldpassword: values.oldpassword,
                             newpassword: values.newpassword,
                           })
-                          .then((res) => console.log(res))
+                          .then((res) => setChanged(true))
                           .catch((error) => {
                             setUserError(true);
                           });
@@ -154,6 +163,12 @@ function Edit() {
                             {userError && (
                               <>
                                 <div className="input-feedback">Your old password was wrong</div>
+                                <hr className="divider" />
+                              </>
+                            )}
+                            {changed && (
+                              <>
+                                <div className="input-correct">Your password was changed</div>
                                 <hr className="divider" />
                               </>
                             )}
