@@ -12,9 +12,12 @@ import "../sass/_edit.scss";
 import Editsidebar from "../components/editsidebar";
 import ResetPassword from "../components/resetPassword";
 function Edit() {
-  const { ResetPasswordHandler, resetInfo, instance, user } = useGlobalContext();
+  const { ResetPasswordHandler, resetInfo, instance, user, RefreshUser } = useGlobalContext();
   const query = useQuery();
   const [userError, setUserError] = useState(false);
+  const [birthday, setBirthday] = useState(
+    new Date(JSON.parse(localStorage.getItem("login")).user.birthday)
+  );
   const [userEdit, setUserEdit] = useState(JSON.parse(localStorage.getItem("login")).user);
   const [loading, setLoading] = useState(false);
   const [showLanguages, setShowLanguages] = useState(false);
@@ -61,9 +64,25 @@ function Edit() {
         name: userEdit.name,
         surname: userEdit.surname,
         languageid: userEdit.languageId,
-        birthday: userEdit.birthday,
+        birthday: birthday,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        let newlogin = {
+          ...JSON.parse(localStorage.getItem("login")),
+          user: {
+            ...JSON.parse(localStorage.getItem("login")).user,
+            username: userEdit.username,
+            gender: userEdit.gender,
+            name: userEdit.name,
+            surname: userEdit.surname,
+            languageid: userEdit.languageId,
+            birthday: birthday,
+          },
+        };
+
+        localStorage.setItem("login", JSON.stringify(newlogin));
+        RefreshUser();
+      })
       .catch((res) => console.log(res));
   };
 
@@ -128,7 +147,7 @@ function Edit() {
                       }}
                     >
                       {(props) => {
-                        const { touched, errors, values } = props;
+                        const { touched, errors } = props;
                         return (
                           <>
                             <hr className="divider" />
@@ -252,13 +271,8 @@ function Edit() {
                     <div className="item-key">Birthday:</div>
                     <DatePicker
                       className="info-inp"
-                      selected={new Date(userEdit.birthday)}
-                      onChange={(date) =>
-                        setUserEdit({
-                          ...userEdit,
-                          birthday: moment(user.birthday).format(),
-                        })
-                      }
+                      selected={birthday}
+                      onChange={(date) => setBirthday(date)}
                     />
                   </div>
                 </div>
