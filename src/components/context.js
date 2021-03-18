@@ -5,7 +5,7 @@ import reducer from "./reducer";
 const AppContext = React.createContext();
 
 const initialState = {
-  url: "http://elgun20000-001-site1.btempurl.com/",
+  url: "https://typeme4000.azurewebsites.net/",
 };
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -26,7 +26,7 @@ const AppProvider = ({ children }) => {
   const [resetInfo, setResetInfo] = useState(null);
 
   let instance = axios.create({
-    baseURL: "http://elgun20000-001-site1.btempurl.com/api/",
+    baseURL: "https://typeme4000.azurewebsites.net/api/",
     headers: {
       Authorization: `Bearer ${token} `,
       "Access-Control-Allow-Origin": "*",
@@ -182,7 +182,6 @@ const AppProvider = ({ children }) => {
         instance,
         RefreshUser,
         EditInfo,
-        profileLoading,
         setFriendsLoading,
         friendsLoading,
         GetCreatedTime,

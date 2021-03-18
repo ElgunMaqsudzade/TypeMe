@@ -7,7 +7,7 @@ import RequestedFriends from "../components/friends-page-comp/requestedFriends";
 import { useQuery } from "../components/customHooks/useQuery";
 
 function Friends() {
-  let location = useLocation().pathname;
+  const location = useLocation();
   const { section } = useParams();
   const query = useQuery();
   const { user, instance } = useGlobalContext();
@@ -20,7 +20,7 @@ function Friends() {
     } else {
       HandleFindUsers({ key: "", skip: 0 });
     }
-  }, [section, query.get("keyword")]);
+  }, [section, location]);
 
   const HandleFindUsers = ({ key, skip }) => {
     setFindprops({ ...findprops, key, skip });
@@ -57,19 +57,6 @@ function Friends() {
         console.log(res);
       });
   };
-
-  useEffect(() => {
-    if (user.username !== null) {
-      instance
-        .get("authenticate")
-        .then(({ data }) => {
-          setFindFriends({ loading: false, myfriends: data.users });
-        })
-        .catch((res) => {
-          console.log(res);
-        });
-    }
-  }, [user, instance]);
 
   return (
     <>

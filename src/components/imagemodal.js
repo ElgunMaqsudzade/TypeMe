@@ -22,7 +22,11 @@ function Imagemodal({ images }) {
         images.map((image) => {
           if (image.id === Number(query.get("image"))) {
             return (
-              <div key={image.id} className="modal-box" onClick={() => ExitImage()}>
+              <div
+                key={"modal-images-" + image.id}
+                className="modal-box"
+                onClick={() => ExitImage()}
+              >
                 <div className="singleimage" onClick={(e) => e.stopPropagation()}>
                   <Icon16Cancel className="exit-icon" onClick={() => ExitImage()} />
                   <div className="image-holder">

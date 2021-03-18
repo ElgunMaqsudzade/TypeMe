@@ -202,7 +202,7 @@ const CreatePost = ({
                   const { id, photo } = image;
                   return (
                     <div
-                      key={id}
+                      key={"postimages-" + id}
                       className="image post-image"
                       style={{ backgroundImage: `url(${photo})` }}
                       onClick={() => history.push(`${location.pathname}?image=${id}`)}

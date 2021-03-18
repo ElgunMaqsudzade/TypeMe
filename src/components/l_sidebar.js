@@ -4,7 +4,7 @@ import { useGlobalContext } from "./context";
 import {
   Icon28Profile,
   Icon20NewsfeedOutline,
-  Icon20MessageOutline,
+  // Icon20MessageOutline,
   Icon20UsersOutline,
   Icon20PictureOutline,
 } from "@vkontakte/icons";

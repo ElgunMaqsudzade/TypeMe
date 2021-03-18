@@ -117,7 +117,7 @@ const News = () => {
                 newsPosts.map((post) => {
                   return (
                     <Post
-                      key={post.id}
+                      key={"post-" + post.id}
                       posts={newsPosts}
                       {...post}
                       poster={post.user}

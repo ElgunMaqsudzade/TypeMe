@@ -74,12 +74,13 @@ function Register({ setVerifyEmail }) {
               resetForm();
             })
             .catch(({ response }) => {
-              console.log(response);
-              setResError({
-                status: response.status,
-                error: response.data.error,
-                loading: false,
-              });
+              if (response && response.data) {
+                setResError({
+                  status: response.status,
+                  error: response.data.error,
+                  loading: false,
+                });
+              }
             });
 
           setSubmitting(false);
